@@ -1,1 +1,1 @@
-# Projeto-Sistemas-distribu-dos-Java-Python
+# Projeto-Sistemas-distribuidos-Java-Python
