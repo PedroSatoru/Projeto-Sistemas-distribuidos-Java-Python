@@ -1,0 +1,8 @@
+bot_client_1
+bot_client_2
+bot_client_3
+bot_client_4
+alice
+bob
+charlie
+diana
