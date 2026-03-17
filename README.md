@@ -327,9 +327,7 @@ Quando a dupla tiver o código Java pronto:
 
 ## Autores
 
-- **Python:** [Seu Nome]
-- **Java:** [Nome da dupla]
+- **Python:** Pedro Satoru
+- **Java:** Pedro Correia
 
-## Licença
 
-MIT - Projeto acadêmico
