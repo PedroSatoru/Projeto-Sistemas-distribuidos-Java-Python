@@ -1,11 +1,36 @@
-"""
-Message schema definitions for the distributed chat system.
-All messages are serialized using MessagePack and include a timestamp.
-"""
+"""Message schema definitions using Protobuf with binary serialization."""
 
-import msgpack
+import importlib
 import time
+from pathlib import Path
 from typing import Any, Dict, Optional
+
+
+def _load_chat_pb2():
+    try:
+        from . import chat_pb2 as module
+        return module
+    except ImportError:
+        from grpc_tools import protoc
+
+        base_dir = Path(__file__).resolve().parent.parent
+        proto_dir = base_dir / "proto"
+        out_dir = base_dir / "schemas"
+        proto_file = proto_dir / "chat.proto"
+
+        result = protoc.main([
+            "grpc_tools.protoc",
+            f"-I{proto_dir}",
+            f"--python_out={out_dir}",
+            str(proto_file),
+        ])
+        if result != 0:
+            raise RuntimeError("Falha ao gerar chat_pb2.py a partir de chat.proto")
+
+        return importlib.import_module("schemas.chat_pb2")
+
+
+chat_pb2 = _load_chat_pb2()
 
 
 class MessageType:
@@ -16,14 +41,16 @@ class MessageType:
     LIST_CHANNELS_RESPONSE = "LIST_CHANNELS_RESPONSE"
     CREATE_CHANNEL = "CREATE_CHANNEL"
     CREATE_CHANNEL_RESPONSE = "CREATE_CHANNEL_RESPONSE"
+    ERROR_RESPONSE = "ERROR_RESPONSE"
 
 
 class Message:
     """Base message class with timestamp and type"""
     
-    def __init__(self, message_type: str, payload: Dict[str, Any]):
+    def __init__(self, message_type: str, payload: Dict[str, Any], timestamp_ms: Optional[int] = None):
         self.message_type = message_type
         self.timestamp = time.time()
+        self.timestamp_ms = timestamp_ms
         self.payload = payload
     
     def to_dict(self) -> Dict[str, Any]:
@@ -35,17 +62,156 @@ class Message:
         }
     
     def serialize(self) -> bytes:
-        """Serialize message to MessagePack bytes"""
-        return msgpack.packb(self.to_dict(), use_bin_type=True)
+        """Serialize message to Protobuf bytes"""
+        now_ms = self.timestamp_ms if self.timestamp_ms is not None else int(time.time() * 1000)
+        self.timestamp_ms = now_ms
+
+        if self.message_type == MessageType.LOGIN:
+            msg = chat_pb2.ClientRequest(
+                timestamp_ms=now_ms,
+                login_request=chat_pb2.LoginRequest(
+                    timestamp_ms=now_ms,
+                    username=self.payload.get("username", "")
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.LIST_CHANNELS:
+            msg = chat_pb2.ClientRequest(
+                timestamp_ms=now_ms,
+                list_channels_request=chat_pb2.ListChannelsRequest(timestamp_ms=now_ms)
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.CREATE_CHANNEL:
+            msg = chat_pb2.ClientRequest(
+                timestamp_ms=now_ms,
+                create_channel_request=chat_pb2.CreateChannelRequest(
+                    timestamp_ms=now_ms,
+                    channel_name=self.payload.get("channel_name", "")
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.LOGIN_RESPONSE:
+            msg = chat_pb2.ServerResponse(
+                timestamp_ms=now_ms,
+                login_response=chat_pb2.LoginResponse(
+                    timestamp_ms=now_ms,
+                    success=bool(self.payload.get("success", False)),
+                    error=self.payload.get("error", "")
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.LIST_CHANNELS_RESPONSE:
+            msg = chat_pb2.ServerResponse(
+                timestamp_ms=now_ms,
+                list_channels_response=chat_pb2.ListChannelsResponse(
+                    timestamp_ms=now_ms,
+                    channels=self.payload.get("channels", [])
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.CREATE_CHANNEL_RESPONSE:
+            msg = chat_pb2.ServerResponse(
+                timestamp_ms=now_ms,
+                create_channel_response=chat_pb2.CreateChannelResponse(
+                    timestamp_ms=now_ms,
+                    success=bool(self.payload.get("success", False)),
+                    error=self.payload.get("error", "")
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.ERROR_RESPONSE:
+            msg = chat_pb2.ServerResponse(
+                timestamp_ms=now_ms,
+                error_response=chat_pb2.ErrorResponse(
+                    timestamp_ms=now_ms,
+                    error=self.payload.get("error", "Unknown error")
+                )
+            )
+            return msg.SerializeToString()
+
+        msg = chat_pb2.ServerResponse(
+            timestamp_ms=now_ms,
+            error_response=chat_pb2.ErrorResponse(
+                timestamp_ms=now_ms,
+                error="Unknown message type"
+            )
+        )
+        return msg.SerializeToString()
     
     @staticmethod
+    def deserialize_request(data: bytes) -> 'Message':
+        """Deserialize ClientRequest bytes into Message"""
+        req = chat_pb2.ClientRequest()
+        req.ParseFromString(data)
+        req_action = req.WhichOneof("action")
+
+        if req_action == "login_request":
+            return Message(MessageType.LOGIN, {"username": req.login_request.username}, timestamp_ms=req.timestamp_ms)
+
+        if req_action == "list_channels_request":
+            return Message(MessageType.LIST_CHANNELS, {}, timestamp_ms=req.timestamp_ms)
+
+        if req_action == "create_channel_request":
+            return Message(MessageType.CREATE_CHANNEL, {"channel_name": req.create_channel_request.channel_name}, timestamp_ms=req.timestamp_ms)
+
+        raise ValueError("ClientRequest sem acao valida")
+
+    @staticmethod
+    def deserialize_response(data: bytes) -> 'Message':
+        """Deserialize ServerResponse bytes into Message"""
+        resp = chat_pb2.ServerResponse()
+        resp.ParseFromString(data)
+        resp_action = resp.WhichOneof("action")
+
+        if resp_action == "login_response":
+            return Message(
+                MessageType.LOGIN_RESPONSE,
+                {
+                    "success": resp.login_response.success,
+                    "error": resp.login_response.error,
+                },
+                timestamp_ms=resp.timestamp_ms,
+            )
+
+        if resp_action == "list_channels_response":
+            return Message(
+                MessageType.LIST_CHANNELS_RESPONSE,
+                {"channels": list(resp.list_channels_response.channels)},
+                timestamp_ms=resp.timestamp_ms,
+            )
+
+        if resp_action == "create_channel_response":
+            return Message(
+                MessageType.CREATE_CHANNEL_RESPONSE,
+                {
+                    "success": resp.create_channel_response.success,
+                    "error": resp.create_channel_response.error,
+                },
+                timestamp_ms=resp.timestamp_ms,
+            )
+
+        if resp_action == "error_response":
+            return Message(
+                MessageType.ERROR_RESPONSE,
+                {"error": resp.error_response.error},
+                timestamp_ms=resp.timestamp_ms,
+            )
+
+        return Message(MessageType.ERROR_RESPONSE, {"error": "Invalid payload"})
+
+    @staticmethod
     def deserialize(data: bytes) -> 'Message':
-        """Deserialize message from MessagePack bytes"""
-        dict_data = msgpack.unpackb(data, raw=False)
-        return Message(
-            message_type=dict_data["type"],
-            payload=dict_data["payload"]
-        )
+        """Backward-compatible auto-deserialize (defaults to response first)."""
+        response = Message.deserialize_response(data)
+        if response.message_type != MessageType.ERROR_RESPONSE or response.payload.get("error") != "Invalid payload":
+            return response
+        return Message.deserialize_request(data)
 
 
 class LoginMessage(Message):

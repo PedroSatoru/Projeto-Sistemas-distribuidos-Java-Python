@@ -16,6 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY . .
 
+# Compile Protobuf schema used by Python and Java services
+RUN python -m grpc_tools.protoc -I./proto --python_out=./schemas ./proto/chat.proto
+
 # Create data directory for server persistence
 RUN mkdir -p /data
 

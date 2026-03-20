@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+option java_package = "br.ufc.sd.chat.proto";
+option java_outer_classname = "ChatProtocol";
+
+message LoginRequest {
+  int64 timestamp_ms = 1;
+  string username = 2;
+}
+
+message LoginResponse {
+  int64 timestamp_ms = 1;
+  bool success = 2;
+  string error = 3;
+}
+
+message ListChannelsRequest {
+  int64 timestamp_ms = 1;
+}
+
+message ListChannelsResponse {
+  int64 timestamp_ms = 1;
+  repeated string channels = 2;
+}
+
+message CreateChannelRequest {
+  int64 timestamp_ms = 1;
+  string channel_name = 2;
+}
+
+message CreateChannelResponse {
+  int64 timestamp_ms = 1;
+  bool success = 2;
+  string error = 3;
+}
+
+message ErrorResponse {
+  int64 timestamp_ms = 1;
+  string error = 2;
+}
+
+message ClientRequest {
+  int64 timestamp_ms = 1;
+  oneof action {
+    LoginRequest login_request = 2;
+    ListChannelsRequest list_channels_request = 3;
+    CreateChannelRequest create_channel_request = 4;
+  }
+}
+
+message ServerResponse {
+  int64 timestamp_ms = 1;
+  oneof action {
+    LoginResponse login_response = 2;
+    ListChannelsResponse list_channels_response = 3;
+    CreateChannelResponse create_channel_response = 4;
+    ErrorResponse error_response = 5;
+  }
+}
