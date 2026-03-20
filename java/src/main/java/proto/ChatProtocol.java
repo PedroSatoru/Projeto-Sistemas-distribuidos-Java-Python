@@ -2,7 +2,7 @@
 // source: chat.proto
 
 // Protobuf Java Version: 3.25.5
-package br.ufc.sd.chat.proto;
+package proto;
 
 public final class ChatProtocol {
   private ChatProtocol() {}
@@ -62,15 +62,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginRequest_descriptor;
+      return proto.ChatProtocol.internal_static_LoginRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginRequest_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_LoginRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.class, br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder.class);
+              proto.ChatProtocol.LoginRequest.class, proto.ChatProtocol.LoginRequest.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -169,10 +169,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.LoginRequest)) {
+      if (!(obj instanceof proto.ChatProtocol.LoginRequest)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.LoginRequest other = (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) obj;
+      proto.ChatProtocol.LoginRequest other = (proto.ChatProtocol.LoginRequest) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -199,44 +199,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(byte[] data)
+    public static proto.ChatProtocol.LoginRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.LoginRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -244,26 +244,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.LoginRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseDelimitedFrom(
+    public static proto.ChatProtocol.LoginRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest parseFrom(
+    public static proto.ChatProtocol.LoginRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -276,7 +276,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.LoginRequest prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.LoginRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -297,21 +297,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:LoginRequest)
-        br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder {
+        proto.ChatProtocol.LoginRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginRequest_descriptor;
+        return proto.ChatProtocol.internal_static_LoginRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginRequest_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_LoginRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.class, br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder.class);
+                proto.ChatProtocol.LoginRequest.class, proto.ChatProtocol.LoginRequest.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.newBuilder()
+      // Construct using proto.ChatProtocol.LoginRequest.newBuilder()
       private Builder() {
 
       }
@@ -333,17 +333,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginRequest_descriptor;
+        return proto.ChatProtocol.internal_static_LoginRequest_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+      public proto.ChatProtocol.LoginRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.LoginRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest build() {
-        br.ufc.sd.chat.proto.ChatProtocol.LoginRequest result = buildPartial();
+      public proto.ChatProtocol.LoginRequest build() {
+        proto.ChatProtocol.LoginRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -351,14 +351,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.LoginRequest result = new br.ufc.sd.chat.proto.ChatProtocol.LoginRequest(this);
+      public proto.ChatProtocol.LoginRequest buildPartial() {
+        proto.ChatProtocol.LoginRequest result = new proto.ChatProtocol.LoginRequest(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.LoginRequest result) {
+      private void buildPartial0(proto.ChatProtocol.LoginRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -402,16 +402,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.LoginRequest)other);
+        if (other instanceof proto.ChatProtocol.LoginRequest) {
+          return mergeFrom((proto.ChatProtocol.LoginRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.LoginRequest other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.LoginRequest other) {
+        if (other == proto.ChatProtocol.LoginRequest.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -593,12 +593,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:LoginRequest)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.LoginRequest DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.LoginRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.LoginRequest();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.LoginRequest();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getDefaultInstance() {
+    public static proto.ChatProtocol.LoginRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -634,7 +634,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getDefaultInstanceForType() {
+    public proto.ChatProtocol.LoginRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -693,15 +693,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginResponse_descriptor;
+      return proto.ChatProtocol.internal_static_LoginResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginResponse_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_LoginResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.class, br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder.class);
+              proto.ChatProtocol.LoginResponse.class, proto.ChatProtocol.LoginResponse.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -818,10 +818,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.LoginResponse)) {
+      if (!(obj instanceof proto.ChatProtocol.LoginResponse)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.LoginResponse other = (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) obj;
+      proto.ChatProtocol.LoginResponse other = (proto.ChatProtocol.LoginResponse) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -853,44 +853,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(byte[] data)
+    public static proto.ChatProtocol.LoginResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.LoginResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -898,26 +898,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.LoginResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseDelimitedFrom(
+    public static proto.ChatProtocol.LoginResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse parseFrom(
+    public static proto.ChatProtocol.LoginResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -930,7 +930,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.LoginResponse prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.LoginResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -951,21 +951,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:LoginResponse)
-        br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder {
+        proto.ChatProtocol.LoginResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginResponse_descriptor;
+        return proto.ChatProtocol.internal_static_LoginResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginResponse_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_LoginResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.class, br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder.class);
+                proto.ChatProtocol.LoginResponse.class, proto.ChatProtocol.LoginResponse.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.newBuilder()
+      // Construct using proto.ChatProtocol.LoginResponse.newBuilder()
       private Builder() {
 
       }
@@ -988,17 +988,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_LoginResponse_descriptor;
+        return proto.ChatProtocol.internal_static_LoginResponse_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+      public proto.ChatProtocol.LoginResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.LoginResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse build() {
-        br.ufc.sd.chat.proto.ChatProtocol.LoginResponse result = buildPartial();
+      public proto.ChatProtocol.LoginResponse build() {
+        proto.ChatProtocol.LoginResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1006,14 +1006,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.LoginResponse result = new br.ufc.sd.chat.proto.ChatProtocol.LoginResponse(this);
+      public proto.ChatProtocol.LoginResponse buildPartial() {
+        proto.ChatProtocol.LoginResponse result = new proto.ChatProtocol.LoginResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.LoginResponse result) {
+      private void buildPartial0(proto.ChatProtocol.LoginResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -1060,16 +1060,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.LoginResponse)other);
+        if (other instanceof proto.ChatProtocol.LoginResponse) {
+          return mergeFrom((proto.ChatProtocol.LoginResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.LoginResponse other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.LoginResponse other) {
+        if (other == proto.ChatProtocol.LoginResponse.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -1291,12 +1291,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:LoginResponse)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.LoginResponse DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.LoginResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.LoginResponse();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.LoginResponse();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getDefaultInstance() {
+    public static proto.ChatProtocol.LoginResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1332,7 +1332,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getDefaultInstanceForType() {
+    public proto.ChatProtocol.LoginResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1372,15 +1372,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
+      return proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsRequest_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_ListChannelsRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.class, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder.class);
+              proto.ChatProtocol.ListChannelsRequest.class, proto.ChatProtocol.ListChannelsRequest.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -1434,10 +1434,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest)) {
+      if (!(obj instanceof proto.ChatProtocol.ListChannelsRequest)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest other = (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) obj;
+      proto.ChatProtocol.ListChannelsRequest other = (proto.ChatProtocol.ListChannelsRequest) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -1460,44 +1460,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(byte[] data)
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1505,26 +1505,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ListChannelsRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseDelimitedFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest parseFrom(
+    public static proto.ChatProtocol.ListChannelsRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1537,7 +1537,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.ListChannelsRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1558,21 +1558,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ListChannelsRequest)
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder {
+        proto.ChatProtocol.ListChannelsRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
+        return proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsRequest_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_ListChannelsRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.class, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder.class);
+                proto.ChatProtocol.ListChannelsRequest.class, proto.ChatProtocol.ListChannelsRequest.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.newBuilder()
+      // Construct using proto.ChatProtocol.ListChannelsRequest.newBuilder()
       private Builder() {
 
       }
@@ -1593,17 +1593,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
+        return proto.ChatProtocol.internal_static_ListChannelsRequest_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+      public proto.ChatProtocol.ListChannelsRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest build() {
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest result = buildPartial();
+      public proto.ChatProtocol.ListChannelsRequest build() {
+        proto.ChatProtocol.ListChannelsRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1611,14 +1611,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest result = new br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest(this);
+      public proto.ChatProtocol.ListChannelsRequest buildPartial() {
+        proto.ChatProtocol.ListChannelsRequest result = new proto.ChatProtocol.ListChannelsRequest(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest result) {
+      private void buildPartial0(proto.ChatProtocol.ListChannelsRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -1659,16 +1659,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest)other);
+        if (other instanceof proto.ChatProtocol.ListChannelsRequest) {
+          return mergeFrom((proto.ChatProtocol.ListChannelsRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.ListChannelsRequest other) {
+        if (other == proto.ChatProtocol.ListChannelsRequest.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -1768,12 +1768,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:ListChannelsRequest)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.ListChannelsRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ListChannelsRequest();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getDefaultInstance() {
+    public static proto.ChatProtocol.ListChannelsRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1809,7 +1809,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getDefaultInstanceForType() {
+    public proto.ChatProtocol.ListChannelsRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1876,15 +1876,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
+      return proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsResponse_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_ListChannelsResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder.class);
+              proto.ChatProtocol.ListChannelsResponse.class, proto.ChatProtocol.ListChannelsResponse.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -1986,10 +1986,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse)) {
+      if (!(obj instanceof proto.ChatProtocol.ListChannelsResponse)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse other = (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) obj;
+      proto.ChatProtocol.ListChannelsResponse other = (proto.ChatProtocol.ListChannelsResponse) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -2018,44 +2018,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(byte[] data)
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2063,26 +2063,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ListChannelsResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseDelimitedFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse parseFrom(
+    public static proto.ChatProtocol.ListChannelsResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2095,7 +2095,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.ListChannelsResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -2116,21 +2116,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ListChannelsResponse)
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder {
+        proto.ChatProtocol.ListChannelsResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsResponse_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_ListChannelsResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder.class);
+                proto.ChatProtocol.ListChannelsResponse.class, proto.ChatProtocol.ListChannelsResponse.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.newBuilder()
+      // Construct using proto.ChatProtocol.ListChannelsResponse.newBuilder()
       private Builder() {
 
       }
@@ -2153,17 +2153,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ListChannelsResponse_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+      public proto.ChatProtocol.ListChannelsResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse build() {
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse result = buildPartial();
+      public proto.ChatProtocol.ListChannelsResponse build() {
+        proto.ChatProtocol.ListChannelsResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -2171,14 +2171,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse result = new br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse(this);
+      public proto.ChatProtocol.ListChannelsResponse buildPartial() {
+        proto.ChatProtocol.ListChannelsResponse result = new proto.ChatProtocol.ListChannelsResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse result) {
+      private void buildPartial0(proto.ChatProtocol.ListChannelsResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -2223,16 +2223,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse)other);
+        if (other instanceof proto.ChatProtocol.ListChannelsResponse) {
+          return mergeFrom((proto.ChatProtocol.ListChannelsResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.ListChannelsResponse other) {
+        if (other == proto.ChatProtocol.ListChannelsResponse.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -2459,12 +2459,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:ListChannelsResponse)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.ListChannelsResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ListChannelsResponse();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getDefaultInstance() {
+    public static proto.ChatProtocol.ListChannelsResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2500,7 +2500,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getDefaultInstanceForType() {
+    public proto.ChatProtocol.ListChannelsResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2553,15 +2553,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
+      return proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelRequest_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_CreateChannelRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.class, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder.class);
+              proto.ChatProtocol.CreateChannelRequest.class, proto.ChatProtocol.CreateChannelRequest.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -2660,10 +2660,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest)) {
+      if (!(obj instanceof proto.ChatProtocol.CreateChannelRequest)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest other = (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) obj;
+      proto.ChatProtocol.CreateChannelRequest other = (proto.ChatProtocol.CreateChannelRequest) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -2690,44 +2690,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(byte[] data)
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2735,26 +2735,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.CreateChannelRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseDelimitedFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest parseFrom(
+    public static proto.ChatProtocol.CreateChannelRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2767,7 +2767,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.CreateChannelRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -2788,21 +2788,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:CreateChannelRequest)
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder {
+        proto.ChatProtocol.CreateChannelRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
+        return proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelRequest_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_CreateChannelRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.class, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder.class);
+                proto.ChatProtocol.CreateChannelRequest.class, proto.ChatProtocol.CreateChannelRequest.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.newBuilder()
+      // Construct using proto.ChatProtocol.CreateChannelRequest.newBuilder()
       private Builder() {
 
       }
@@ -2824,17 +2824,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
+        return proto.ChatProtocol.internal_static_CreateChannelRequest_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+      public proto.ChatProtocol.CreateChannelRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest build() {
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest result = buildPartial();
+      public proto.ChatProtocol.CreateChannelRequest build() {
+        proto.ChatProtocol.CreateChannelRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -2842,14 +2842,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest result = new br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest(this);
+      public proto.ChatProtocol.CreateChannelRequest buildPartial() {
+        proto.ChatProtocol.CreateChannelRequest result = new proto.ChatProtocol.CreateChannelRequest(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest result) {
+      private void buildPartial0(proto.ChatProtocol.CreateChannelRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -2893,16 +2893,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest)other);
+        if (other instanceof proto.ChatProtocol.CreateChannelRequest) {
+          return mergeFrom((proto.ChatProtocol.CreateChannelRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.CreateChannelRequest other) {
+        if (other == proto.ChatProtocol.CreateChannelRequest.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -3084,12 +3084,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:CreateChannelRequest)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.CreateChannelRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.CreateChannelRequest();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getDefaultInstance() {
+    public static proto.ChatProtocol.CreateChannelRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3125,7 +3125,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getDefaultInstanceForType() {
+    public proto.ChatProtocol.CreateChannelRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3184,15 +3184,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
+      return proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelResponse_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_CreateChannelResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.class, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder.class);
+              proto.ChatProtocol.CreateChannelResponse.class, proto.ChatProtocol.CreateChannelResponse.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -3309,10 +3309,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse)) {
+      if (!(obj instanceof proto.ChatProtocol.CreateChannelResponse)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse other = (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) obj;
+      proto.ChatProtocol.CreateChannelResponse other = (proto.ChatProtocol.CreateChannelResponse) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -3344,44 +3344,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(byte[] data)
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3389,26 +3389,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.CreateChannelResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseDelimitedFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse parseFrom(
+    public static proto.ChatProtocol.CreateChannelResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3421,7 +3421,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.CreateChannelResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -3442,21 +3442,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:CreateChannelResponse)
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder {
+        proto.ChatProtocol.CreateChannelResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
+        return proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelResponse_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_CreateChannelResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.class, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder.class);
+                proto.ChatProtocol.CreateChannelResponse.class, proto.ChatProtocol.CreateChannelResponse.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.newBuilder()
+      // Construct using proto.ChatProtocol.CreateChannelResponse.newBuilder()
       private Builder() {
 
       }
@@ -3479,17 +3479,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
+        return proto.ChatProtocol.internal_static_CreateChannelResponse_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+      public proto.ChatProtocol.CreateChannelResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse build() {
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse result = buildPartial();
+      public proto.ChatProtocol.CreateChannelResponse build() {
+        proto.ChatProtocol.CreateChannelResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -3497,14 +3497,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse result = new br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse(this);
+      public proto.ChatProtocol.CreateChannelResponse buildPartial() {
+        proto.ChatProtocol.CreateChannelResponse result = new proto.ChatProtocol.CreateChannelResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse result) {
+      private void buildPartial0(proto.ChatProtocol.CreateChannelResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -3551,16 +3551,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse)other);
+        if (other instanceof proto.ChatProtocol.CreateChannelResponse) {
+          return mergeFrom((proto.ChatProtocol.CreateChannelResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.CreateChannelResponse other) {
+        if (other == proto.ChatProtocol.CreateChannelResponse.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -3782,12 +3782,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:CreateChannelResponse)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.CreateChannelResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.CreateChannelResponse();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getDefaultInstance() {
+    public static proto.ChatProtocol.CreateChannelResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3823,7 +3823,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getDefaultInstanceForType() {
+    public proto.ChatProtocol.CreateChannelResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3876,15 +3876,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
+      return proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ErrorResponse_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_ErrorResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder.class);
+              proto.ChatProtocol.ErrorResponse.class, proto.ChatProtocol.ErrorResponse.Builder.class);
     }
 
     public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
@@ -3983,10 +3983,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse)) {
+      if (!(obj instanceof proto.ChatProtocol.ErrorResponse)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse other = (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) obj;
+      proto.ChatProtocol.ErrorResponse other = (proto.ChatProtocol.ErrorResponse) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -4013,44 +4013,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(byte[] data)
+    public static proto.ChatProtocol.ErrorResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ErrorResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4058,26 +4058,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ErrorResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseDelimitedFrom(
+    public static proto.ChatProtocol.ErrorResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse parseFrom(
+    public static proto.ChatProtocol.ErrorResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4090,7 +4090,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.ErrorResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4111,21 +4111,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ErrorResponse)
-        br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder {
+        proto.ChatProtocol.ErrorResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ErrorResponse_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_ErrorResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder.class);
+                proto.ChatProtocol.ErrorResponse.class, proto.ChatProtocol.ErrorResponse.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.newBuilder()
+      // Construct using proto.ChatProtocol.ErrorResponse.newBuilder()
       private Builder() {
 
       }
@@ -4147,17 +4147,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ErrorResponse_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+      public proto.ChatProtocol.ErrorResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse build() {
-        br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse result = buildPartial();
+      public proto.ChatProtocol.ErrorResponse build() {
+        proto.ChatProtocol.ErrorResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4165,14 +4165,14 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse result = new br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse(this);
+      public proto.ChatProtocol.ErrorResponse buildPartial() {
+        proto.ChatProtocol.ErrorResponse result = new proto.ChatProtocol.ErrorResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse result) {
+      private void buildPartial0(proto.ChatProtocol.ErrorResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
@@ -4216,16 +4216,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse)other);
+        if (other instanceof proto.ChatProtocol.ErrorResponse) {
+          return mergeFrom((proto.ChatProtocol.ErrorResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.ErrorResponse other) {
+        if (other == proto.ChatProtocol.ErrorResponse.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -4407,12 +4407,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:ErrorResponse)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.ErrorResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ErrorResponse();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getDefaultInstance() {
+    public static proto.ChatProtocol.ErrorResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4448,7 +4448,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getDefaultInstanceForType() {
+    public proto.ChatProtocol.ErrorResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4473,11 +4473,11 @@ public final class ChatProtocol {
      * <code>.LoginRequest login_request = 2;</code>
      * @return The loginRequest.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getLoginRequest();
+    proto.ChatProtocol.LoginRequest getLoginRequest();
     /**
      * <code>.LoginRequest login_request = 2;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder();
+    proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder();
 
     /**
      * <code>.ListChannelsRequest list_channels_request = 3;</code>
@@ -4488,11 +4488,11 @@ public final class ChatProtocol {
      * <code>.ListChannelsRequest list_channels_request = 3;</code>
      * @return The listChannelsRequest.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getListChannelsRequest();
+    proto.ChatProtocol.ListChannelsRequest getListChannelsRequest();
     /**
      * <code>.ListChannelsRequest list_channels_request = 3;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder();
+    proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder();
 
     /**
      * <code>.CreateChannelRequest create_channel_request = 4;</code>
@@ -4503,13 +4503,13 @@ public final class ChatProtocol {
      * <code>.CreateChannelRequest create_channel_request = 4;</code>
      * @return The createChannelRequest.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest();
+    proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest();
     /**
      * <code>.CreateChannelRequest create_channel_request = 4;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder();
+    proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder();
 
-    br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.ActionCase getActionCase();
+    proto.ChatProtocol.ClientRequest.ActionCase getActionCase();
   }
   /**
    * Protobuf type {@code ClientRequest}
@@ -4535,15 +4535,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ClientRequest_descriptor;
+      return proto.ChatProtocol.internal_static_ClientRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ClientRequest_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_ClientRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.class, br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.Builder.class);
+              proto.ChatProtocol.ClientRequest.class, proto.ChatProtocol.ClientRequest.Builder.class);
     }
 
     private int actionCase_ = 0;
@@ -4615,21 +4615,21 @@ public final class ChatProtocol {
      * @return The loginRequest.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getLoginRequest() {
+    public proto.ChatProtocol.LoginRequest getLoginRequest() {
       if (actionCase_ == 2) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_;
+         return (proto.ChatProtocol.LoginRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+      return proto.ChatProtocol.LoginRequest.getDefaultInstance();
     }
     /**
      * <code>.LoginRequest login_request = 2;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder() {
+    public proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder() {
       if (actionCase_ == 2) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_;
+         return (proto.ChatProtocol.LoginRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+      return proto.ChatProtocol.LoginRequest.getDefaultInstance();
     }
 
     public static final int LIST_CHANNELS_REQUEST_FIELD_NUMBER = 3;
@@ -4646,21 +4646,21 @@ public final class ChatProtocol {
      * @return The listChannelsRequest.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getListChannelsRequest() {
+    public proto.ChatProtocol.ListChannelsRequest getListChannelsRequest() {
       if (actionCase_ == 3) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_;
+         return (proto.ChatProtocol.ListChannelsRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+      return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
     }
     /**
      * <code>.ListChannelsRequest list_channels_request = 3;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder() {
+    public proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder() {
       if (actionCase_ == 3) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_;
+         return (proto.ChatProtocol.ListChannelsRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+      return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
     }
 
     public static final int CREATE_CHANNEL_REQUEST_FIELD_NUMBER = 4;
@@ -4677,21 +4677,21 @@ public final class ChatProtocol {
      * @return The createChannelRequest.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest() {
+    public proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest() {
       if (actionCase_ == 4) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_;
+         return (proto.ChatProtocol.CreateChannelRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+      return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
     }
     /**
      * <code>.CreateChannelRequest create_channel_request = 4;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder() {
+    public proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder() {
       if (actionCase_ == 4) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_;
+         return (proto.ChatProtocol.CreateChannelRequest) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+      return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4712,13 +4712,13 @@ public final class ChatProtocol {
         output.writeInt64(1, timestampMs_);
       }
       if (actionCase_ == 2) {
-        output.writeMessage(2, (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_);
+        output.writeMessage(2, (proto.ChatProtocol.LoginRequest) action_);
       }
       if (actionCase_ == 3) {
-        output.writeMessage(3, (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_);
+        output.writeMessage(3, (proto.ChatProtocol.ListChannelsRequest) action_);
       }
       if (actionCase_ == 4) {
-        output.writeMessage(4, (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_);
+        output.writeMessage(4, (proto.ChatProtocol.CreateChannelRequest) action_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -4735,15 +4735,15 @@ public final class ChatProtocol {
       }
       if (actionCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_);
+          .computeMessageSize(2, (proto.ChatProtocol.LoginRequest) action_);
       }
       if (actionCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_);
+          .computeMessageSize(3, (proto.ChatProtocol.ListChannelsRequest) action_);
       }
       if (actionCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_);
+          .computeMessageSize(4, (proto.ChatProtocol.CreateChannelRequest) action_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -4755,10 +4755,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.ClientRequest)) {
+      if (!(obj instanceof proto.ChatProtocol.ClientRequest)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.ClientRequest other = (br.ufc.sd.chat.proto.ChatProtocol.ClientRequest) obj;
+      proto.ChatProtocol.ClientRequest other = (proto.ChatProtocol.ClientRequest) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -4814,44 +4814,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(byte[] data)
+    public static proto.ChatProtocol.ClientRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ClientRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4859,26 +4859,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ClientRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseDelimitedFrom(
+    public static proto.ChatProtocol.ClientRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest parseFrom(
+    public static proto.ChatProtocol.ClientRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4891,7 +4891,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.ClientRequest prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.ClientRequest prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4912,21 +4912,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ClientRequest)
-        br.ufc.sd.chat.proto.ChatProtocol.ClientRequestOrBuilder {
+        proto.ChatProtocol.ClientRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ClientRequest_descriptor;
+        return proto.ChatProtocol.internal_static_ClientRequest_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ClientRequest_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_ClientRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.class, br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.Builder.class);
+                proto.ChatProtocol.ClientRequest.class, proto.ChatProtocol.ClientRequest.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.newBuilder()
+      // Construct using proto.ChatProtocol.ClientRequest.newBuilder()
       private Builder() {
 
       }
@@ -4958,17 +4958,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ClientRequest_descriptor;
+        return proto.ChatProtocol.internal_static_ClientRequest_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ClientRequest getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.getDefaultInstance();
+      public proto.ChatProtocol.ClientRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.ClientRequest.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ClientRequest build() {
-        br.ufc.sd.chat.proto.ChatProtocol.ClientRequest result = buildPartial();
+      public proto.ChatProtocol.ClientRequest build() {
+        proto.ChatProtocol.ClientRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4976,22 +4976,22 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ClientRequest buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.ClientRequest result = new br.ufc.sd.chat.proto.ChatProtocol.ClientRequest(this);
+      public proto.ChatProtocol.ClientRequest buildPartial() {
+        proto.ChatProtocol.ClientRequest result = new proto.ChatProtocol.ClientRequest(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         buildPartialOneofs(result);
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.ClientRequest result) {
+      private void buildPartial0(proto.ChatProtocol.ClientRequest result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
         }
       }
 
-      private void buildPartialOneofs(br.ufc.sd.chat.proto.ChatProtocol.ClientRequest result) {
+      private void buildPartialOneofs(proto.ChatProtocol.ClientRequest result) {
         result.actionCase_ = actionCase_;
         result.action_ = this.action_;
         if (actionCase_ == 2 &&
@@ -5042,16 +5042,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.ClientRequest) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.ClientRequest)other);
+        if (other instanceof proto.ChatProtocol.ClientRequest) {
+          return mergeFrom((proto.ChatProtocol.ClientRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.ClientRequest other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.ClientRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.ClientRequest other) {
+        if (other == proto.ChatProtocol.ClientRequest.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -5189,7 +5189,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.LoginRequest, br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder> loginRequestBuilder_;
+          proto.ChatProtocol.LoginRequest, proto.ChatProtocol.LoginRequest.Builder, proto.ChatProtocol.LoginRequestOrBuilder> loginRequestBuilder_;
       /**
        * <code>.LoginRequest login_request = 2;</code>
        * @return Whether the loginRequest field is set.
@@ -5203,23 +5203,23 @@ public final class ChatProtocol {
        * @return The loginRequest.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest getLoginRequest() {
+      public proto.ChatProtocol.LoginRequest getLoginRequest() {
         if (loginRequestBuilder_ == null) {
           if (actionCase_ == 2) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_;
+            return (proto.ChatProtocol.LoginRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+          return proto.ChatProtocol.LoginRequest.getDefaultInstance();
         } else {
           if (actionCase_ == 2) {
             return loginRequestBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+          return proto.ChatProtocol.LoginRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.LoginRequest login_request = 2;</code>
        */
-      public Builder setLoginRequest(br.ufc.sd.chat.proto.ChatProtocol.LoginRequest value) {
+      public Builder setLoginRequest(proto.ChatProtocol.LoginRequest value) {
         if (loginRequestBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5236,7 +5236,7 @@ public final class ChatProtocol {
        * <code>.LoginRequest login_request = 2;</code>
        */
       public Builder setLoginRequest(
-          br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder builderForValue) {
+          proto.ChatProtocol.LoginRequest.Builder builderForValue) {
         if (loginRequestBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -5249,11 +5249,11 @@ public final class ChatProtocol {
       /**
        * <code>.LoginRequest login_request = 2;</code>
        */
-      public Builder mergeLoginRequest(br.ufc.sd.chat.proto.ChatProtocol.LoginRequest value) {
+      public Builder mergeLoginRequest(proto.ChatProtocol.LoginRequest value) {
         if (loginRequestBuilder_ == null) {
           if (actionCase_ == 2 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_)
+              action_ != proto.ChatProtocol.LoginRequest.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.LoginRequest.newBuilder((proto.ChatProtocol.LoginRequest) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -5291,36 +5291,36 @@ public final class ChatProtocol {
       /**
        * <code>.LoginRequest login_request = 2;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder getLoginRequestBuilder() {
+      public proto.ChatProtocol.LoginRequest.Builder getLoginRequestBuilder() {
         return getLoginRequestFieldBuilder().getBuilder();
       }
       /**
        * <code>.LoginRequest login_request = 2;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder() {
+      public proto.ChatProtocol.LoginRequestOrBuilder getLoginRequestOrBuilder() {
         if ((actionCase_ == 2) && (loginRequestBuilder_ != null)) {
           return loginRequestBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 2) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_;
+            return (proto.ChatProtocol.LoginRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+          return proto.ChatProtocol.LoginRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.LoginRequest login_request = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.LoginRequest, br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder> 
+          proto.ChatProtocol.LoginRequest, proto.ChatProtocol.LoginRequest.Builder, proto.ChatProtocol.LoginRequestOrBuilder> 
           getLoginRequestFieldBuilder() {
         if (loginRequestBuilder_ == null) {
           if (!(actionCase_ == 2)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.getDefaultInstance();
+            action_ = proto.ChatProtocol.LoginRequest.getDefaultInstance();
           }
           loginRequestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.LoginRequest, br.ufc.sd.chat.proto.ChatProtocol.LoginRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginRequestOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.LoginRequest) action_,
+              proto.ChatProtocol.LoginRequest, proto.ChatProtocol.LoginRequest.Builder, proto.ChatProtocol.LoginRequestOrBuilder>(
+                  (proto.ChatProtocol.LoginRequest) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -5331,7 +5331,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder> listChannelsRequestBuilder_;
+          proto.ChatProtocol.ListChannelsRequest, proto.ChatProtocol.ListChannelsRequest.Builder, proto.ChatProtocol.ListChannelsRequestOrBuilder> listChannelsRequestBuilder_;
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        * @return Whether the listChannelsRequest field is set.
@@ -5345,23 +5345,23 @@ public final class ChatProtocol {
        * @return The listChannelsRequest.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest getListChannelsRequest() {
+      public proto.ChatProtocol.ListChannelsRequest getListChannelsRequest() {
         if (listChannelsRequestBuilder_ == null) {
           if (actionCase_ == 3) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_;
+            return (proto.ChatProtocol.ListChannelsRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
         } else {
           if (actionCase_ == 3) {
             return listChannelsRequestBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
-      public Builder setListChannelsRequest(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest value) {
+      public Builder setListChannelsRequest(proto.ChatProtocol.ListChannelsRequest value) {
         if (listChannelsRequestBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5378,7 +5378,7 @@ public final class ChatProtocol {
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
       public Builder setListChannelsRequest(
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder builderForValue) {
+          proto.ChatProtocol.ListChannelsRequest.Builder builderForValue) {
         if (listChannelsRequestBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -5391,11 +5391,11 @@ public final class ChatProtocol {
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
-      public Builder mergeListChannelsRequest(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest value) {
+      public Builder mergeListChannelsRequest(proto.ChatProtocol.ListChannelsRequest value) {
         if (listChannelsRequestBuilder_ == null) {
           if (actionCase_ == 3 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_)
+              action_ != proto.ChatProtocol.ListChannelsRequest.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.ListChannelsRequest.newBuilder((proto.ChatProtocol.ListChannelsRequest) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -5433,36 +5433,36 @@ public final class ChatProtocol {
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder getListChannelsRequestBuilder() {
+      public proto.ChatProtocol.ListChannelsRequest.Builder getListChannelsRequestBuilder() {
         return getListChannelsRequestFieldBuilder().getBuilder();
       }
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder() {
+      public proto.ChatProtocol.ListChannelsRequestOrBuilder getListChannelsRequestOrBuilder() {
         if ((actionCase_ == 3) && (listChannelsRequestBuilder_ != null)) {
           return listChannelsRequestBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 3) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_;
+            return (proto.ChatProtocol.ListChannelsRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.ListChannelsRequest list_channels_request = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder> 
+          proto.ChatProtocol.ListChannelsRequest, proto.ChatProtocol.ListChannelsRequest.Builder, proto.ChatProtocol.ListChannelsRequestOrBuilder> 
           getListChannelsRequestFieldBuilder() {
         if (listChannelsRequestBuilder_ == null) {
           if (!(actionCase_ == 3)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
+            action_ = proto.ChatProtocol.ListChannelsRequest.getDefaultInstance();
           }
           listChannelsRequestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequestOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsRequest) action_,
+              proto.ChatProtocol.ListChannelsRequest, proto.ChatProtocol.ListChannelsRequest.Builder, proto.ChatProtocol.ListChannelsRequestOrBuilder>(
+                  (proto.ChatProtocol.ListChannelsRequest) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -5473,7 +5473,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder> createChannelRequestBuilder_;
+          proto.ChatProtocol.CreateChannelRequest, proto.ChatProtocol.CreateChannelRequest.Builder, proto.ChatProtocol.CreateChannelRequestOrBuilder> createChannelRequestBuilder_;
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        * @return Whether the createChannelRequest field is set.
@@ -5487,23 +5487,23 @@ public final class ChatProtocol {
        * @return The createChannelRequest.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest() {
+      public proto.ChatProtocol.CreateChannelRequest getCreateChannelRequest() {
         if (createChannelRequestBuilder_ == null) {
           if (actionCase_ == 4) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_;
+            return (proto.ChatProtocol.CreateChannelRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
         } else {
           if (actionCase_ == 4) {
             return createChannelRequestBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
-      public Builder setCreateChannelRequest(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest value) {
+      public Builder setCreateChannelRequest(proto.ChatProtocol.CreateChannelRequest value) {
         if (createChannelRequestBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -5520,7 +5520,7 @@ public final class ChatProtocol {
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
       public Builder setCreateChannelRequest(
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder builderForValue) {
+          proto.ChatProtocol.CreateChannelRequest.Builder builderForValue) {
         if (createChannelRequestBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -5533,11 +5533,11 @@ public final class ChatProtocol {
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
-      public Builder mergeCreateChannelRequest(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest value) {
+      public Builder mergeCreateChannelRequest(proto.ChatProtocol.CreateChannelRequest value) {
         if (createChannelRequestBuilder_ == null) {
           if (actionCase_ == 4 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_)
+              action_ != proto.ChatProtocol.CreateChannelRequest.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.CreateChannelRequest.newBuilder((proto.ChatProtocol.CreateChannelRequest) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -5575,36 +5575,36 @@ public final class ChatProtocol {
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder getCreateChannelRequestBuilder() {
+      public proto.ChatProtocol.CreateChannelRequest.Builder getCreateChannelRequestBuilder() {
         return getCreateChannelRequestFieldBuilder().getBuilder();
       }
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder() {
+      public proto.ChatProtocol.CreateChannelRequestOrBuilder getCreateChannelRequestOrBuilder() {
         if ((actionCase_ == 4) && (createChannelRequestBuilder_ != null)) {
           return createChannelRequestBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 4) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_;
+            return (proto.ChatProtocol.CreateChannelRequest) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
         }
       }
       /**
        * <code>.CreateChannelRequest create_channel_request = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder> 
+          proto.ChatProtocol.CreateChannelRequest, proto.ChatProtocol.CreateChannelRequest.Builder, proto.ChatProtocol.CreateChannelRequestOrBuilder> 
           getCreateChannelRequestFieldBuilder() {
         if (createChannelRequestBuilder_ == null) {
           if (!(actionCase_ == 4)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
+            action_ = proto.ChatProtocol.CreateChannelRequest.getDefaultInstance();
           }
           createChannelRequestBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequestOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelRequest) action_,
+              proto.ChatProtocol.CreateChannelRequest, proto.ChatProtocol.CreateChannelRequest.Builder, proto.ChatProtocol.CreateChannelRequestOrBuilder>(
+                  (proto.ChatProtocol.CreateChannelRequest) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -5630,12 +5630,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:ClientRequest)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.ClientRequest DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.ClientRequest DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.ClientRequest();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ClientRequest();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ClientRequest getDefaultInstance() {
+    public static proto.ChatProtocol.ClientRequest getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5671,7 +5671,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ClientRequest getDefaultInstanceForType() {
+    public proto.ChatProtocol.ClientRequest getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5696,11 +5696,11 @@ public final class ChatProtocol {
      * <code>.LoginResponse login_response = 2;</code>
      * @return The loginResponse.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getLoginResponse();
+    proto.ChatProtocol.LoginResponse getLoginResponse();
     /**
      * <code>.LoginResponse login_response = 2;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder();
+    proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder();
 
     /**
      * <code>.ListChannelsResponse list_channels_response = 3;</code>
@@ -5711,11 +5711,11 @@ public final class ChatProtocol {
      * <code>.ListChannelsResponse list_channels_response = 3;</code>
      * @return The listChannelsResponse.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getListChannelsResponse();
+    proto.ChatProtocol.ListChannelsResponse getListChannelsResponse();
     /**
      * <code>.ListChannelsResponse list_channels_response = 3;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder();
+    proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder();
 
     /**
      * <code>.CreateChannelResponse create_channel_response = 4;</code>
@@ -5726,11 +5726,11 @@ public final class ChatProtocol {
      * <code>.CreateChannelResponse create_channel_response = 4;</code>
      * @return The createChannelResponse.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse();
+    proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse();
     /**
      * <code>.CreateChannelResponse create_channel_response = 4;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder();
+    proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder();
 
     /**
      * <code>.ErrorResponse error_response = 5;</code>
@@ -5741,13 +5741,13 @@ public final class ChatProtocol {
      * <code>.ErrorResponse error_response = 5;</code>
      * @return The errorResponse.
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getErrorResponse();
+    proto.ChatProtocol.ErrorResponse getErrorResponse();
     /**
      * <code>.ErrorResponse error_response = 5;</code>
      */
-    br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder();
+    proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder();
 
-    br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.ActionCase getActionCase();
+    proto.ChatProtocol.ServerResponse.ActionCase getActionCase();
   }
   /**
    * Protobuf type {@code ServerResponse}
@@ -5773,15 +5773,15 @@ public final class ChatProtocol {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ServerResponse_descriptor;
+      return proto.ChatProtocol.internal_static_ServerResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ServerResponse_fieldAccessorTable
+      return proto.ChatProtocol.internal_static_ServerResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.Builder.class);
+              proto.ChatProtocol.ServerResponse.class, proto.ChatProtocol.ServerResponse.Builder.class);
     }
 
     private int actionCase_ = 0;
@@ -5855,21 +5855,21 @@ public final class ChatProtocol {
      * @return The loginResponse.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getLoginResponse() {
+    public proto.ChatProtocol.LoginResponse getLoginResponse() {
       if (actionCase_ == 2) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_;
+         return (proto.ChatProtocol.LoginResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+      return proto.ChatProtocol.LoginResponse.getDefaultInstance();
     }
     /**
      * <code>.LoginResponse login_response = 2;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder() {
+    public proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder() {
       if (actionCase_ == 2) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_;
+         return (proto.ChatProtocol.LoginResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+      return proto.ChatProtocol.LoginResponse.getDefaultInstance();
     }
 
     public static final int LIST_CHANNELS_RESPONSE_FIELD_NUMBER = 3;
@@ -5886,21 +5886,21 @@ public final class ChatProtocol {
      * @return The listChannelsResponse.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getListChannelsResponse() {
+    public proto.ChatProtocol.ListChannelsResponse getListChannelsResponse() {
       if (actionCase_ == 3) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_;
+         return (proto.ChatProtocol.ListChannelsResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+      return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
     }
     /**
      * <code>.ListChannelsResponse list_channels_response = 3;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder() {
+    public proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder() {
       if (actionCase_ == 3) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_;
+         return (proto.ChatProtocol.ListChannelsResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+      return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
     }
 
     public static final int CREATE_CHANNEL_RESPONSE_FIELD_NUMBER = 4;
@@ -5917,21 +5917,21 @@ public final class ChatProtocol {
      * @return The createChannelResponse.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse() {
+    public proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse() {
       if (actionCase_ == 4) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_;
+         return (proto.ChatProtocol.CreateChannelResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+      return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
     }
     /**
      * <code>.CreateChannelResponse create_channel_response = 4;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder() {
+    public proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder() {
       if (actionCase_ == 4) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_;
+         return (proto.ChatProtocol.CreateChannelResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+      return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
     }
 
     public static final int ERROR_RESPONSE_FIELD_NUMBER = 5;
@@ -5948,21 +5948,21 @@ public final class ChatProtocol {
      * @return The errorResponse.
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getErrorResponse() {
+    public proto.ChatProtocol.ErrorResponse getErrorResponse() {
       if (actionCase_ == 5) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_;
+         return (proto.ChatProtocol.ErrorResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+      return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
     }
     /**
      * <code>.ErrorResponse error_response = 5;</code>
      */
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder() {
+    public proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder() {
       if (actionCase_ == 5) {
-         return (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_;
+         return (proto.ChatProtocol.ErrorResponse) action_;
       }
-      return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+      return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
     }
 
     private byte memoizedIsInitialized = -1;
@@ -5983,16 +5983,16 @@ public final class ChatProtocol {
         output.writeInt64(1, timestampMs_);
       }
       if (actionCase_ == 2) {
-        output.writeMessage(2, (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_);
+        output.writeMessage(2, (proto.ChatProtocol.LoginResponse) action_);
       }
       if (actionCase_ == 3) {
-        output.writeMessage(3, (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_);
+        output.writeMessage(3, (proto.ChatProtocol.ListChannelsResponse) action_);
       }
       if (actionCase_ == 4) {
-        output.writeMessage(4, (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_);
+        output.writeMessage(4, (proto.ChatProtocol.CreateChannelResponse) action_);
       }
       if (actionCase_ == 5) {
-        output.writeMessage(5, (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_);
+        output.writeMessage(5, (proto.ChatProtocol.ErrorResponse) action_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -6009,19 +6009,19 @@ public final class ChatProtocol {
       }
       if (actionCase_ == 2) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_);
+          .computeMessageSize(2, (proto.ChatProtocol.LoginResponse) action_);
       }
       if (actionCase_ == 3) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_);
+          .computeMessageSize(3, (proto.ChatProtocol.ListChannelsResponse) action_);
       }
       if (actionCase_ == 4) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_);
+          .computeMessageSize(4, (proto.ChatProtocol.CreateChannelResponse) action_);
       }
       if (actionCase_ == 5) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_);
+          .computeMessageSize(5, (proto.ChatProtocol.ErrorResponse) action_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -6033,10 +6033,10 @@ public final class ChatProtocol {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof br.ufc.sd.chat.proto.ChatProtocol.ServerResponse)) {
+      if (!(obj instanceof proto.ChatProtocol.ServerResponse)) {
         return super.equals(obj);
       }
-      br.ufc.sd.chat.proto.ChatProtocol.ServerResponse other = (br.ufc.sd.chat.proto.ChatProtocol.ServerResponse) obj;
+      proto.ChatProtocol.ServerResponse other = (proto.ChatProtocol.ServerResponse) obj;
 
       if (getTimestampMs()
           != other.getTimestampMs()) return false;
@@ -6100,44 +6100,44 @@ public final class ChatProtocol {
       return hash;
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(byte[] data)
+    public static proto.ChatProtocol.ServerResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ServerResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6145,26 +6145,26 @@ public final class ChatProtocol {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseDelimitedFrom(java.io.InputStream input)
+    public static proto.ChatProtocol.ServerResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseDelimitedFrom(
+    public static proto.ChatProtocol.ServerResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse parseFrom(
+    public static proto.ChatProtocol.ServerResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -6177,7 +6177,7 @@ public final class ChatProtocol {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(br.ufc.sd.chat.proto.ChatProtocol.ServerResponse prototype) {
+    public static Builder newBuilder(proto.ChatProtocol.ServerResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -6198,21 +6198,21 @@ public final class ChatProtocol {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ServerResponse)
-        br.ufc.sd.chat.proto.ChatProtocol.ServerResponseOrBuilder {
+        proto.ChatProtocol.ServerResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ServerResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ServerResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ServerResponse_fieldAccessorTable
+        return proto.ChatProtocol.internal_static_ServerResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.class, br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.Builder.class);
+                proto.ChatProtocol.ServerResponse.class, proto.ChatProtocol.ServerResponse.Builder.class);
       }
 
-      // Construct using br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.newBuilder()
+      // Construct using proto.ChatProtocol.ServerResponse.newBuilder()
       private Builder() {
 
       }
@@ -6247,17 +6247,17 @@ public final class ChatProtocol {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.internal_static_ServerResponse_descriptor;
+        return proto.ChatProtocol.internal_static_ServerResponse_descriptor;
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ServerResponse getDefaultInstanceForType() {
-        return br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.getDefaultInstance();
+      public proto.ChatProtocol.ServerResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.ServerResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ServerResponse build() {
-        br.ufc.sd.chat.proto.ChatProtocol.ServerResponse result = buildPartial();
+      public proto.ChatProtocol.ServerResponse build() {
+        proto.ChatProtocol.ServerResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -6265,22 +6265,22 @@ public final class ChatProtocol {
       }
 
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ServerResponse buildPartial() {
-        br.ufc.sd.chat.proto.ChatProtocol.ServerResponse result = new br.ufc.sd.chat.proto.ChatProtocol.ServerResponse(this);
+      public proto.ChatProtocol.ServerResponse buildPartial() {
+        proto.ChatProtocol.ServerResponse result = new proto.ChatProtocol.ServerResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         buildPartialOneofs(result);
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(br.ufc.sd.chat.proto.ChatProtocol.ServerResponse result) {
+      private void buildPartial0(proto.ChatProtocol.ServerResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.timestampMs_ = timestampMs_;
         }
       }
 
-      private void buildPartialOneofs(br.ufc.sd.chat.proto.ChatProtocol.ServerResponse result) {
+      private void buildPartialOneofs(proto.ChatProtocol.ServerResponse result) {
         result.actionCase_ = actionCase_;
         result.action_ = this.action_;
         if (actionCase_ == 2 &&
@@ -6335,16 +6335,16 @@ public final class ChatProtocol {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof br.ufc.sd.chat.proto.ChatProtocol.ServerResponse) {
-          return mergeFrom((br.ufc.sd.chat.proto.ChatProtocol.ServerResponse)other);
+        if (other instanceof proto.ChatProtocol.ServerResponse) {
+          return mergeFrom((proto.ChatProtocol.ServerResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(br.ufc.sd.chat.proto.ChatProtocol.ServerResponse other) {
-        if (other == br.ufc.sd.chat.proto.ChatProtocol.ServerResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(proto.ChatProtocol.ServerResponse other) {
+        if (other == proto.ChatProtocol.ServerResponse.getDefaultInstance()) return this;
         if (other.getTimestampMs() != 0L) {
           setTimestampMs(other.getTimestampMs());
         }
@@ -6493,7 +6493,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.LoginResponse, br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder> loginResponseBuilder_;
+          proto.ChatProtocol.LoginResponse, proto.ChatProtocol.LoginResponse.Builder, proto.ChatProtocol.LoginResponseOrBuilder> loginResponseBuilder_;
       /**
        * <code>.LoginResponse login_response = 2;</code>
        * @return Whether the loginResponse field is set.
@@ -6507,23 +6507,23 @@ public final class ChatProtocol {
        * @return The loginResponse.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse getLoginResponse() {
+      public proto.ChatProtocol.LoginResponse getLoginResponse() {
         if (loginResponseBuilder_ == null) {
           if (actionCase_ == 2) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_;
+            return (proto.ChatProtocol.LoginResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+          return proto.ChatProtocol.LoginResponse.getDefaultInstance();
         } else {
           if (actionCase_ == 2) {
             return loginResponseBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+          return proto.ChatProtocol.LoginResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.LoginResponse login_response = 2;</code>
        */
-      public Builder setLoginResponse(br.ufc.sd.chat.proto.ChatProtocol.LoginResponse value) {
+      public Builder setLoginResponse(proto.ChatProtocol.LoginResponse value) {
         if (loginResponseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6540,7 +6540,7 @@ public final class ChatProtocol {
        * <code>.LoginResponse login_response = 2;</code>
        */
       public Builder setLoginResponse(
-          br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder builderForValue) {
+          proto.ChatProtocol.LoginResponse.Builder builderForValue) {
         if (loginResponseBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -6553,11 +6553,11 @@ public final class ChatProtocol {
       /**
        * <code>.LoginResponse login_response = 2;</code>
        */
-      public Builder mergeLoginResponse(br.ufc.sd.chat.proto.ChatProtocol.LoginResponse value) {
+      public Builder mergeLoginResponse(proto.ChatProtocol.LoginResponse value) {
         if (loginResponseBuilder_ == null) {
           if (actionCase_ == 2 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_)
+              action_ != proto.ChatProtocol.LoginResponse.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.LoginResponse.newBuilder((proto.ChatProtocol.LoginResponse) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -6595,36 +6595,36 @@ public final class ChatProtocol {
       /**
        * <code>.LoginResponse login_response = 2;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder getLoginResponseBuilder() {
+      public proto.ChatProtocol.LoginResponse.Builder getLoginResponseBuilder() {
         return getLoginResponseFieldBuilder().getBuilder();
       }
       /**
        * <code>.LoginResponse login_response = 2;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder() {
+      public proto.ChatProtocol.LoginResponseOrBuilder getLoginResponseOrBuilder() {
         if ((actionCase_ == 2) && (loginResponseBuilder_ != null)) {
           return loginResponseBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 2) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_;
+            return (proto.ChatProtocol.LoginResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+          return proto.ChatProtocol.LoginResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.LoginResponse login_response = 2;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.LoginResponse, br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder> 
+          proto.ChatProtocol.LoginResponse, proto.ChatProtocol.LoginResponse.Builder, proto.ChatProtocol.LoginResponseOrBuilder> 
           getLoginResponseFieldBuilder() {
         if (loginResponseBuilder_ == null) {
           if (!(actionCase_ == 2)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.getDefaultInstance();
+            action_ = proto.ChatProtocol.LoginResponse.getDefaultInstance();
           }
           loginResponseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.LoginResponse, br.ufc.sd.chat.proto.ChatProtocol.LoginResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.LoginResponseOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.LoginResponse) action_,
+              proto.ChatProtocol.LoginResponse, proto.ChatProtocol.LoginResponse.Builder, proto.ChatProtocol.LoginResponseOrBuilder>(
+                  (proto.ChatProtocol.LoginResponse) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -6635,7 +6635,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder> listChannelsResponseBuilder_;
+          proto.ChatProtocol.ListChannelsResponse, proto.ChatProtocol.ListChannelsResponse.Builder, proto.ChatProtocol.ListChannelsResponseOrBuilder> listChannelsResponseBuilder_;
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        * @return Whether the listChannelsResponse field is set.
@@ -6649,23 +6649,23 @@ public final class ChatProtocol {
        * @return The listChannelsResponse.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse getListChannelsResponse() {
+      public proto.ChatProtocol.ListChannelsResponse getListChannelsResponse() {
         if (listChannelsResponseBuilder_ == null) {
           if (actionCase_ == 3) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_;
+            return (proto.ChatProtocol.ListChannelsResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
         } else {
           if (actionCase_ == 3) {
             return listChannelsResponseBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
-      public Builder setListChannelsResponse(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse value) {
+      public Builder setListChannelsResponse(proto.ChatProtocol.ListChannelsResponse value) {
         if (listChannelsResponseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6682,7 +6682,7 @@ public final class ChatProtocol {
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
       public Builder setListChannelsResponse(
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder builderForValue) {
+          proto.ChatProtocol.ListChannelsResponse.Builder builderForValue) {
         if (listChannelsResponseBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -6695,11 +6695,11 @@ public final class ChatProtocol {
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
-      public Builder mergeListChannelsResponse(br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse value) {
+      public Builder mergeListChannelsResponse(proto.ChatProtocol.ListChannelsResponse value) {
         if (listChannelsResponseBuilder_ == null) {
           if (actionCase_ == 3 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_)
+              action_ != proto.ChatProtocol.ListChannelsResponse.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.ListChannelsResponse.newBuilder((proto.ChatProtocol.ListChannelsResponse) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -6737,36 +6737,36 @@ public final class ChatProtocol {
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder getListChannelsResponseBuilder() {
+      public proto.ChatProtocol.ListChannelsResponse.Builder getListChannelsResponseBuilder() {
         return getListChannelsResponseFieldBuilder().getBuilder();
       }
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder() {
+      public proto.ChatProtocol.ListChannelsResponseOrBuilder getListChannelsResponseOrBuilder() {
         if ((actionCase_ == 3) && (listChannelsResponseBuilder_ != null)) {
           return listChannelsResponseBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 3) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_;
+            return (proto.ChatProtocol.ListChannelsResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+          return proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.ListChannelsResponse list_channels_response = 3;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder> 
+          proto.ChatProtocol.ListChannelsResponse, proto.ChatProtocol.ListChannelsResponse.Builder, proto.ChatProtocol.ListChannelsResponseOrBuilder> 
           getListChannelsResponseFieldBuilder() {
         if (listChannelsResponseBuilder_ == null) {
           if (!(actionCase_ == 3)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
+            action_ = proto.ChatProtocol.ListChannelsResponse.getDefaultInstance();
           }
           listChannelsResponseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponseOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.ListChannelsResponse) action_,
+              proto.ChatProtocol.ListChannelsResponse, proto.ChatProtocol.ListChannelsResponse.Builder, proto.ChatProtocol.ListChannelsResponseOrBuilder>(
+                  (proto.ChatProtocol.ListChannelsResponse) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -6777,7 +6777,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder> createChannelResponseBuilder_;
+          proto.ChatProtocol.CreateChannelResponse, proto.ChatProtocol.CreateChannelResponse.Builder, proto.ChatProtocol.CreateChannelResponseOrBuilder> createChannelResponseBuilder_;
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        * @return Whether the createChannelResponse field is set.
@@ -6791,23 +6791,23 @@ public final class ChatProtocol {
        * @return The createChannelResponse.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse() {
+      public proto.ChatProtocol.CreateChannelResponse getCreateChannelResponse() {
         if (createChannelResponseBuilder_ == null) {
           if (actionCase_ == 4) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_;
+            return (proto.ChatProtocol.CreateChannelResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
         } else {
           if (actionCase_ == 4) {
             return createChannelResponseBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
-      public Builder setCreateChannelResponse(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse value) {
+      public Builder setCreateChannelResponse(proto.ChatProtocol.CreateChannelResponse value) {
         if (createChannelResponseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6824,7 +6824,7 @@ public final class ChatProtocol {
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
       public Builder setCreateChannelResponse(
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder builderForValue) {
+          proto.ChatProtocol.CreateChannelResponse.Builder builderForValue) {
         if (createChannelResponseBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -6837,11 +6837,11 @@ public final class ChatProtocol {
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
-      public Builder mergeCreateChannelResponse(br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse value) {
+      public Builder mergeCreateChannelResponse(proto.ChatProtocol.CreateChannelResponse value) {
         if (createChannelResponseBuilder_ == null) {
           if (actionCase_ == 4 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_)
+              action_ != proto.ChatProtocol.CreateChannelResponse.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.CreateChannelResponse.newBuilder((proto.ChatProtocol.CreateChannelResponse) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -6879,36 +6879,36 @@ public final class ChatProtocol {
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder getCreateChannelResponseBuilder() {
+      public proto.ChatProtocol.CreateChannelResponse.Builder getCreateChannelResponseBuilder() {
         return getCreateChannelResponseFieldBuilder().getBuilder();
       }
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder() {
+      public proto.ChatProtocol.CreateChannelResponseOrBuilder getCreateChannelResponseOrBuilder() {
         if ((actionCase_ == 4) && (createChannelResponseBuilder_ != null)) {
           return createChannelResponseBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 4) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_;
+            return (proto.ChatProtocol.CreateChannelResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+          return proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.CreateChannelResponse create_channel_response = 4;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder> 
+          proto.ChatProtocol.CreateChannelResponse, proto.ChatProtocol.CreateChannelResponse.Builder, proto.ChatProtocol.CreateChannelResponseOrBuilder> 
           getCreateChannelResponseFieldBuilder() {
         if (createChannelResponseBuilder_ == null) {
           if (!(actionCase_ == 4)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
+            action_ = proto.ChatProtocol.CreateChannelResponse.getDefaultInstance();
           }
           createChannelResponseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponseOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.CreateChannelResponse) action_,
+              proto.ChatProtocol.CreateChannelResponse, proto.ChatProtocol.CreateChannelResponse.Builder, proto.ChatProtocol.CreateChannelResponseOrBuilder>(
+                  (proto.ChatProtocol.CreateChannelResponse) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -6919,7 +6919,7 @@ public final class ChatProtocol {
       }
 
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder> errorResponseBuilder_;
+          proto.ChatProtocol.ErrorResponse, proto.ChatProtocol.ErrorResponse.Builder, proto.ChatProtocol.ErrorResponseOrBuilder> errorResponseBuilder_;
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        * @return Whether the errorResponse field is set.
@@ -6933,23 +6933,23 @@ public final class ChatProtocol {
        * @return The errorResponse.
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse getErrorResponse() {
+      public proto.ChatProtocol.ErrorResponse getErrorResponse() {
         if (errorResponseBuilder_ == null) {
           if (actionCase_ == 5) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_;
+            return (proto.ChatProtocol.ErrorResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+          return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
         } else {
           if (actionCase_ == 5) {
             return errorResponseBuilder_.getMessage();
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+          return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        */
-      public Builder setErrorResponse(br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse value) {
+      public Builder setErrorResponse(proto.ChatProtocol.ErrorResponse value) {
         if (errorResponseBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -6966,7 +6966,7 @@ public final class ChatProtocol {
        * <code>.ErrorResponse error_response = 5;</code>
        */
       public Builder setErrorResponse(
-          br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder builderForValue) {
+          proto.ChatProtocol.ErrorResponse.Builder builderForValue) {
         if (errorResponseBuilder_ == null) {
           action_ = builderForValue.build();
           onChanged();
@@ -6979,11 +6979,11 @@ public final class ChatProtocol {
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        */
-      public Builder mergeErrorResponse(br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse value) {
+      public Builder mergeErrorResponse(proto.ChatProtocol.ErrorResponse value) {
         if (errorResponseBuilder_ == null) {
           if (actionCase_ == 5 &&
-              action_ != br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance()) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.newBuilder((br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_)
+              action_ != proto.ChatProtocol.ErrorResponse.getDefaultInstance()) {
+            action_ = proto.ChatProtocol.ErrorResponse.newBuilder((proto.ChatProtocol.ErrorResponse) action_)
                 .mergeFrom(value).buildPartial();
           } else {
             action_ = value;
@@ -7021,36 +7021,36 @@ public final class ChatProtocol {
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        */
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder getErrorResponseBuilder() {
+      public proto.ChatProtocol.ErrorResponse.Builder getErrorResponseBuilder() {
         return getErrorResponseFieldBuilder().getBuilder();
       }
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        */
       @java.lang.Override
-      public br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder() {
+      public proto.ChatProtocol.ErrorResponseOrBuilder getErrorResponseOrBuilder() {
         if ((actionCase_ == 5) && (errorResponseBuilder_ != null)) {
           return errorResponseBuilder_.getMessageOrBuilder();
         } else {
           if (actionCase_ == 5) {
-            return (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_;
+            return (proto.ChatProtocol.ErrorResponse) action_;
           }
-          return br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+          return proto.ChatProtocol.ErrorResponse.getDefaultInstance();
         }
       }
       /**
        * <code>.ErrorResponse error_response = 5;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder> 
+          proto.ChatProtocol.ErrorResponse, proto.ChatProtocol.ErrorResponse.Builder, proto.ChatProtocol.ErrorResponseOrBuilder> 
           getErrorResponseFieldBuilder() {
         if (errorResponseBuilder_ == null) {
           if (!(actionCase_ == 5)) {
-            action_ = br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.getDefaultInstance();
+            action_ = proto.ChatProtocol.ErrorResponse.getDefaultInstance();
           }
           errorResponseBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse.Builder, br.ufc.sd.chat.proto.ChatProtocol.ErrorResponseOrBuilder>(
-                  (br.ufc.sd.chat.proto.ChatProtocol.ErrorResponse) action_,
+              proto.ChatProtocol.ErrorResponse, proto.ChatProtocol.ErrorResponse.Builder, proto.ChatProtocol.ErrorResponseOrBuilder>(
+                  (proto.ChatProtocol.ErrorResponse) action_,
                   getParentForChildren(),
                   isClean());
           action_ = null;
@@ -7076,12 +7076,12 @@ public final class ChatProtocol {
     }
 
     // @@protoc_insertion_point(class_scope:ServerResponse)
-    private static final br.ufc.sd.chat.proto.ChatProtocol.ServerResponse DEFAULT_INSTANCE;
+    private static final proto.ChatProtocol.ServerResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new br.ufc.sd.chat.proto.ChatProtocol.ServerResponse();
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ServerResponse();
     }
 
-    public static br.ufc.sd.chat.proto.ChatProtocol.ServerResponse getDefaultInstance() {
+    public static proto.ChatProtocol.ServerResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7117,7 +7117,7 @@ public final class ChatProtocol {
     }
 
     @java.lang.Override
-    public br.ufc.sd.chat.proto.ChatProtocol.ServerResponse getDefaultInstanceForType() {
+    public proto.ChatProtocol.ServerResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -7199,8 +7199,8 @@ public final class ChatProtocol {
       "\030\003 \001(\0132\025.ListChannelsResponseH\000\0229\n\027creat" +
       "e_channel_response\030\004 \001(\0132\026.CreateChannel" +
       "ResponseH\000\022(\n\016error_response\030\005 \001(\0132\016.Err" +
-      "orResponseH\000B\010\n\006actionB$\n\024br.ufc.sd.chat" +
-      ".protoB\014ChatProtocolb\006proto3"
+      "orResponseH\000B\010\n\006actionB\025\n\005protoB\014ChatPro" +
+      "tocolb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

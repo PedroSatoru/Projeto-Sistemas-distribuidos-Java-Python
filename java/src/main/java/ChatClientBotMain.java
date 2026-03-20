@@ -8,7 +8,7 @@ import org.zeromq.ZMQ;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import br.ufc.sd.chat.proto.ChatProtocol;
+import proto.ChatProtocol;
 
 public class ChatClientBotMain {
     private static void log(String level, String id, String event, String message) {

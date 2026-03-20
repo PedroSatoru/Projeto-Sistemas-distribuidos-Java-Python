@@ -1,7 +1,7 @@
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import br.ufc.sd.chat.proto.ChatProtocol;
+import proto.ChatProtocol;
 
 public final class ProtocolCodec {
     private ProtocolCodec() {

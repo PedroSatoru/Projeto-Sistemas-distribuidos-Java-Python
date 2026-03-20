@@ -1,333 +1,157 @@
-# Sistema de Chat Distribuído - Parte 1: Login e Criação de Canais
+# Sistema de Chat Distribuido - Parte 1
 
-## Introdução
+Implementacao da Parte 1 do projeto de Sistemas Distribuidos com interoperabilidade entre Python e Java.
 
-Este é o código Python para a Parte 1 do projeto de Sistema de Chat Distribuído. Implementa funcionalidades básicas de autenticação e gerenciamento de canais usando ZeroMQ para comunicação distribuída.
+## Visao geral
 
+A arquitetura atual usa um unico broker Python para todo o sistema. Clientes e servidores de ambas as linguagens usam o mesmo protocolo binario e a mesma topologia de rede.
 
-## Arquitetura e Escolhas
+Topologia em execucao:
 
-### 1. Comunicação: ZeroMQ (Obrigatório)
+- 1 broker Python (ROUTER/DEALER)
+- 2 servidores Python (REP no backend do broker)
+- 2 servidores Java (REP no backend do broker)
+- 2 clientes Python (REQ no frontend do broker)
+- 2 clientes Java (REQ no frontend do broker)
 
-- **Padrão utilizado:** REQUEST-REPLY (REQ-REP)
-- **Por que:** Ideal para comunicação síncrona cliente-servidor com garantia de entrega
-- **Configuração:** 
-  - Servidor aguarda em `tcp://*:5555` e `tcp://*:5556` (2 servidores)
-  - Clientes conectam via `tcp://hostname:porta`
-  - Timeout de 5000ms para requisições
+## Tecnologias e decisoes
 
-### 2. Serialização: MessagePack
+- Comunicacao: ZeroMQ
+- Padrao: Request-Reply com broker ROUTER/DEALER
+- Serializacao: Protocol Buffers (unificado entre Python e Java)
+- Timestamp: todas as mensagens incluem `timestamp_ms`
+- Persistencia:
+  - Python: JSON por servidor em `python/data/`
+  - Java: arquivos texto por servidor em `java/data/`
 
-- **Formato:** Binário, mais compacto que JSON/XML
-- **Por que:** 
-  - Leve e eficiente
-  - Suporta tipos complexos
-  - Amplamente compatível (funcionará com cliente Java)
-- **Inclusão de Timestamp:** ✅ Obrigatório - todas as mensagens contêm timestamp do envio
+## Contrato de mensagens
 
-**Estrutura de Mensagem:**
-```python
-{
-    "type": "LOGIN",  # Tipo da mensagem
-    "timestamp": 1710705600.123,  # Timestamp UNIX (obrigatório)
-    "payload": {  # Dados específicos da mensagem
-        "username": "bot_user"
-    }
-}
-```
+Schema Protobuf:
 
-### 3. Persistência: JSON
+- `python/proto/chat.proto`
+- `java/src/main/proto/chat.proto`
 
-- **Arquivo:** `server_data.json` (um por servidor)
-- **Dados armazenados:**
-  - Lista de usuários logados
-  - Lista de canais criados
-  - Histórico de logins com timestamps
-- **Localização:** `/data/` no container
+Mensagens principais:
 
-**Exemplo de arquivo:**
-```json
-{
-  "users": ["bot_client_1", "bot_client_2"],
-  "channels": ["general", "random", "announcements"],
-  "login_history": [
-    {
-      "username": "bot_client_1",
-      "timestamp": 1710705600.123,
-      "datetime": "2024-03-17T12:00:00.123456"
-    }
-  ]
-}
-```
+- `ClientRequest` com `oneof` para:
+  - `login_request`
+  - `list_channels_request`
+  - `create_channel_request`
+- `ServerResponse` com `oneof` para:
+  - `login_response`
+  - `list_channels_response`
+  - `create_channel_response`
+  - `error_response`
 
-### 4. Validação de Nomes
+## Fluxo funcional da Parte 1
 
-- **Regra:** Alfanuméricos, underscores (`_`) e hífens (`-`)
-- **Case-Insensitive:** SIM (canais "General" e "general" são iguais)
-- **Autenticação:** Apenas usuários em `users.txt` podem fazer login
-- **Erros tratados:**
-  - Nome com formato inválido (caracteres especiais, espaços, vazio)
-  - Usuário não registrado em `users.txt`
-  - Usuário já logado
-  - Canal já existente
+Cada cliente executa automaticamente:
 
-## Estrutura do Projeto
+1. Login
+2. Listagem de canais
+3. Criacao de canais
+4. Listagem final de canais
 
-```
+Os servidores validam:
+
+- formato de username e canal
+- existencia de usuario permitido
+- duplicidade de login
+- duplicidade de canal
+
+## Estrutura relevante do projeto
+
+```text
 python/
-├── server/
-│   └── server.py           # Implementação do servidor
-├── client/
-│   └── client.py           # Implementação do cliente (bot)
-├── schemas/
-│   ├── __init__.py
-│   ├── messages.py         # Definição das mensagens MessagePack
-│   └── data_models.py      # Modelos de persistência JSON
-├── data/                   # Diretório de volumes (criado em runtime)
-├── users.txt               # Usuários permitidos (um por linha)
-├── Dockerfile              # Imagem Docker
-└── requirements.txt        # Dependências Python
+  broker/broker.py
+  client/client.py
+  server/server.py
+  schemas/messages.py
+  proto/chat.proto
+  users.txt
 
-docker-compose.yaml         # Orquestração (raiz do projeto)
-README.md                   # Este arquivo
+java/
+  src/main/java/
+    ChatClientBotMain.java
+    ChatServerMain.java
+    ChatService.java
+    ProtocolCodec.java
+    PersistenceStore.java
+  src/main/proto/chat.proto
+
+docker-compose.yaml
 ```
 
-## Autenticação de Usuários
+## Como executar
 
-Para aumentar a segurança do sistema (mesmo que não usemos senhas), **apenas usuários pré-cadastrados podem fazer login**.
-
-### Arquivo de Usuários Permitidos
-
-**Arquivo:** `python/users.txt`
-
-Contém um usuário por linha:
-```
-bot_client_1
-bot_client_2
-bot_client_3
-bot_client_4
-alice
-bob
-charlie
-diana
-```
-
-### Fluxo de Login
-
-1. Cliente envia username
-2. Servidor valida **formato** (alfanumérico + underscore + hífen)
-3. Servidor valida se username está em `users.txt`
-4. Se tudo OK, usuário faz login e é persistido
-5. Se falhar em qualquer validação, retorna erro descritivo
-
-### Erros de Login
-
-- "Invalid username format..." → Nome contém caracteres inválidos
-- "User not registered..." → Nome não está em `users.txt`
-- "User already logged in." → Username já logado em outra conexão
-
-## Dependências
-
-```
-pyzmq==25.1.2          # Binding Python para ZeroMQ
-msgpack==1.0.7         # Serialização MessagePack
-```
-
-## Mensagens Implementadas
-
-### 1. LOGIN
-
-**Requisição (Cliente → Servidor):**
-```json
-{
-    "type": "LOGIN",
-    "timestamp": 1710705600.123,
-    "payload": {"username": "bot_user"}
-}
-```
-
-**Resposta (Servidor → Cliente):**
-- Sucesso: `{"type": "LOGIN_RESPONSE", "payload": {"success": true}}`
-- Erro: `{"type": "LOGIN_RESPONSE", "payload": {"success": false, "error": "User already logged in."}}`
-
----
-
-### 2. LIST_CHANNELS
-
-**Requisição:**
-```json
-{
-    "type": "LIST_CHANNELS",
-    "timestamp": 1710705600.123,
-    "payload": {}
-}
-```
-
-**Resposta:**
-```json
-{
-    "type": "LIST_CHANNELS_RESPONSE",
-    "timestamp": 1710705600.450,
-    "payload": {"channels": ["general", "random", "tech"]}
-}
-```
-
----
-
-### 3. CREATE_CHANNEL
-
-**Requisição:**
-```json
-{
-    "type": "CREATE_CHANNEL",
-    "timestamp": 1710705600.123,
-    "payload": {"channel_name": "announcements"}
-}
-```
-
-**Resposta:**
-- Sucesso: `{"type": "CREATE_CHANNEL_RESPONSE", "payload": {"success": true}}`
-- Erro: `{"type": "CREATE_CHANNEL_RESPONSE", "payload": {"success": false, "error": "Invalid channel name."}}`
-
-## Como Executar
-
-### Opção 1: Docker Compose (Recomendado)
+Subir todo o ambiente:
 
 ```bash
-cd <raiz-do-projeto>
-docker compose up
+docker compose up --build
 ```
 
-Isso vai:
-- Compilar a imagem Docker do Python
-- Iniciar 2 servidores Python (portas 5555 e 5556)
-- Iniciar 4 clientes bot automáticos (2 por servidor)
-- Exibir logs de todas as operações em tempo real
+Parar e remover containers:
 
-Para parar:
 ```bash
 docker compose down
 ```
 
-### Opção 2: Execução Local
+## Interoperabilidade (o que esperar)
 
-**Terminal 1 - Servidor 1:**
+Com o ambiente em execucao:
+
+- cliente Python pode ser atendido por servidor Python ou Java
+- cliente Java pode ser atendido por servidor Java ou Python
+
+Isso acontece porque todos os clientes vao para o mesmo frontend do broker e todos os servidores vao para o mesmo backend.
+
+## Execucao local sem Docker (opcional)
+
+### Python
+
 ```bash
 cd python
 pip install -r requirements.txt
-python server/server.py --port 5555
+python broker/broker.py
 ```
 
-**Terminal 2 - Servidor 2:**
+Em outros terminais:
+
 ```bash
 cd python
-python server/server.py --port 5556
+python server/server.py --server-id py_server_1 --backend-endpoint tcp://localhost:5556
+python client/client.py --username bot_client_1 --endpoint tcp://localhost:5555
 ```
 
-**Terminal 3 - Cliente 1:**
+### Java
+
 ```bash
-cd python
-python client/client.py --host localhost --port 5555 --username bot1 --channels "general,random"
+cd java
+mvn clean package
 ```
 
-**Terminal 4 - Cliente 2:**
+Exemplos:
+
 ```bash
-cd python
-python client/client.py --host localhost --port 5556 --username bot2 --channels "tech,music"
+java -jar target/chat-distribuido-java-1.0.0.jar --mode server --server-id java_server_1 --endpoint tcp://localhost:5556
+java -jar target/chat-distribuido-java-1.0.0.jar --mode client --username java_bot_1 --endpoint tcp://localhost:5555
 ```
 
-## Fluxo de Execução
+## Observacao sobre arquivos gerados
 
-1. **Cliente conecta ao servidor** via ZeroMQ
-2. **Cliente realiza LOGIN** com seu nome de usuário
-3. **Servidor valida** e persiste no JSON
-4. **Cliente lista canais** disponíveis
-5. **Cliente cria novos canais** (um por um)
-6. **Cliente lista canais novamente** para verificar
-7. Todos os dados são **persistidos em JSON** no servidor
+A classe Protobuf Java (`ChatProtocol`) e gerada durante o build Maven. Por isso, a pasta `java/target` nao precisa ser versionada para deploy, desde que o pipeline rode o build normalmente.
 
-## Saída Esperada (Exemplo)
+## Requisitos atendidos na Parte 1
 
-```
-# BOT STARTING - 2024-03-17T12:00:00.123456
-[CLIENT] Initialized. Username: bot_client_1
-[CLIENT] Connecting to python_server_1:5555
-
-============================================================
-[CLIENT] STEP 1: LOGIN
-============================================================
-[SENDING] Type: LOGIN, Timestamp: 2024-03-17T12:00:00.123456
-[SENDING] Payload: {'username': 'bot_client_1'}
-[RECEIVED] Type: LOGIN_RESPONSE
-[RECEIVED] Payload: {'success': True}
-[SUCCESS] Login successful!
-
-============================================================
-[CLIENT] STEP 2: LIST CHANNELS
-============================================================
-[SENDING] Type: LIST_CHANNELS, Timestamp: 2024-03-17T12:00:01.234567
-[RECEIVED] Type: LIST_CHANNELS_RESPONSE
-[RECEIVED] Payload: {'channels': []}
-[SUCCESS] Received 0 channel(s): []
-
-============================================================
-[CLIENT] STEP 3: CREATE CHANNELS
-============================================================
-[SENDING] Type: CREATE_CHANNEL, Timestamp: 2024-03-17T12:00:02.345678
-[SENDING] Payload: {'channel_name': 'general'}
-[RECEIVED] Type: CREATE_CHANNEL_RESPONSE
-[RECEIVED] Payload: {'success': True}
-
-# BOT COMPLETED - 2024-03-17T12:00:05.678901
-```
-
-## Servidor - Logs de Operações
-
-```
-[SERVER] Started on port 5555
-[SERVER] Data file: server_data.json
-[SERVER] Waiting for messages...
-
-[LOGIN SUCCESS] User 'bot_client_1' logged in at 2024-03-17T12:00:00.123456
-[LIST CHANNELS] Returning 0 channels: []
-[CREATE CHANNEL SUCCESS] Channel 'general' created at 2024-03-17T12:00:02.345678
-```
-
-## Tratamento de Erros (Grosseiros)
-
-- ❌ Nome com formato inválido → "Invalid username format. Only alphanumeric, underscore, and hyphen allowed."
-- ❌ Usuário não registrado → "User not registered. Check users.txt file."
-- ❌ Usuário já logado → "User already logged in."
-- ❌ Canal já existe → "Channel already exists."
-- ❌ Nome de canal inválido → "Invalid channel name. Only alphanumeric characters allowed."
-- ⏱️ Timeout de resposta → "Request timeout - no response from server"
-
-## Observações Importantes
-
-1. **Cada servidor tem seus próprios dados** - `server1_data.json` e `server2_data.json` são independentes
-2. **Caso-insensitive:** Canais "General" e "general" são tratados como o mesmo
-3. **Bots não possuem interação manual** - Tudo é automático via docker-compose
-4. **Timestamps incluídos em TODAS as mensagens** - Conforme obrigatório
-5. **Servidores persistem dados em disco** - Sobrevivem a reinicializações
-
-## Próximas Partes do Projeto
-
-- **Parte 2:** Publicação e recebimento de mensagens
-- **Parte 3:** Replicação entre servidores
-- **Parte 4:** Tolerância a falhas
-- **Parte 5:** Otimizações e melhorias
-
-## Integração com Java
-
-Quando a dupla tiver o código Java pronto:
-1. Adicionar serviços Java no `docker-compose.yaml`
-2. Usar os mesmos message schemas (MessagePack)
-3. Conectar via rede bridge do Docker Compose
-4. Manter compatibilidade de timestamps
+- ZeroMQ em comunicacao distribuida
+- Request-Reply
+- Broker para multiplos servidores
+- Serializacao binaria
+- Timestamp em mensagens
+- Persistencia por servidor
+- Orquestracao com Docker Compose
 
 ## Autores
 
-- **Python:** Pedro Satoru
-- **Java:** Pedro Correia
-
-
+- Python: Pedro Satoru
+- Java: Pedro Correia

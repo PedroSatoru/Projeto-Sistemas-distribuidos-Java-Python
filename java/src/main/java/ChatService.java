@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import br.ufc.sd.chat.proto.ChatProtocol;
+import proto.ChatProtocol;
 
 public class ChatService {
     private static final Pattern VALID_NAME = Pattern.compile("^[a-zA-Z0-9_-]+$");
