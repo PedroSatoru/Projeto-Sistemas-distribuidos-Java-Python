@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import br.ufc.sd.chat.proto.ChatProtocol;
+import proto.ChatProtocol;
 
 class ChatServiceLoginTest {
 
