@@ -22,6 +22,18 @@ var/
 .installed.cfg
 *.egg
 
+# Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+.gradle/
+build/
+!gradle-wrapper.jar
+
 # IDE
 .vscode/
 .idea/
