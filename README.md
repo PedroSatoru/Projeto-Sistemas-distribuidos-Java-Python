@@ -96,7 +96,7 @@ Parar e remover containers:
 docker compose down
 ```
 
-## Interoperabilidade (o que esperar)
+## Interoperabilidade
 
 Com o ambiente em execucao:
 
@@ -104,38 +104,6 @@ Com o ambiente em execucao:
 - cliente Java pode ser atendido por servidor Java ou Python
 
 Isso acontece porque todos os clientes vao para o mesmo frontend do broker e todos os servidores vao para o mesmo backend.
-
-## Execucao local sem Docker (opcional)
-
-### Python
-
-```bash
-cd python
-pip install -r requirements.txt
-python broker/broker.py
-```
-
-Em outros terminais:
-
-```bash
-cd python
-python server/server.py --server-id py_server_1 --backend-endpoint tcp://localhost:5556
-python client/client.py --username bot_client_1 --endpoint tcp://localhost:5555
-```
-
-### Java
-
-```bash
-cd java
-mvn clean package
-```
-
-Exemplos:
-
-```bash
-java -jar target/chat-distribuido-java-1.0.0.jar --mode server --server-id java_server_1 --endpoint tcp://localhost:5556
-java -jar target/chat-distribuido-java-1.0.0.jar --mode client --username java_bot_1 --endpoint tcp://localhost:5555
-```
 
 ## Observacao sobre arquivos gerados
 
