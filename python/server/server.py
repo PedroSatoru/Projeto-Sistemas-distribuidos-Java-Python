@@ -19,6 +19,8 @@ from schemas import (
     LoginResponseMessage,
     ListChannelsResponseMessage,
     CreateChannelResponseMessage,
+    PublishResponseMessage,
+    ChatMessageBody,
     ServerData
 )
 
@@ -26,21 +28,24 @@ from schemas import (
 class ChatServer:
     """ZeroMQ-based chat server"""
     
-    def __init__(self, backend_endpoint: str = "tcp://localhost:5556", data_file: str = "server_data.json", users_file: str = "users.txt"):
+    def __init__(self, backend_endpoint: str = "tcp://localhost:5556", pub_endpoint: str = "tcp://localhost:5557", data_file: str = "server_data.json", users_file: str = "users.txt"):
         """
         Initialize the server
         
         Args:
             backend_endpoint: Broker backend endpoint
+            pub_endpoint: Proxy XSUB endpoint for publishing
             data_file: Path to JSON file for data persistence
             users_file: Path to file with allowed usernames
         """
         self.backend_endpoint = backend_endpoint
+        self.pub_endpoint = pub_endpoint
         self.data = ServerData(data_file)
         self.users_file = users_file
         self.allowed_users = self.load_allowed_users()
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REP)
+        self.pub_socket = self.context.socket(zmq.PUB)
         self.running = True
         self.server_id = os.path.basename(data_file)
         
@@ -56,7 +61,8 @@ class ChatServer:
         for attempt in range(max_retries):
             try:
                 self.socket.connect(self.backend_endpoint)
-                self._log("INFO", "CONNECT", f"conectado ao broker backend {self.backend_endpoint}")
+                self.pub_socket.connect(self.pub_endpoint)
+                self._log("INFO", "CONNECT", f"conectado ao broker backend {self.backend_endpoint} e proxy pub {self.pub_endpoint}")
                 return True
             except zmq.error.ZMQError as e:
                 if attempt < max_retries - 1:
@@ -148,6 +154,35 @@ class ChatServer:
         self.data.add_channel(channel_name)
         self._log("INFO", "CREATE_CHANNEL_OK", f"canal {channel_name} criado", ts_ms=message.timestamp_ms)
         return CreateChannelResponseMessage(success=True)
+
+    def handle_publish(self, message: Message) -> Message:
+        """Handle publish request by verifying and publishing to pub/sub proxy"""
+        channel_name = message.payload.get("channel_name", "").strip()
+        message_text = message.payload.get("message_text", "")
+        
+        # We don't have a direct username field in publish request natively without sender identity,
+        # but the project requires a REQ. So since zeroMQ REP socket doesn't know sender unless we check frame,
+        # we'll use a standard 'user' or pass it if you want. Wait, we won't know the user unless we put it in payload.
+        # Enunciado só pediu "canal, mensagem", vamos registrar apenas a msg.
+        
+        if not self.data.channel_exists(channel_name):
+            error_msg = f"Canal não existe: {channel_name}"
+            self._log("WARN", "PUBLISH_FAIL", error_msg, ts_ms=message.timestamp_ms)
+            return PublishResponseMessage(success=False, error=error_msg)
+            
+        # Register to data (disk)
+        self.data.add_message(channel_name, message_text, message.timestamp_ms)
+        
+        # Route to PUB
+        chat_msg = ChatMessageBody(channel_name, "server", message_text, message.timestamp_ms)
+        pub_payload = chat_msg.serialize()
+        
+        # ZeroMQ PUB envelope format: topic + space + payload or multi-part depending on parser.
+        # But here we send multi-part so topic filtering works well.
+        self.pub_socket.send_multipart([channel_name.encode('utf-8'), pub_payload])
+        self._log("INFO", "PUBLISH_OK", f"mensagem enviada para {channel_name}", ts_ms=message.timestamp_ms)
+        
+        return PublishResponseMessage(success=True)
     
     def process_message(self, message: Message) -> Message:
         """Process incoming message and return response"""
@@ -159,6 +194,8 @@ class ChatServer:
             return self.handle_list_channels(message)
         elif msg_type == MessageType.CREATE_CHANNEL:
             return self.handle_create_channel(message)
+        elif msg_type == MessageType.PUBLISH_REQUEST:
+            return self.handle_publish(message)
         else:
             self._log("ERROR", "UNKNOWN_MSG", f"tipo desconhecido: {msg_type}")
             return Message(MessageType.ERROR_RESPONSE, {"error": "Unknown message type"})
@@ -194,6 +231,7 @@ class ChatServer:
         """Graceful shutdown"""
         self.data.save_data()
         self.socket.close()
+        self.pub_socket.close()
         self.context.term()
         self._log("INFO", "SHUTDOWN", "servidor desligado")
 
@@ -203,10 +241,11 @@ if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description="Chat Server")
     parser.add_argument("--backend-endpoint", type=str, default="tcp://localhost:5556", help="Broker backend endpoint (default: tcp://localhost:5556)")
+    parser.add_argument("--pub-endpoint", type=str, default="tcp://localhost:5557", help="Proxy Pub endpoint (default: tcp://localhost:5557)")
     parser.add_argument("--data-file", type=str, default="server_data.json", help="Data file path (default: server_data.json)")
     parser.add_argument("--users-file", type=str, default="users.txt", help="Users file path (default: users.txt)")
     
     args = parser.parse_args()
     
-    server = ChatServer(backend_endpoint=args.backend_endpoint, data_file=args.data_file, users_file=args.users_file)
+    server = ChatServer(backend_endpoint=args.backend_endpoint, pub_endpoint=args.pub_endpoint, data_file=args.data_file, users_file=args.users_file)
     server.run()

@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Broker unico do sistema inteiro (Python)
+  # Broker unico do sistema inteiro (Python) - Parte 1
   broker:
     build:
       context: ./python
@@ -19,7 +19,7 @@ services:
     networks:
       - chat_network
 
-  # Proxy PUB/SUB (Python)
+  # Proxy PUB/SUB (Python) - Parte 2
   python_proxy:
     build:
       context: ./python
@@ -36,102 +36,6 @@ services:
       - "5558:5558"
     networks:
       - chat_network
-
-  # Java Server 1
-  java_server_1:
-    build:
-      context: ./java
-      dockerfile: Dockerfile
-    container_name: java_server_1
-    command:
-      - ChatServerMain
-      - --id
-      - java_server_1
-      - --backend
-      - tcp://broker:5556
-      - --users-file
-      - /app/users.txt
-      - --data-dir
-      - /data
-    volumes:
-      - ./java/data:/data
-    networks:
-      - chat_network
-    depends_on:
-      - broker
-
-  # Java Server 2
-  java_server_2:
-    build:
-      context: ./java
-      dockerfile: Dockerfile
-    container_name: java_server_2
-    command:
-      - ChatServerMain
-      - --id
-      - java_server_2
-      - --backend
-      - tcp://broker:5556
-      - --users-file
-      - /app/users.txt
-      - --data-dir
-      - /data
-    volumes:
-      - ./java/data:/data
-    networks:
-      - chat_network
-    depends_on:
-      - broker
-
-  # Java Client 1
-  java_client_1:
-    build:
-      context: ./java
-      dockerfile: Dockerfile
-    container_name: java_client_1
-    command:
-      - ChatClientBotMain
-      - --username
-      - java_bot_1
-      - --frontend
-      - tcp://broker:5555
-      - --channels
-      - general,random
-      - --login-attempts
-      - "3"
-    networks:
-      - chat_network
-    depends_on:
-      - broker
-      - java_server_1
-      - java_server_2
-      - python_server_1
-      - python_server_2
-
-  # Java Client 2
-  java_client_2:
-    build:
-      context: ./java
-      dockerfile: Dockerfile
-    container_name: java_client_2
-    command:
-      - ChatClientBotMain
-      - --username
-      - java_bot_2
-      - --frontend
-      - tcp://broker:5555
-      - --channels
-      - announcements,tech
-      - --login-attempts
-      - "3"
-    networks:
-      - chat_network
-    depends_on:
-      - broker
-      - java_server_1
-      - java_server_2
-      - python_server_1
-      - python_server_2
 
   # Python Server 1
   python_server_1:
@@ -185,7 +89,7 @@ services:
       - broker
       - python_proxy
 
-  # Python Client 1 (connects to Server 1)
+  # Python Client 1 (Bot 1)
   python_client_1:
     build:
       context: ./python
@@ -212,10 +116,8 @@ services:
       - python_proxy
       - python_server_1
       - python_server_2
-      - java_server_1
-      - java_server_2
 
-  # Python Client 2 (connects to Server 2)
+  # Python Client 2 (Bot 2)
   python_client_2:
     build:
       context: ./python
@@ -242,8 +144,6 @@ services:
       - python_proxy
       - python_server_1
       - python_server_2
-      - java_server_1
-      - java_server_2
 
 networks:
   chat_network:

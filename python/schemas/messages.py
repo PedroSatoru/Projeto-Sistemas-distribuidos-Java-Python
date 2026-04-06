@@ -41,6 +41,9 @@ class MessageType:
     LIST_CHANNELS_RESPONSE = "LIST_CHANNELS_RESPONSE"
     CREATE_CHANNEL = "CREATE_CHANNEL"
     CREATE_CHANNEL_RESPONSE = "CREATE_CHANNEL_RESPONSE"
+    PUBLISH_REQUEST = "PUBLISH_REQUEST"
+    PUBLISH_RESPONSE = "PUBLISH_RESPONSE"
+    CHAT_MESSAGE = "CHAT_MESSAGE"
     ERROR_RESPONSE = "ERROR_RESPONSE"
 
 
@@ -125,6 +128,37 @@ class Message:
             )
             return msg.SerializeToString()
 
+        if self.message_type == MessageType.PUBLISH_REQUEST:
+            msg = chat_pb2.ClientRequest(
+                timestamp_ms=now_ms,
+                publish_request=chat_pb2.PublishRequest(
+                    timestamp_ms=now_ms,
+                    channel_name=self.payload.get("channel_name", ""),
+                    message_text=self.payload.get("message_text", "")
+                )
+            )
+            return msg.SerializeToString()
+
+        if self.message_type == MessageType.PUBLISH_RESPONSE:
+            msg = chat_pb2.ServerResponse(
+                timestamp_ms=now_ms,
+                publish_response=chat_pb2.PublishResponse(
+                    timestamp_ms=now_ms,
+                    success=bool(self.payload.get("success", False)),
+                    error=self.payload.get("error", "")
+                )
+            )
+            return msg.SerializeToString()
+            
+        if self.message_type == MessageType.CHAT_MESSAGE:
+            msg = chat_pb2.ChatMessage(
+                timestamp_ms=now_ms,
+                channel_name=self.payload.get("channel_name", ""),
+                username=self.payload.get("username", ""),
+                message_text=self.payload.get("message_text", "")
+            )
+            return msg.SerializeToString()
+
         if self.message_type == MessageType.ERROR_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
@@ -160,6 +194,12 @@ class Message:
         if req_action == "create_channel_request":
             return Message(MessageType.CREATE_CHANNEL, {"channel_name": req.create_channel_request.channel_name}, timestamp_ms=req.timestamp_ms)
 
+        if req_action == "publish_request":
+            return Message(MessageType.PUBLISH_REQUEST, {
+                "channel_name": req.publish_request.channel_name,
+                "message_text": req.publish_request.message_text
+            }, timestamp_ms=req.timestamp_ms)
+
         raise ValueError("ClientRequest sem acao valida")
 
     @staticmethod
@@ -192,6 +232,16 @@ class Message:
                 {
                     "success": resp.create_channel_response.success,
                     "error": resp.create_channel_response.error,
+                },
+                timestamp_ms=resp.timestamp_ms,
+            )
+
+        if resp_action == "publish_response":
+            return Message(
+                MessageType.PUBLISH_RESPONSE,
+                {
+                    "success": resp.publish_response.success,
+                    "error": resp.publish_response.error,
                 },
                 timestamp_ms=resp.timestamp_ms,
             )
@@ -254,3 +304,42 @@ class CreateChannelResponseMessage(Message):
         if error:
             payload["error"] = error
         super().__init__(MessageType.CREATE_CHANNEL_RESPONSE, payload)
+
+
+class PublishRequestMessage(Message):
+    """Client requests to publish a message"""
+    def __init__(self, channel_name: str, message_text: str):
+        super().__init__(MessageType.PUBLISH_REQUEST, {
+            "channel_name": channel_name,
+            "message_text": message_text
+        })
+
+
+class PublishResponseMessage(Message):
+    """Server responds to publish request"""
+    def __init__(self, success: bool, error: Optional[str] = None):
+        payload = {"success": success}
+        if error:
+            payload["error"] = error
+        super().__init__(MessageType.PUBLISH_RESPONSE, payload)
+
+
+class ChatMessageBody(Message):
+    """Message distributed via Pub/Sub"""
+    def __init__(self, channel_name: str, username: str, message_text: str, timestamp_ms: Optional[int] = None):
+        super().__init__(MessageType.CHAT_MESSAGE, {
+            "channel_name": channel_name,
+            "username": username,
+            "message_text": message_text
+        }, timestamp_ms=timestamp_ms)
+    
+    @staticmethod
+    def deserialize_chat_message(data: bytes) -> 'ChatMessageBody':
+        msg = chat_pb2.ChatMessage()
+        msg.ParseFromString(data)
+        return ChatMessageBody(
+            channel_name=msg.channel_name,
+            username=msg.username,
+            message_text=msg.message_text,
+            timestamp_ms=msg.timestamp_ms
+        )
