@@ -12,10 +12,12 @@ import java.util.Set;
 public class PersistenceStore {
     private final Path channelsFile;
     private final Path loginsFile;
+    private final Path messagesFile;
 
-    public PersistenceStore(Path channelsFile, Path loginsFile) {
+    public PersistenceStore(Path channelsFile, Path loginsFile, Path messagesFile) {
         this.channelsFile = channelsFile;
         this.loginsFile = loginsFile;
+        this.messagesFile = messagesFile;
     }
 
     public Set<String> loadChannels() {
@@ -40,6 +42,12 @@ public class PersistenceStore {
     public synchronized void appendLogin(long timestampMs, String username) {
         String line = timestampMs + "|" + username + System.lineSeparator();
         appendLine(loginsFile, line);
+    }
+
+    public synchronized void appendPublishedMessage(long timestampMs, String username, String channel, String messageText) {
+        String sanitized = messageText.replace("\n", "\\n").replace("\r", "");
+        String line = timestampMs + "|" + username + "|" + channel + "|" + sanitized + System.lineSeparator();
+        appendLine(messagesFile, line);
     }
 
     public synchronized void persistChannelSet(Set<String> channels) {

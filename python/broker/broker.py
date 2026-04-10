@@ -5,7 +5,11 @@ import time
 
 def log_event(level: str, event: str, message: str):
     ts_ms = int(time.time() * 1000)
-    print(f"[ts={ts_ms}][PY-BROKER][{level}] {message}", flush=True)
+    print(
+        f"[ts={ts_ms}][lang=PY][role=BROKER][id=broker]"
+        f"[lvl={level}][evt={event}] {message}",
+        flush=True,
+    )
 
 
 def main():

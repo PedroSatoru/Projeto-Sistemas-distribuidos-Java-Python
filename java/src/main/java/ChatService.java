@@ -1,6 +1,7 @@
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +17,10 @@ public class ChatService {
     private final Set<String> activeUsers;
     private final Set<String> channels;
     private final PersistenceStore store;
+    private OutboundPublication lastPublication;
+
+    public record OutboundPublication(String channel, ChatProtocol.ChatMessage chatMessage) {
+    }
 
     public ChatService(Path usersFile, PersistenceStore store) {
         this.allowedUsers = loadAllowedUsers(usersFile);
@@ -29,8 +34,15 @@ public class ChatService {
             case LOGIN_REQUEST -> handleLogin(request.getLoginRequest());
             case LIST_CHANNELS_REQUEST -> handleListChannels();
             case CREATE_CHANNEL_REQUEST -> handleCreateChannel(request.getCreateChannelRequest());
+            case PUBLISH_REQUEST -> handlePublish(request.getPublishRequest());
             case ACTION_NOT_SET -> error("Mensagem sem acao definida");
         };
+    }
+
+    public synchronized OutboundPublication consumeLastPublication() {
+        OutboundPublication value = lastPublication;
+        lastPublication = null;
+        return value;
     }
 
     private ChatProtocol.ServerResponse handleLogin(ChatProtocol.LoginRequest request) {
@@ -94,6 +106,45 @@ public class ChatService {
         return createChannelResponse(true, "");
     }
 
+    private ChatProtocol.ServerResponse handlePublish(ChatProtocol.PublishRequest request) {
+        String channelName = request.getChannelName().trim().toLowerCase();
+        String messageText = request.getMessageText();
+        String username = request.getUsername().trim();
+
+        if (!VALID_NAME.matcher(channelName).matches()) {
+            return publishResponse(false, "Formato de nome de canal invalido.");
+        }
+
+        if (messageText == null || messageText.isBlank()) {
+            return publishResponse(false, "Mensagem vazia nao permitida.");
+        }
+
+        if (!username.isEmpty() && !VALID_NAME.matcher(username).matches()) {
+            return publishResponse(false, "Formato de nome de usuario invalido.");
+        }
+
+        String publicationUser = username.isEmpty() ? "unknown" : username;
+        synchronized (channels) {
+            if (!channels.contains(channelName)) {
+                return publishResponse(false, "Canal nao existe.");
+            }
+        }
+
+        long now = request.getTimestampMs() > 0 ? request.getTimestampMs() : System.currentTimeMillis();
+        ChatProtocol.ChatMessage chatMessage = ChatProtocol.ChatMessage.newBuilder()
+                .setTimestampMs(now)
+                .setChannelName(channelName)
+                .setUsername(publicationUser)
+                .setMessageText(messageText)
+                .build();
+
+        store.appendPublishedMessage(now, publicationUser, channelName, messageText);
+        synchronized (this) {
+            lastPublication = new OutboundPublication(channelName, chatMessage);
+        }
+        return publishResponse(true, "");
+    }
+
     private ChatProtocol.ServerResponse loginResponse(boolean success, String error) {
         ChatProtocol.LoginResponse response = ChatProtocol.LoginResponse.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
@@ -117,6 +168,19 @@ public class ChatService {
         return ChatProtocol.ServerResponse.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
                 .setCreateChannelResponse(response)
+                .build();
+    }
+
+    private ChatProtocol.ServerResponse publishResponse(boolean success, String error) {
+        ChatProtocol.PublishResponse response = ChatProtocol.PublishResponse.newBuilder()
+                .setTimestampMs(System.currentTimeMillis())
+                .setSuccess(success)
+                .setError(error)
+                .build();
+
+        return ChatProtocol.ServerResponse.newBuilder()
+                .setTimestampMs(System.currentTimeMillis())
+                .setPublishResponse(response)
                 .build();
     }
 
@@ -146,7 +210,7 @@ public class ChatService {
                 }
             }
             return users;
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             throw new IllegalStateException("Falha ao carregar usuarios de " + usersFile, ex);
         }
     }

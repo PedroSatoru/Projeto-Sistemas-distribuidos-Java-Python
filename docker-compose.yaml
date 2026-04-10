@@ -49,6 +49,8 @@ services:
       - java_server_1
       - --backend
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -59,6 +61,7 @@ services:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
 
   # Java Server 2
   java_server_2:
@@ -72,6 +75,8 @@ services:
       - java_server_2
       - --backend
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -82,6 +87,7 @@ services:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
 
   # Java Client 1
   java_client_1:
@@ -95,14 +101,15 @@ services:
       - java_bot_1
       - --frontend
       - tcp://broker:5555
-      - --channels
-      - general,random
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --login-attempts
       - "3"
     networks:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
       - java_server_1
       - java_server_2
       - python_server_1
@@ -120,14 +127,15 @@ services:
       - java_bot_2
       - --frontend
       - tcp://broker:5555
-      - --channels
-      - announcements,tech
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --login-attempts
       - "3"
     networks:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
       - java_server_1
       - java_server_2
       - python_server_1

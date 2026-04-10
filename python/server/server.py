@@ -8,7 +8,6 @@ import sys
 import os
 import re
 import time
-from datetime import datetime
 
 # Add parent directory to path to import schemas
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -54,7 +53,10 @@ class ChatServer:
 
     def _log(self, level: str, event: str, message: str, ts_ms: int | None = None):
         ts_ms = ts_ms if ts_ms is not None else int(time.time() * 1000)
-        print(f"[ts={ts_ms}][PY-SERVER][{self.server_id}][{level}] {message}")
+        print(
+            f"[ts={ts_ms}][lang=PY][role=SERVER][id={self.server_id}]"
+            f"[lvl={level}][evt={event}] {message}"
+        )
     
     def _connect_with_retry(self, max_retries: int = 5):
         """Connect with exponential backoff retry"""
@@ -159,11 +161,7 @@ class ChatServer:
         """Handle publish request by verifying and publishing to pub/sub proxy"""
         channel_name = message.payload.get("channel_name", "").strip()
         message_text = message.payload.get("message_text", "")
-        
-        # We don't have a direct username field in publish request natively without sender identity,
-        # but the project requires a REQ. So since zeroMQ REP socket doesn't know sender unless we check frame,
-        # we'll use a standard 'user' or pass it if you want. Wait, we won't know the user unless we put it in payload.
-        # Enunciado só pediu "canal, mensagem", vamos registrar apenas a msg.
+        username = message.payload.get("username", "").strip() or "server"
         
         if not self.data.channel_exists(channel_name):
             error_msg = f"Canal não existe: {channel_name}"
@@ -174,7 +172,7 @@ class ChatServer:
         self.data.add_message(channel_name, message_text, message.timestamp_ms)
         
         # Route to PUB
-        chat_msg = ChatMessageBody(channel_name, "server", message_text, message.timestamp_ms)
+        chat_msg = ChatMessageBody(channel_name, username, message_text, message.timestamp_ms)
         pub_payload = chat_msg.serialize()
         
         # ZeroMQ PUB envelope format: topic + space + payload or multi-part depending on parser.

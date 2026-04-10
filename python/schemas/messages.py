@@ -134,7 +134,8 @@ class Message:
                 publish_request=chat_pb2.PublishRequest(
                     timestamp_ms=now_ms,
                     channel_name=self.payload.get("channel_name", ""),
-                    message_text=self.payload.get("message_text", "")
+                    message_text=self.payload.get("message_text", ""),
+                    username=self.payload.get("username", "")
                 )
             )
             return msg.SerializeToString()
@@ -197,7 +198,8 @@ class Message:
         if req_action == "publish_request":
             return Message(MessageType.PUBLISH_REQUEST, {
                 "channel_name": req.publish_request.channel_name,
-                "message_text": req.publish_request.message_text
+                "message_text": req.publish_request.message_text,
+                "username": req.publish_request.username
             }, timestamp_ms=req.timestamp_ms)
 
         raise ValueError("ClientRequest sem acao valida")
@@ -308,10 +310,11 @@ class CreateChannelResponseMessage(Message):
 
 class PublishRequestMessage(Message):
     """Client requests to publish a message"""
-    def __init__(self, channel_name: str, message_text: str):
+    def __init__(self, channel_name: str, message_text: str, username: str = ""):
         super().__init__(MessageType.PUBLISH_REQUEST, {
             "channel_name": channel_name,
-            "message_text": message_text
+            "message_text": message_text,
+            "username": username
         })
 
 

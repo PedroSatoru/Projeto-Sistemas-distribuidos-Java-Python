@@ -5,7 +5,11 @@ import time
 
 def log_event(level: str, event: str, message: str):
     ts_ms = int(time.time() * 1000)
-    print(f"[ts={ts_ms}][PY-PROXY][{level}] {message}", flush=True)
+    print(
+        f"[ts={ts_ms}][lang=PY][role=PROXY][id=python_proxy]"
+        f"[lvl={level}][evt={event}] {message}",
+        flush=True,
+    )
 
 
 def main():

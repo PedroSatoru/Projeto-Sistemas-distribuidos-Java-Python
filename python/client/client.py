@@ -10,7 +10,6 @@ import time
 import threading
 import random
 import uuid
-from datetime import datetime
 
 # Add parent directory to path to import schemas
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -60,7 +59,10 @@ class ChatClient:
 
     def _log(self, level: str, event: str, message: str, ts_ms: int | None = None):
         ts_ms = ts_ms if ts_ms is not None else int(time.time() * 1000)
-        print(f"[ts={ts_ms}][PY-CLIENT][{self.username}][{level}] {message}")
+        print(
+            f"[ts={ts_ms}][lang=PY][role=CLIENT][id={self.username}]"
+            f"[lvl={level}][evt={event}] {message}"
+        )
 
     def _connect_with_retry(self, max_retries: int = 5):
         """Connect with exponential backoff retry"""
@@ -219,10 +221,11 @@ class ChatClient:
                     self.subscribed_channels.append(channel_to_sub)
                     self._log("INFO", "SUB_OK", f"inscrito ao canal {channel_to_sub}")
                     
-            # Ficar em loop infinito:
-            self._log("INFO", "BOT_LOOP", "iniciando repetição infinta (Ctrl+C para sair)")
+            # Publicar no maximo 10 mensagens totais
+            self._log("INFO", "BOT_LOOP", "iniciando publicacao com limite total de 10 mensagens")
             msg_counter = 0
-            while True:
+            max_publishes = 10
+            while msg_counter < max_publishes:
                 if not channels:
                     time.sleep(1)
                     channels = self.get_channels_list()
@@ -231,13 +234,13 @@ class ChatClient:
                 # Escolher um canal aleatorio disponivel
                 target_channel = random.choice(channels)
                 
-                # Enviar 10 mensagens aleatorias com int=1s
-                for _ in range(10):
-                    msg_counter += 1
-                    msg_text = f"Hello pub/sub {msg_counter} from {self.username} [{str(uuid.uuid4())[:4]}]"
-                    publish_req = PublishRequestMessage(target_channel, msg_text)
-                    self.send_request(publish_req)
-                    time.sleep(1)
+                msg_counter += 1
+                msg_text = f"Hello pub/sub {msg_counter} from {self.username} [{str(uuid.uuid4())[:4]}]"
+                publish_req = PublishRequestMessage(target_channel, msg_text, self.username)
+                self.send_request(publish_req)
+                time.sleep(1)
+
+            self._log("INFO", "BOT_DONE", "limite de 10 publicacoes totais atingido")
             
             return True
         
