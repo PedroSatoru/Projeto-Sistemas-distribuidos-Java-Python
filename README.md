@@ -1,4 +1,4 @@
-# Sistema de Chat Distribuído - Parte 2
+# Sistema de Chat Distribuído 
 
 Implementação da Parte 2 do projeto de Sistemas Distribuídos com interoperabilidade entre Python e Java, introduzindo o padrão Publisher-Subscriber para publicação em canais.
 
