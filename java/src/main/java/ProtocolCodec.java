@@ -24,4 +24,13 @@ public final class ProtocolCodec {
             throws InvalidProtocolBufferException {
         return ChatProtocol.ServerResponse.parseFrom(payload);
     }
+
+    public static ChatProtocol.ChatMessage parseChatMessage(byte[] payload)
+            throws InvalidProtocolBufferException {
+        return ChatProtocol.ChatMessage.parseFrom(payload);
+    }
+
+    public static byte[] toBytes(ChatProtocol.ChatMessage chatMessage) {
+        return chatMessage.toByteArray();
+    }
 }

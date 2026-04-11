@@ -39,12 +39,33 @@ message ErrorResponse {
   string error = 2;
 }
 
+message PublishRequest {
+  int64 timestamp_ms = 1;
+  string channel_name = 2;
+  string message_text = 3;
+  string username = 4;
+}
+
+message PublishResponse {
+  int64 timestamp_ms = 1;
+  bool success = 2;
+  string error = 3;
+}
+
+message ChatMessage {
+  int64 timestamp_ms = 1;
+  string channel_name = 2;
+  string username = 3;
+  string message_text = 4;
+}
+
 message ClientRequest {
   int64 timestamp_ms = 1;
   oneof action {
     LoginRequest login_request = 2;
     ListChannelsRequest list_channels_request = 3;
     CreateChannelRequest create_channel_request = 4;
+    PublishRequest publish_request = 5;
   }
 }
 
@@ -55,5 +76,6 @@ message ServerResponse {
     ListChannelsResponse list_channels_response = 3;
     CreateChannelResponse create_channel_response = 4;
     ErrorResponse error_response = 5;
+    PublishResponse publish_response = 6;
   }
 }

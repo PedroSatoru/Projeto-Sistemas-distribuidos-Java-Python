@@ -31,6 +31,7 @@ class ServerData:
         self.users: Set[str] = set()  # Logged in users
         self.channels: Set[str] = set()  # Available channels
         self.login_history: List[UserLogin] = []  # Login history with timestamps
+        self.messages_published: List[dict] = []  # List of published messages
         self.load_data()
     
     def load_data(self):
@@ -47,12 +48,14 @@ class ServerData:
                         UserLogin(log["username"], log["timestamp"])
                         for log in data.get("login_history", [])
                     ]
+                    self.messages_published = data.get("messages_published", [])
             except Exception as e:
                 print(f"✗ Erro ao carregar dados: {e}")
         else:
             self.users = set()
             self.channels = set()
             self.login_history = []
+            self.messages_published = []
     
     def save_data(self):
         """Save data to JSON file"""
@@ -60,7 +63,8 @@ class ServerData:
             data = {
                 "users": list(self.users),
                 "channels": list(self.channels),
-                "login_history": [log.to_dict() for log in self.login_history]
+                "login_history": [log.to_dict() for log in self.login_history],
+                "messages_published": self.messages_published
             }
             with open(self.data_file, 'w') as f:
                 json.dump(data, f, indent=2)
@@ -96,3 +100,12 @@ class ServerData:
     def user_exists(self, username: str) -> bool:
         """Check if user is logged in"""
         return username in self.users
+
+    def add_message(self, channel_name: str, message_text: str, timestamp_ms: int):
+        """Add a published message and persist to disk"""
+        self.messages_published.append({
+            "channel_name": channel_name,
+            "message_text": message_text,
+            "timestamp_ms": timestamp_ms
+        })
+        self.save_data()

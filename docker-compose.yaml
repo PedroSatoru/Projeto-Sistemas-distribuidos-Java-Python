@@ -19,6 +19,24 @@ services:
     networks:
       - chat_network
 
+  # Proxy PUB/SUB (Python)
+  python_proxy:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: python_proxy
+    command:
+      - broker/proxy.py
+      - --frontend
+      - tcp://*:5557
+      - --backend
+      - tcp://*:5558
+    ports:
+      - "5557:5557"
+      - "5558:5558"
+    networks:
+      - chat_network
+
   # Java Server 1
   java_server_1:
     build:
@@ -31,6 +49,8 @@ services:
       - java_server_1
       - --backend
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -41,6 +61,7 @@ services:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
 
   # Java Server 2
   java_server_2:
@@ -54,6 +75,8 @@ services:
       - java_server_2
       - --backend
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -64,6 +87,7 @@ services:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
 
   # Java Client 1
   java_client_1:
@@ -77,14 +101,15 @@ services:
       - java_bot_1
       - --frontend
       - tcp://broker:5555
-      - --channels
-      - general,random
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --login-attempts
       - "3"
     networks:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
       - java_server_1
       - java_server_2
       - python_server_1
@@ -102,14 +127,15 @@ services:
       - java_bot_2
       - --frontend
       - tcp://broker:5555
-      - --channels
-      - announcements,tech
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --login-attempts
       - "3"
     networks:
       - chat_network
     depends_on:
       - broker
+      - python_proxy
       - java_server_1
       - java_server_2
       - python_server_1
@@ -125,6 +151,8 @@ services:
       - server/server.py
       - --backend-endpoint
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --data-file
       - /data/server1_data.json
       - --users-file
@@ -137,6 +165,7 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - broker
+      - python_proxy
 
   # Python Server 2
   python_server_2:
@@ -148,6 +177,8 @@ services:
       - server/server.py
       - --backend-endpoint
       - tcp://broker:5556
+      - --pub-endpoint
+      - tcp://python_proxy:5557
       - --data-file
       - /data/server2_data.json
       - --users-file
@@ -160,6 +191,7 @@ services:
       - PYTHONUNBUFFERED=1
     depends_on:
       - broker
+      - python_proxy
 
   # Python Client 1 (connects to Server 1)
   python_client_1:
@@ -173,16 +205,19 @@ services:
       - broker
       - --port
       - "5555"
+      - --sub-host
+      - python_proxy
+      - --sub-port
+      - "5558"
       - --username
       - bot_client_1
-      - --channels
-      - general,random
     networks:
       - chat_network
     environment:
       - PYTHONUNBUFFERED=1
     depends_on:
       - broker
+      - python_proxy
       - python_server_1
       - python_server_2
       - java_server_1
@@ -200,16 +235,19 @@ services:
       - broker
       - --port
       - "5555"
+      - --sub-host
+      - python_proxy
+      - --sub-port
+      - "5558"
       - --username
       - bot_client_2
-      - --channels
-      - announcements,tech
     networks:
       - chat_network
     environment:
       - PYTHONUNBUFFERED=1
     depends_on:
       - broker
+      - python_proxy
       - python_server_1
       - python_server_2
       - java_server_1

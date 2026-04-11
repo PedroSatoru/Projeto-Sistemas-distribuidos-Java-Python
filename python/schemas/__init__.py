@@ -8,7 +8,10 @@ from .messages import (
     ListChannelsMessage,
     ListChannelsResponseMessage,
     CreateChannelMessage,
-    CreateChannelResponseMessage
+    CreateChannelResponseMessage,
+    PublishRequestMessage,
+    PublishResponseMessage,
+    ChatMessageBody
 )
 from .data_models import ServerData, UserLogin
 
@@ -21,6 +24,9 @@ __all__ = [
     "ListChannelsResponseMessage",
     "CreateChannelMessage",
     "CreateChannelResponseMessage",
+    "PublishRequestMessage",
+    "PublishResponseMessage",
+    "ChatMessageBody",
     "ServerData",
     "UserLogin"
 ]

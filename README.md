@@ -1,86 +1,41 @@
-# Sistema de Chat Distribuido - Parte 1
+# Sistema de Chat Distribuído - Parte 2
 
-Implementacao da Parte 1 do projeto de Sistemas Distribuidos com interoperabilidade entre Python e Java.
+Implementação da Parte 2 do projeto de Sistemas Distribuídos com interoperabilidade entre Python e Java, introduzindo o padrão Publisher-Subscriber para publicação em canais.
 
-## Visao geral
+## Visão Geral
 
-A arquitetura atual usa um unico broker Python para todo o sistema. Clientes e servidores de ambas as linguagens usam o mesmo protocolo binario e a mesma topologia de rede.
+A arquitetura foi expandida para incluir um proxy Pub/Sub dedicado, permitindo que os usuários se inscrevam em canais e recebam mensagens em tempo real.
 
-Topologia em execucao:
+Topologia em execução:
 
-- 1 broker Python (ROUTER/DEALER)
-- 2 servidores Python (REP no backend do broker)
-- 2 servidores Java (REP no backend do broker)
-- 2 clientes Python (REQ no frontend do broker)
-- 2 clientes Java (REQ no frontend do broker)
+- **1 Broker Req-Rep (Python)**: Gerencia login, listagem e criação de canais (Portas 5555/5556).
+- **1 Proxy Pub/Sub (Python)**: Gerencia a distribuição de mensagens nos canais (Portas 5557/5558).
+- **Servidores (Python/Java)**: Atuam como REPs para o broker e como PUBs para o proxy.
+- **Clientes/Bots (Python/Java)**: Atuam como REQs para o broker e como SUBs para o proxy.
 
-## Tecnologias e decisoes
+## Tecnologias e Decisões
 
-- Comunicacao: ZeroMQ
-- Padrao: Request-Reply com broker ROUTER/DEALER
-- Serializacao: Protocol Buffers (unificado entre Python e Java)
-- Timestamp: todas as mensagens incluem `timestamp_ms`
-- Persistencia:
-  - Python: JSON por servidor em `python/data/`
-  - Java: arquivos texto por servidor em `java/data/`
+### Comunicação Pub/Sub
+- **Proxy Centralizado**: Optamos por um proxy ZeroMQ (XSUB/XPUB) centralizado para desacoplar totalmente os publicadores (servidores) dos inscritos (clientes). Isso facilita a escalabilidade e a interoperabilidade.
+- **Tópicos**: Os nomes dos canais são usados como tópicos no ZeroMQ. O filtragem é feita pelo proxy e pelos sockets SUB dos clientes.
 
-## Contrato de mensagens
+### Persistência
+O servidor agora persiste o histórico de mensagens e eventos:
+- **Python Server**: Utiliza arquivos JSON (`python/data/serverX_data.json`) para persistir canais, histórico de logins e todas as mensagens publicadas. O JSON foi escolhido pela facilidade de manipulação e legibilidade em Python.
+- **Java Server**: Utiliza arquivos de texto plano (`java/data/serverX_messages.txt`, etc.) com campos delimitados por `|`. Esta escolha visa simplicidade e performance em Java, facilitando o parse manual se necessário.
 
-Schema Protobuf:
+### Protocolo (Protobuf)
+O contrato foi atualizado para incluir:
+- `PublishRequest`: Para solicitação de publicação via REQ-REP.
+- `ChatMessage`: Estrutura da mensagem enviada via PUB-SUB.
 
-- `python/proto/chat.proto`
-- `java/src/main/proto/chat.proto`
+## Funcionamento dos Bots
 
-Mensagens principais:
-
-- `ClientRequest` com `oneof` para:
-  - `login_request`
-  - `list_channels_request`
-  - `create_channel_request`
-- `ServerResponse` com `oneof` para:
-  - `login_response`
-  - `list_channels_response`
-  - `create_channel_response`
-  - `error_response`
-
-## Fluxo funcional da Parte 1
-
-Cada cliente executa automaticamente:
-
-1. Login
-2. Listagem de canais
-3. Criacao de canais
-4. Listagem final de canais
-
-Os servidores validam:
-
-- formato de username e canal
-- existencia de usuario permitido
-- duplicidade de login
-- duplicidade de canal
-
-## Estrutura relevante do projeto
-
-```text
-python/
-  broker/broker.py
-  client/client.py
-  server/server.py
-  schemas/messages.py
-  proto/chat.proto
-  users.txt
-
-java/
-  src/main/java/
-    ChatClientBotMain.java
-    ChatServerMain.java
-    ChatService.java
-    ProtocolCodec.java
-    PersistenceStore.java
-  src/main/proto/chat.proto
-
-docker-compose.yaml
-```
+Seguindo o padrão estabelecido:
+1. **Verificação de Canais**: O bot garante que existam pelo menos 5 canais no sistema.
+2. **Inscrição**: O bot se inscreve em pelo menos 3 canais aleatórios.
+3. **Loop de Publicação**: Escolhe um canal aleatório e publica 10 mensagens (intervalo de 1s).
+4. **Logs**: Exibe no console cada mensagem recebida via SUB, contendo Canal, Mensagem, Timestamp de Envio e Timestamp de Recebimento.
 
 ## Como executar
 
@@ -90,34 +45,27 @@ Subir todo o ambiente:
 docker compose up --build
 ```
 
-Parar e remover containers:
+## Estrutura do Projeto
 
-```bash
-docker compose down
+```text
+python/
+  broker/
+    broker.py (Req-Rep)
+    proxy.py  (Pub-Sub)
+  client/client.py
+  server/server.py
+  schemas/data_models.py (Persistência)
+  proto/chat.proto
+
+java/
+  src/main/java/
+    ChatClientBotMain.java
+    ChatServerMain.java
+    PersistenceStore.java (Persistência)
+  src/main/proto/chat.proto
+
+docker-compose.yaml
 ```
-
-## Interoperabilidade
-
-Com o ambiente em execucao:
-
-- cliente Python pode ser atendido por servidor Python ou Java
-- cliente Java pode ser atendido por servidor Java ou Python
-
-Isso acontece porque todos os clientes vao para o mesmo frontend do broker e todos os servidores vao para o mesmo backend.
-
-## Observacao sobre arquivos gerados
-
-A classe Protobuf Java (`ChatProtocol`) e gerada durante o build Maven. Por isso, a pasta `java/target` nao precisa ser versionada para deploy, desde que o pipeline rode o build normalmente.
-
-## Requisitos atendidos na Parte 1
-
-- ZeroMQ em comunicacao distribuida
-- Request-Reply
-- Broker para multiplos servidores
-- Serializacao binaria
-- Timestamp em mensagens
-- Persistencia por servidor
-- Orquestracao com Docker Compose
 
 ## Autores
 
