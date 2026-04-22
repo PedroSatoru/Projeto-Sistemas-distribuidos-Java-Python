@@ -1,6 +1,7 @@
 """
 Chat client implementation using ZeroMQ (Bot)
-Automatically performs login, lists channels, and creates new channels
+Automatically performs login, lists channels, creates new channels, and publishes.
+Part 3: logical clock on all messages.
 """
 
 import zmq
@@ -21,25 +22,17 @@ from schemas import (
     ListChannelsMessage,
     CreateChannelMessage,
     PublishRequestMessage,
-    ChatMessageBody
+    ChatMessageBody,
+    LogicalClock
 )
 
 
 class ChatClient:
     """ZeroMQ-based chat client (Bot)"""
     
-    def __init__(self, server_host: str = "localhost", server_port: int = 5555, sub_host: str = "localhost", sub_port: int = 5558, username: str = "bot_user", timeout: int = 5000):
-        """
-        Initialize the client
-        
-        Args:
-            server_host: Server hostname
-            server_port: Server port
-            sub_host: PUB/SUB proxy hostname
-            sub_port: PUB/SUB proxy port
-            username: Username for this bot
-            timeout: Request timeout in milliseconds
-        """
+    def __init__(self, server_host: str = "localhost", server_port: int = 5555,
+                 sub_host: str = "localhost", sub_port: int = 5558,
+                 username: str = "bot_user", timeout: int = 5000):
         self.server_host = server_host
         self.server_port = server_port
         self.sub_host = sub_host
@@ -53,15 +46,20 @@ class ChatClient:
         self.sub_socket = self.context.socket(zmq.SUB)
         self.listening = False
         self.subscribed_channels = []
+
+        # Logical clock (Part 3)
+        self.lc = LogicalClock()
         
         # Connect with retry
         self._connect_with_retry()
 
     def _log(self, level: str, event: str, message: str, ts_ms: int | None = None):
         ts_ms = ts_ms if ts_ms is not None else int(time.time() * 1000)
+        lc_val = self.lc.value
         print(
-            f"[ts={ts_ms}][lang=PY][role=CLIENT][id={self.username}]"
-            f"[lvl={level}][evt={event}] {message}"
+            f"[ts={ts_ms}][lc={lc_val}][lang=PY][role=CLIENT][id={self.username}]"
+            f"[lvl={level}][evt={event}] {message}",
+            flush=True,
         )
 
     def _connect_with_retry(self, max_retries: int = 5):
@@ -76,7 +74,7 @@ class ChatClient:
                 return True
             except zmq.error.ZMQError as e:
                 if attempt < max_retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff: 1, 2, 4, 8, 16 seconds
+                    wait_time = 2 ** attempt
                     self._log("WARN", "RETRY", f"tentativa {attempt + 1}/{max_retries} falhou; aguardando {wait_time}s")
                     time.sleep(wait_time)
                 else:
@@ -85,13 +83,21 @@ class ChatClient:
         return False
     
     def send_request(self, message: Message) -> Message:
-        """Send request and receive response"""
+        """Send request and receive response (with logical clock)."""
         try:
+            # Increment logical clock before sending
+            send_lc = self.lc.increment()
+            message.logical_clock = send_lc
+
             payload = message.serialize()
             self._log("INFO", "SEND", f"enviando {message.message_type}", ts_ms=message.timestamp_ms)
             self.socket.send(payload)
+
             raw_response = self.socket.recv()
             response = Message.deserialize_response(raw_response)
+
+            # Update logical clock on receive
+            self.lc.update(response.logical_clock)
             self._log("INFO", "RECV", f"recebido {response.message_type}", ts_ms=response.timestamp_ms)
             return response
         
@@ -121,7 +127,7 @@ class ChatClient:
             return False
     
     def get_channels_list(self) -> list:
-        """Request channel list from server and return the list of channels"""
+        """Request channel list from server"""
         self._log("INFO", "LIST_CHANNELS_START", "listando canais")
         
         message = ListChannelsMessage()
@@ -149,10 +155,16 @@ class ChatClient:
                         recv_ts_ms = int(time.time() * 1000)
                         send_ts_ms = chat_msg.timestamp_ms
                         
+                        # Update logical clock from pub/sub message
+                        self.lc.update(chat_msg.logical_clock)
+                        
                         channel_str = chat_msg.payload.get("channel_name", "")
                         message_txt = chat_msg.payload.get("message_text", "")
                         
-                        self._log("INFO", "RECV_SUB", f"Canal: {channel_str} | Msg: {message_txt} | TS envio: {send_ts_ms} | TS recv: {recv_ts_ms}")
+                        self._log("INFO", "RECV_SUB",
+                                  f"Canal: {channel_str} | Msg: {message_txt} "
+                                  f"| TS envio: {send_ts_ms} | TS recv: {recv_ts_ms} "
+                                  f"| LC msg: {chat_msg.logical_clock}")
                     except Exception as parse_e:
                         self._log("WARN", "SUB_PARSE_ERR", f"Erro ao decodificar msg PUB: {parse_e}")
             except zmq.Again:
@@ -209,11 +221,9 @@ class ChatClient:
                 self._log("INFO", "BOT_ACTION", f"criando {num_to_create} canais para atingir 5 canais")
                 self.create_channels(new_channels)
                 time.sleep(0.5)
-                # Atualizando lista
                 channels = self.get_channels_list()
                 
             # Se o bot estiver inscrito em menos do que 3 canais, ele deverá se inscrever em mais um
-            # (Loop until 3 subscriptions)
             while len(self.subscribed_channels) < 3 and len(channels) > 0:
                 channel_to_sub = random.choice(channels)
                 if channel_to_sub not in self.subscribed_channels:
@@ -231,7 +241,6 @@ class ChatClient:
                     channels = self.get_channels_list()
                     continue
                 
-                # Escolher um canal aleatorio disponivel
                 target_channel = random.choice(channels)
                 
                 msg_counter += 1

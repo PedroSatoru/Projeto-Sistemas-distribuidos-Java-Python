@@ -57,6 +57,7 @@ message ChatMessage {
   string channel_name = 2;
   string username = 3;
   string message_text = 4;
+  int64 logical_clock = 5;
 }
 
 message ClientRequest {
@@ -67,6 +68,7 @@ message ClientRequest {
     CreateChannelRequest create_channel_request = 4;
     PublishRequest publish_request = 5;
   }
+  int64 logical_clock = 6;
 }
 
 message ServerResponse {
@@ -78,4 +80,27 @@ message ServerResponse {
     ErrorResponse error_response = 5;
     PublishResponse publish_response = 6;
   }
+  int64 logical_clock = 7;
+}
+
+// ---- Reference Service Messages ----
+
+message ReferenceRequest {
+  int64 timestamp_ms = 1;
+  string action = 2;       // "rank", "list", "heartbeat"
+  string server_name = 3;
+}
+
+message ServerInfo {
+  string name = 1;
+  int32 rank = 2;
+}
+
+message ReferenceResponse {
+  int64 timestamp_ms = 1;
+  string action = 2;
+  int32 rank = 3;
+  repeated ServerInfo servers = 4;
+  string status = 5;
+  int64 reference_time_ms = 6;
 }

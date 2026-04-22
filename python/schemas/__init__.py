@@ -14,6 +14,7 @@ from .messages import (
     ChatMessageBody
 )
 from .data_models import ServerData, UserLogin
+from .logical_clock import LogicalClock
 
 __all__ = [
     "Message",
@@ -28,5 +29,6 @@ __all__ = [
     "PublishResponseMessage",
     "ChatMessageBody",
     "ServerData",
-    "UserLogin"
+    "UserLogin",
+    "LogicalClock",
 ]

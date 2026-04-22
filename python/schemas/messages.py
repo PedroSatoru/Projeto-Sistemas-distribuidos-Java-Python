@@ -48,30 +48,35 @@ class MessageType:
 
 
 class Message:
-    """Base message class with timestamp and type"""
+    """Base message class with timestamp, type, and logical clock"""
     
-    def __init__(self, message_type: str, payload: Dict[str, Any], timestamp_ms: Optional[int] = None):
+    def __init__(self, message_type: str, payload: Dict[str, Any],
+                 timestamp_ms: Optional[int] = None, logical_clock: int = 0):
         self.message_type = message_type
         self.timestamp = time.time()
         self.timestamp_ms = timestamp_ms
         self.payload = payload
+        self.logical_clock = logical_clock
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert message to dictionary for serialization"""
         return {
             "type": self.message_type,
             "timestamp": self.timestamp,
-            "payload": self.payload
+            "payload": self.payload,
+            "logical_clock": self.logical_clock,
         }
     
     def serialize(self) -> bytes:
         """Serialize message to Protobuf bytes"""
         now_ms = self.timestamp_ms if self.timestamp_ms is not None else int(time.time() * 1000)
         self.timestamp_ms = now_ms
+        lc = self.logical_clock
 
         if self.message_type == MessageType.LOGIN:
             msg = chat_pb2.ClientRequest(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 login_request=chat_pb2.LoginRequest(
                     timestamp_ms=now_ms,
                     username=self.payload.get("username", "")
@@ -82,6 +87,7 @@ class Message:
         if self.message_type == MessageType.LIST_CHANNELS:
             msg = chat_pb2.ClientRequest(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 list_channels_request=chat_pb2.ListChannelsRequest(timestamp_ms=now_ms)
             )
             return msg.SerializeToString()
@@ -89,6 +95,7 @@ class Message:
         if self.message_type == MessageType.CREATE_CHANNEL:
             msg = chat_pb2.ClientRequest(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 create_channel_request=chat_pb2.CreateChannelRequest(
                     timestamp_ms=now_ms,
                     channel_name=self.payload.get("channel_name", "")
@@ -99,6 +106,7 @@ class Message:
         if self.message_type == MessageType.LOGIN_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 login_response=chat_pb2.LoginResponse(
                     timestamp_ms=now_ms,
                     success=bool(self.payload.get("success", False)),
@@ -110,6 +118,7 @@ class Message:
         if self.message_type == MessageType.LIST_CHANNELS_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 list_channels_response=chat_pb2.ListChannelsResponse(
                     timestamp_ms=now_ms,
                     channels=self.payload.get("channels", [])
@@ -120,6 +129,7 @@ class Message:
         if self.message_type == MessageType.CREATE_CHANNEL_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 create_channel_response=chat_pb2.CreateChannelResponse(
                     timestamp_ms=now_ms,
                     success=bool(self.payload.get("success", False)),
@@ -131,6 +141,7 @@ class Message:
         if self.message_type == MessageType.PUBLISH_REQUEST:
             msg = chat_pb2.ClientRequest(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 publish_request=chat_pb2.PublishRequest(
                     timestamp_ms=now_ms,
                     channel_name=self.payload.get("channel_name", ""),
@@ -143,6 +154,7 @@ class Message:
         if self.message_type == MessageType.PUBLISH_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 publish_response=chat_pb2.PublishResponse(
                     timestamp_ms=now_ms,
                     success=bool(self.payload.get("success", False)),
@@ -154,6 +166,7 @@ class Message:
         if self.message_type == MessageType.CHAT_MESSAGE:
             msg = chat_pb2.ChatMessage(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 channel_name=self.payload.get("channel_name", ""),
                 username=self.payload.get("username", ""),
                 message_text=self.payload.get("message_text", "")
@@ -163,6 +176,7 @@ class Message:
         if self.message_type == MessageType.ERROR_RESPONSE:
             msg = chat_pb2.ServerResponse(
                 timestamp_ms=now_ms,
+                logical_clock=lc,
                 error_response=chat_pb2.ErrorResponse(
                     timestamp_ms=now_ms,
                     error=self.payload.get("error", "Unknown error")
@@ -172,6 +186,7 @@ class Message:
 
         msg = chat_pb2.ServerResponse(
             timestamp_ms=now_ms,
+            logical_clock=lc,
             error_response=chat_pb2.ErrorResponse(
                 timestamp_ms=now_ms,
                 error="Unknown message type"
@@ -185,22 +200,27 @@ class Message:
         req = chat_pb2.ClientRequest()
         req.ParseFromString(data)
         req_action = req.WhichOneof("action")
+        lc = req.logical_clock
 
         if req_action == "login_request":
-            return Message(MessageType.LOGIN, {"username": req.login_request.username}, timestamp_ms=req.timestamp_ms)
+            return Message(MessageType.LOGIN, {"username": req.login_request.username},
+                           timestamp_ms=req.timestamp_ms, logical_clock=lc)
 
         if req_action == "list_channels_request":
-            return Message(MessageType.LIST_CHANNELS, {}, timestamp_ms=req.timestamp_ms)
+            return Message(MessageType.LIST_CHANNELS, {},
+                           timestamp_ms=req.timestamp_ms, logical_clock=lc)
 
         if req_action == "create_channel_request":
-            return Message(MessageType.CREATE_CHANNEL, {"channel_name": req.create_channel_request.channel_name}, timestamp_ms=req.timestamp_ms)
+            return Message(MessageType.CREATE_CHANNEL,
+                           {"channel_name": req.create_channel_request.channel_name},
+                           timestamp_ms=req.timestamp_ms, logical_clock=lc)
 
         if req_action == "publish_request":
             return Message(MessageType.PUBLISH_REQUEST, {
                 "channel_name": req.publish_request.channel_name,
                 "message_text": req.publish_request.message_text,
                 "username": req.publish_request.username
-            }, timestamp_ms=req.timestamp_ms)
+            }, timestamp_ms=req.timestamp_ms, logical_clock=lc)
 
         raise ValueError("ClientRequest sem acao valida")
 
@@ -210,6 +230,7 @@ class Message:
         resp = chat_pb2.ServerResponse()
         resp.ParseFromString(data)
         resp_action = resp.WhichOneof("action")
+        lc = resp.logical_clock
 
         if resp_action == "login_response":
             return Message(
@@ -219,6 +240,7 @@ class Message:
                     "error": resp.login_response.error,
                 },
                 timestamp_ms=resp.timestamp_ms,
+                logical_clock=lc,
             )
 
         if resp_action == "list_channels_response":
@@ -226,6 +248,7 @@ class Message:
                 MessageType.LIST_CHANNELS_RESPONSE,
                 {"channels": list(resp.list_channels_response.channels)},
                 timestamp_ms=resp.timestamp_ms,
+                logical_clock=lc,
             )
 
         if resp_action == "create_channel_response":
@@ -236,6 +259,7 @@ class Message:
                     "error": resp.create_channel_response.error,
                 },
                 timestamp_ms=resp.timestamp_ms,
+                logical_clock=lc,
             )
 
         if resp_action == "publish_response":
@@ -246,6 +270,7 @@ class Message:
                     "error": resp.publish_response.error,
                 },
                 timestamp_ms=resp.timestamp_ms,
+                logical_clock=lc,
             )
 
         if resp_action == "error_response":
@@ -253,6 +278,7 @@ class Message:
                 MessageType.ERROR_RESPONSE,
                 {"error": resp.error_response.error},
                 timestamp_ms=resp.timestamp_ms,
+                logical_clock=lc,
             )
 
         return Message(MessageType.ERROR_RESPONSE, {"error": "Invalid payload"})
@@ -329,12 +355,13 @@ class PublishResponseMessage(Message):
 
 class ChatMessageBody(Message):
     """Message distributed via Pub/Sub"""
-    def __init__(self, channel_name: str, username: str, message_text: str, timestamp_ms: Optional[int] = None):
+    def __init__(self, channel_name: str, username: str, message_text: str,
+                 timestamp_ms: Optional[int] = None, logical_clock: int = 0):
         super().__init__(MessageType.CHAT_MESSAGE, {
             "channel_name": channel_name,
             "username": username,
             "message_text": message_text
-        }, timestamp_ms=timestamp_ms)
+        }, timestamp_ms=timestamp_ms, logical_clock=logical_clock)
     
     @staticmethod
     def deserialize_chat_message(data: bytes) -> 'ChatMessageBody':
@@ -344,5 +371,6 @@ class ChatMessageBody(Message):
             channel_name=msg.channel_name,
             username=msg.username,
             message_text=msg.message_text,
-            timestamp_ms=msg.timestamp_ms
+            timestamp_ms=msg.timestamp_ms,
+            logical_clock=msg.logical_clock
         )
