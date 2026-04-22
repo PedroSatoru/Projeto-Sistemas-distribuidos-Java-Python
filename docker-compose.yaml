@@ -37,6 +37,23 @@ services:
     networks:
       - chat_network
 
+  # Reference Service (Part 3) – clock sync, rank, heartbeat
+  python_reference:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: python_reference
+    command:
+      - reference/reference.py
+      - --endpoint
+      - tcp://*:5559
+    ports:
+      - "5559:5559"
+    networks:
+      - chat_network
+    environment:
+      - PYTHONUNBUFFERED=1
+
   # Java Server 1
   java_server_1:
     build:
@@ -153,10 +170,14 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --reference-endpoint
+      - tcp://python_reference:5559
       - --data-file
       - /data/server1_data.json
       - --users-file
       - users.txt
+      - --server-name
+      - python_server_1
     volumes:
       - ./python/data:/data
     networks:
@@ -166,6 +187,7 @@ services:
     depends_on:
       - broker
       - python_proxy
+      - python_reference
 
   # Python Server 2
   python_server_2:
@@ -179,10 +201,14 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --reference-endpoint
+      - tcp://python_reference:5559
       - --data-file
       - /data/server2_data.json
       - --users-file
       - users.txt
+      - --server-name
+      - python_server_2
     volumes:
       - ./python/data:/data
     networks:
@@ -192,6 +218,7 @@ services:
     depends_on:
       - broker
       - python_proxy
+      - python_reference
 
   # Python Client 1 (connects to Server 1)
   python_client_1:
