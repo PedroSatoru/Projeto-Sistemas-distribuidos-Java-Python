@@ -1,41 +1,74 @@
-# Sistema de Chat Distribuído 
+# Sistema de Chat Distribuido
 
-Implementação da Parte 2 do projeto de Sistemas Distribuídos com interoperabilidade entre Python e Java, introduzindo o padrão Publisher-Subscriber para publicação em canais.
+Implementacao da Parte 3 do projeto de Sistemas Distribuidos com interoperabilidade entre Python e Java, incluindo:
+- pub/sub em canais;
+- relogio logico (Lamport) nas mensagens;
+- sincronizacao de relogio fisico dos servidores via servico de referencia;
+- heartbeat de disponibilidade dos servidores.
 
-## Visão Geral
+## Visao Geral
 
-A arquitetura foi expandida para incluir um proxy Pub/Sub dedicado, permitindo que os usuários se inscrevam em canais e recebam mensagens em tempo real.
+A arquitetura possui broker Req/Rep, proxy Pub/Sub e um servico de referencia para coordenacao de servidores.
 
 Topologia em execução:
 
-- **1 Broker Req-Rep (Python)**: Gerencia login, listagem e criação de canais (Portas 5555/5556).
-- **1 Proxy Pub/Sub (Python)**: Gerencia a distribuição de mensagens nos canais (Portas 5557/5558).
-- **Servidores (Python/Java)**: Atuam como REPs para o broker e como PUBs para o proxy.
-- **Clientes/Bots (Python/Java)**: Atuam como REQs para o broker e como SUBs para o proxy.
+Topologia em execucao:
 
-## Tecnologias e Decisões
+- 1 Broker Req-Rep (Python): gerencia login, listagem e criacao de canais (portas 5555/5556).
+- 1 Proxy Pub/Sub (Python): gerencia distribuicao de mensagens por topico/canal (portas 5557/5558).
+- 1 Servico de Referencia (Python): responde rank/list/heartbeat e fornece hora de referencia (porta 5559).
+- Servidores (Python/Java): atuam como REPs para o broker, PUBs para o proxy e clientes REQ do servico de referencia.
+- Clientes/Bots (Python/Java): atuam como REQs para o broker e SUBs para o proxy.
+
+## Tecnologias e Decisoes
 
 ### Comunicação Pub/Sub
-- **Proxy Centralizado**: Optamos por um proxy ZeroMQ (XSUB/XPUB) centralizado para desacoplar totalmente os publicadores (servidores) dos inscritos (clientes). Isso facilita a escalabilidade e a interoperabilidade.
-- **Tópicos**: Os nomes dos canais são usados como tópicos no ZeroMQ. O filtragem é feita pelo proxy e pelos sockets SUB dos clientes.
+### Comunicacao Pub/Sub
+- Proxy centralizado: proxy ZeroMQ (XSUB/XPUB) para desacoplar publicadores (servidores) e inscritos (clientes).
+- Topicos: nomes de canais sao usados como topicos no ZeroMQ.
+
+### Relogio Logico (Lamport)
+- Toda mensagem de cliente para servidor inclui logical_clock.
+- Antes de enviar, o processo incrementa seu contador logico.
+- Ao receber, o processo atualiza com max(local, recebido) + 1.
+- Campos logical_clock foram adicionados em ClientRequest, ServerResponse e ChatMessage.
+
+### Sincronizacao de Relogio Fisico e Heartbeat
+- Cada servidor solicita rank ao iniciar (acao rank no servico de referencia).
+- A cada 10 mensagens de cliente processadas, servidor envia heartbeat.
+- A resposta de heartbeat inclui reference_time_ms para ajuste de offset do relogio local.
+- Servidores inativos sao removidos da lista de disponiveis pelo servico de referencia.
 
 ### Persistência
-O servidor agora persiste o histórico de mensagens e eventos:
-- **Python Server**: Utiliza arquivos JSON (`python/data/serverX_data.json`) para persistir canais, histórico de logins e todas as mensagens publicadas. O JSON foi escolhido pela facilidade de manipulação e legibilidade em Python.
-- **Java Server**: Utiliza arquivos de texto plano (`java/data/serverX_messages.txt`, etc.) com campos delimitados por `|`. Esta escolha visa simplicidade e performance em Java, facilitando o parse manual se necessário.
+### Persistencia
+O servidor persiste historico de mensagens e eventos:
+- Python Server: arquivos JSON em python/data/serverX_data.json.
+- Java Server: arquivos texto em java/data/serverX_messages.txt, java/data/serverX_logins.txt e java/data/serverX_channels.txt.
 
 ### Protocolo (Protobuf)
-O contrato foi atualizado para incluir:
-- `PublishRequest`: Para solicitação de publicação via REQ-REP.
-- `ChatMessage`: Estrutura da mensagem enviada via PUB-SUB.
+Contrato principal em python/proto/chat.proto e java/src/main/proto/chat.proto.
+
+Mensagens principais:
+- LoginRequest/LoginResponse
+- ListChannelsRequest/ListChannelsResponse
+- CreateChannelRequest/CreateChannelResponse
+- PublishRequest/PublishResponse
+- ChatMessage
+- ClientRequest/ServerResponse
+- ReferenceRequest/ReferenceResponse/ServerInfo
+
+Campos relevantes da Parte 3:
+- logical_clock em ClientRequest, ServerResponse e ChatMessage
+- reference_time_ms em ReferenceResponse
 
 ## Funcionamento dos Bots
 
-Seguindo o padrão estabelecido:
-1. **Verificação de Canais**: O bot garante que existam pelo menos 5 canais no sistema.
-2. **Inscrição**: O bot se inscreve em pelo menos 3 canais aleatórios.
-3. **Loop de Publicação**: Escolhe um canal aleatório e publica 10 mensagens (intervalo de 1s).
-4. **Logs**: Exibe no console cada mensagem recebida via SUB, contendo Canal, Mensagem, Timestamp de Envio e Timestamp de Recebimento.
+Fluxo padrao:
+1. Verifica que existem pelo menos 5 canais.
+2. Se inscreve em pelo menos 3 canais.
+3. Publica 10 mensagens (intervalo de 1s).
+4. Exibe logs das mensagens recebidas via SUB.
+5. Atualiza relogio logico em envios e recebimentos.
 
 ## Como executar
 
@@ -45,6 +78,41 @@ Subir todo o ambiente:
 docker compose up --build
 ```
 
+Para subir em segundo plano:
+
+```bash
+docker compose up --build -d
+```
+
+Para acompanhar logs:
+
+```bash
+docker compose logs -f
+```
+
+Para encerrar:
+
+```bash
+docker compose down
+```
+
+## Como validar a Parte 3
+
+Sinais esperados em logs:
+- Servidores Java/Python com evento de rank recebido do servico de referencia.
+- Heartbeat enviado a cada 10 mensagens de cliente.
+- Campos lc=... aparecendo e crescendo monotonicamente.
+- Publicacoes pub/sub entre clientes e servidores de linguagens diferentes.
+
+Servicos chave no compose:
+- broker
+- python_proxy
+- python_reference
+- java_server_1 / java_server_2
+- python_server_1 / python_server_2
+- java_client_1 / java_client_2
+- python_client_1 / python_client_2
+
 ## Estrutura do Projeto
 
 ```text
@@ -52,19 +120,28 @@ python/
   broker/
     broker.py (Req-Rep)
     proxy.py  (Pub-Sub)
+  reference/reference.py (Servico de referencia)
   client/client.py
   server/server.py
-  schemas/data_models.py (Persistência)
+  schemas/data_models.py (Persistencia)
+  schemas/logical_clock.py
   proto/chat.proto
 
 java/
   src/main/java/
     ChatClientBotMain.java
     ChatServerMain.java
-    PersistenceStore.java (Persistência)
+    ReferenceServiceClient.java
+    LogicalClock.java
+    PersistenceStore.java (Persistencia)
   src/main/proto/chat.proto
 
 docker-compose.yaml
+
+## Documentacao da Entrega 3
+
+Detalhamento tecnico das alteracoes:
+- Docs/entrega3-java-python.md
 ```
 
 ## Autores

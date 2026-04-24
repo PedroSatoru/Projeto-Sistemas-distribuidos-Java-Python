@@ -68,6 +68,8 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --reference-endpoint
+      - tcp://python_reference:5559
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -79,6 +81,7 @@ services:
     depends_on:
       - broker
       - python_proxy
+      - python_reference
 
   # Java Server 2
   java_server_2:
@@ -94,6 +97,8 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --reference-endpoint
+      - tcp://python_reference:5559
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -105,6 +110,7 @@ services:
     depends_on:
       - broker
       - python_proxy
+      - python_reference
 
   # Java Client 1
   java_client_1:
