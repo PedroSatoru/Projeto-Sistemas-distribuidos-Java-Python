@@ -1,11 +1,12 @@
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.LongSupplier;
 import java.util.regex.Pattern;
 
 import proto.ChatProtocol;
@@ -17,16 +18,18 @@ public class ChatService {
     private final Set<String> activeUsers;
     private final Set<String> channels;
     private final PersistenceStore store;
+    private final LongSupplier nowMsSupplier;
     private OutboundPublication lastPublication;
 
-    public record OutboundPublication(String channel, ChatProtocol.ChatMessage chatMessage) {
+    public record OutboundPublication(String channel, String username, String messageText) {
     }
 
-    public ChatService(Path usersFile, PersistenceStore store) {
+    public ChatService(Path usersFile, PersistenceStore store, LongSupplier nowMsSupplier) {
         this.allowedUsers = loadAllowedUsers(usersFile);
         this.activeUsers = new HashSet<>();
         this.store = store;
         this.channels = store.loadChannels();
+        this.nowMsSupplier = nowMsSupplier;
     }
 
     public ChatProtocol.ServerResponse handle(ChatProtocol.ClientRequest request) {
@@ -64,7 +67,7 @@ public class ChatService {
             activeUsers.add(normalized);
         }
 
-        long now = System.currentTimeMillis();
+        long now = nowMs();
         store.appendLogin(now, username);
         return loginResponse(true, "");
     }
@@ -77,12 +80,12 @@ public class ChatService {
         }
 
         ChatProtocol.ListChannelsResponse response = ChatProtocol.ListChannelsResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .addAllChannels(ordered)
                 .build();
 
         return ChatProtocol.ServerResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setListChannelsResponse(response)
                 .build();
     }
@@ -130,70 +133,68 @@ public class ChatService {
             }
         }
 
-        long now = request.getTimestampMs() > 0 ? request.getTimestampMs() : System.currentTimeMillis();
-        ChatProtocol.ChatMessage chatMessage = ChatProtocol.ChatMessage.newBuilder()
-                .setTimestampMs(now)
-                .setChannelName(channelName)
-                .setUsername(publicationUser)
-                .setMessageText(messageText)
-                .build();
+        long now = nowMs();
 
         store.appendPublishedMessage(now, publicationUser, channelName, messageText);
         synchronized (this) {
-            lastPublication = new OutboundPublication(channelName, chatMessage);
+            lastPublication = new OutboundPublication(channelName, publicationUser, messageText);
         }
         return publishResponse(true, "");
     }
 
     private ChatProtocol.ServerResponse loginResponse(boolean success, String error) {
         ChatProtocol.LoginResponse response = ChatProtocol.LoginResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setSuccess(success)
                 .setError(error)
                 .build();
 
         return ChatProtocol.ServerResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setLoginResponse(response)
                 .build();
     }
 
     private ChatProtocol.ServerResponse createChannelResponse(boolean success, String error) {
         ChatProtocol.CreateChannelResponse response = ChatProtocol.CreateChannelResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setSuccess(success)
                 .setError(error)
                 .build();
 
         return ChatProtocol.ServerResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setCreateChannelResponse(response)
                 .build();
     }
 
     private ChatProtocol.ServerResponse publishResponse(boolean success, String error) {
         ChatProtocol.PublishResponse response = ChatProtocol.PublishResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setSuccess(success)
                 .setError(error)
                 .build();
 
         return ChatProtocol.ServerResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+            .setTimestampMs(nowMs())
                 .setPublishResponse(response)
                 .build();
     }
 
     private ChatProtocol.ServerResponse error(String message) {
         ChatProtocol.ErrorResponse response = ChatProtocol.ErrorResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+                .setTimestampMs(nowMs())
                 .setError(message)
                 .build();
 
         return ChatProtocol.ServerResponse.newBuilder()
-                .setTimestampMs(System.currentTimeMillis())
+                .setTimestampMs(nowMs())
                 .setErrorResponse(response)
                 .build();
+    }
+
+    private long nowMs() {
+        return nowMsSupplier.getAsLong();
     }
 
     private Set<String> loadAllowedUsers(Path usersFile) {

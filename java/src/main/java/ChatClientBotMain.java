@@ -19,11 +19,12 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import proto.ChatProtocol;
 
 public class ChatClientBotMain {
-    private static void log(String level, String id, String event, String message) {
+    private static void log(String level, String id, String event, String message, long lc) {
         long ts = System.currentTimeMillis();
         System.out.printf(
-                "[ts=%d][lang=JAVA][role=CLIENT][id=%s][lvl=%s][evt=%s] %s%n",
+                "[ts=%d][lc=%d][lang=JAVA][role=CLIENT][id=%s][lvl=%s][evt=%s] %s%n",
                 ts,
+                lc,
                 id,
                 level,
                 event,
@@ -31,10 +32,11 @@ public class ChatClientBotMain {
         );
     }
 
-    private static void log(String level, String id, String event, String message, long messageTs) {
+    private static void log(String level, String id, String event, String message, long messageTs, long lc) {
         System.out.printf(
-                "[ts=%d][lang=JAVA][role=CLIENT][id=%s][lvl=%s][evt=%s] %s%n",
+                "[ts=%d][lc=%d][lang=JAVA][role=CLIENT][id=%s][lvl=%s][evt=%s] %s%n",
                 messageTs,
+                lc,
                 id,
                 level,
                 event,
@@ -44,6 +46,7 @@ public class ChatClientBotMain {
 
     public static void main(String[] args) throws InterruptedException {
         Config config = Config.from(args);
+        LogicalClock logicalClock = new LogicalClock();
 
         try (ZContext context = new ZContext()) {
             ZMQ.Socket reqSocket = context.createSocket(SocketType.REQ);
@@ -52,26 +55,26 @@ public class ChatClientBotMain {
             reqSocket.setReceiveTimeOut(config.timeoutMs());
             subSocket.connect(config.subEndpoint());
 
-            log("INFO", config.username(), "CONNECT", "REQ conectado em " + config.frontendEndpoint());
-            log("INFO", config.username(), "CONNECT", "SUB conectado em " + config.subEndpoint());
+            log("INFO", config.username(), "CONNECT", "REQ conectado em " + config.frontendEndpoint(), logicalClock.value());
+            log("INFO", config.username(), "CONNECT", "SUB conectado em " + config.subEndpoint(), logicalClock.value());
 
-            if (!loginWithRetry(reqSocket, config.username(), config.loginAttempts(), config.retryDelayMs())) {
-                log("ERROR", config.username(), "LOGIN_FAIL", "login falhou apos " + config.loginAttempts() + " tentativas");
+            if (!loginWithRetry(reqSocket, config.username(), config.loginAttempts(), config.retryDelayMs(), logicalClock)) {
+                log("ERROR", config.username(), "LOGIN_FAIL", "login falhou apos " + config.loginAttempts() + " tentativas", logicalClock.value());
                 return;
             }
 
             Set<String> subscribedChannels = new HashSet<>();
-            Thread listener = startSubscriberThread(subSocket, config.username());
+            Thread listener = startSubscriberThread(subSocket, config.username(), logicalClock);
 
-            ensureAtLeastFiveChannels(reqSocket, config.username());
-            ensureUpToThreeSubscriptions(reqSocket, subSocket, config.username(), subscribedChannels, config.random());
-            runPublishLoop(reqSocket, subSocket, config.username(), subscribedChannels, config.random());
+            ensureAtLeastFiveChannels(reqSocket, config.username(), logicalClock);
+            ensureUpToThreeSubscriptions(reqSocket, subSocket, config.username(), subscribedChannels, config.random(), logicalClock);
+            runPublishLoop(reqSocket, subSocket, config.username(), subscribedChannels, config.random(), logicalClock);
 
             listener.join();
         }
     }
 
-    private static boolean loginWithRetry(ZMQ.Socket socket, String username, int attempts, long retryDelayMs)
+    private static boolean loginWithRetry(ZMQ.Socket socket, String username, int attempts, long retryDelayMs, LogicalClock logicalClock)
             throws InterruptedException {
         for (int i = 1; i <= attempts; i++) {
             ChatProtocol.LoginRequest loginRequest = ChatProtocol.LoginRequest.newBuilder()
@@ -79,18 +82,20 @@ public class ChatClientBotMain {
                     .setUsername(username)
                     .build();
 
+            long sendLc = logicalClock.increment();
             ChatProtocol.ClientRequest request = ChatProtocol.ClientRequest.newBuilder()
                     .setTimestampMs(System.currentTimeMillis())
+                    .setLogicalClock(sendLc)
                     .setLoginRequest(loginRequest)
                     .build();
 
-            ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "LOGIN");
+            ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "LOGIN", logicalClock);
             if (response == null) {
                 continue;
             }
 
             if (response.hasLoginResponse() && response.getLoginResponse().getSuccess()) {
-                log("INFO", username, "LOGIN_OK", "login realizado com sucesso", response.getTimestampMs());
+                log("INFO", username, "LOGIN_OK", "login realizado com sucesso", response.getTimestampMs(), logicalClock.value());
                 return true;
             }
 
@@ -98,68 +103,72 @@ public class ChatClientBotMain {
                     ? response.getLoginResponse().getError()
                     : response.getErrorResponse().getError();
 
-            log("WARN", username, "LOGIN_RETRY", "tentativa " + i + " falhou: " + reason, response.getTimestampMs());
+            log("WARN", username, "LOGIN_RETRY", "tentativa " + i + " falhou: " + reason, response.getTimestampMs(), logicalClock.value());
             pauseMs(retryDelayMs);
         }
         return false;
     }
 
-    private static List<String> listChannels(ZMQ.Socket socket, String username) {
+    private static List<String> listChannels(ZMQ.Socket socket, String username, LogicalClock logicalClock) {
         ChatProtocol.ListChannelsRequest listRequest = ChatProtocol.ListChannelsRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
                 .build();
 
+        long sendLc = logicalClock.increment();
         ChatProtocol.ClientRequest request = ChatProtocol.ClientRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
+                .setLogicalClock(sendLc)
                 .setListChannelsRequest(listRequest)
                 .build();
 
-        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "LIST_CHANNELS");
+        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "LIST_CHANNELS", logicalClock);
         if (response == null) {
             return List.of();
         }
 
         if (response.hasListChannelsResponse()) {
             List<String> channels = response.getListChannelsResponse().getChannelsList();
-            log("INFO", username, "LIST_CHANNELS_OK", "canais=" + channels);
+            log("INFO", username, "LIST_CHANNELS_OK", "canais=" + channels, logicalClock.value());
             return channels;
         }
 
-        log("ERROR", username, "LIST_CHANNELS_FAIL", response.getErrorResponse().getError());
+        log("ERROR", username, "LIST_CHANNELS_FAIL", response.getErrorResponse().getError(), logicalClock.value());
         return List.of();
     }
 
-    private static boolean createChannel(ZMQ.Socket socket, String username, String channel) {
+    private static boolean createChannel(ZMQ.Socket socket, String username, String channel, LogicalClock logicalClock) {
         ChatProtocol.CreateChannelRequest createRequest = ChatProtocol.CreateChannelRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
                 .setChannelName(channel)
                 .build();
 
+        long sendLc = logicalClock.increment();
         ChatProtocol.ClientRequest request = ChatProtocol.ClientRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
+                .setLogicalClock(sendLc)
                 .setCreateChannelRequest(createRequest)
                 .build();
 
-        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "CREATE_CHANNEL");
+        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "CREATE_CHANNEL", logicalClock);
         if (response == null) {
             return false;
         }
 
         if (response.hasCreateChannelResponse() && response.getCreateChannelResponse().getSuccess()) {
-            log("INFO", username, "CREATE_CHANNEL_OK", "canal criado: " + channel);
+            log("INFO", username, "CREATE_CHANNEL_OK", "canal criado: " + channel, logicalClock.value());
             return true;
         }
 
         if (response.hasCreateChannelResponse()) {
-            log("WARN", username, "CREATE_CHANNEL_FAIL", "falha ao criar canal " + channel + ": " + response.getCreateChannelResponse().getError());
+            log("WARN", username, "CREATE_CHANNEL_FAIL", "falha ao criar canal " + channel + ": " + response.getCreateChannelResponse().getError(), logicalClock.value());
             return false;
         }
 
-        log("ERROR", username, "CREATE_CHANNEL_FAIL", "erro ao criar canal " + channel + ": " + response.getErrorResponse().getError());
+        log("ERROR", username, "CREATE_CHANNEL_FAIL", "erro ao criar canal " + channel + ": " + response.getErrorResponse().getError(), logicalClock.value());
         return false;
     }
 
-    private static boolean publishMessage(ZMQ.Socket socket, String username, String channel, String text) {
+    private static boolean publishMessage(ZMQ.Socket socket, String username, String channel, String text, LogicalClock logicalClock) {
         ChatProtocol.PublishRequest publishRequest = ChatProtocol.PublishRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
                 .setChannelName(channel)
@@ -167,12 +176,14 @@ public class ChatClientBotMain {
                 .setUsername(username)
                 .build();
 
+        long sendLc = logicalClock.increment();
         ChatProtocol.ClientRequest request = ChatProtocol.ClientRequest.newBuilder()
                 .setTimestampMs(System.currentTimeMillis())
+                .setLogicalClock(sendLc)
                 .setPublishRequest(publishRequest)
                 .build();
 
-        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "PUBLISH");
+        ChatProtocol.ServerResponse response = sendAndReceive(socket, request, username, "PUBLISH", logicalClock);
         if (response == null) {
             return false;
         }
@@ -182,14 +193,14 @@ public class ChatClientBotMain {
         }
 
         if (response.hasPublishResponse()) {
-            log("WARN", username, "PUBLISH_FAIL", response.getPublishResponse().getError(), response.getTimestampMs());
+            log("WARN", username, "PUBLISH_FAIL", response.getPublishResponse().getError(), response.getTimestampMs(), logicalClock.value());
         } else {
-            log("ERROR", username, "PUBLISH_FAIL", response.getErrorResponse().getError(), response.getTimestampMs());
+            log("ERROR", username, "PUBLISH_FAIL", response.getErrorResponse().getError(), response.getTimestampMs(), logicalClock.value());
         }
         return false;
     }
 
-    private static Thread startSubscriberThread(ZMQ.Socket subSocket, String username) {
+    private static Thread startSubscriberThread(ZMQ.Socket subSocket, String username, LogicalClock logicalClock) {
         Thread listener = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
@@ -206,6 +217,7 @@ public class ChatClientBotMain {
 
                     byte[] payload = frames.getLast().getData();
                     ChatProtocol.ChatMessage chatMessage = ProtocolCodec.parseChatMessage(payload);
+            logicalClock.update(chatMessage.getLogicalClock());
                     long recvTs = System.currentTimeMillis();
                     frames.destroy();
 
@@ -217,13 +229,14 @@ public class ChatClientBotMain {
                                     + " | Msg: " + chatMessage.getMessageText()
                                     + " | TS envio: " + chatMessage.getTimestampMs()
                                     + " | TS recv: " + recvTs,
-                            recvTs
+                            recvTs,
+                            logicalClock.value()
                     );
                 } catch (InvalidProtocolBufferException ex) {
-                    log("WARN", username, "SUB_PARSE_ERR", "payload protobuf invalido: " + ex.getMessage());
+                    log("WARN", username, "SUB_PARSE_ERR", "payload protobuf invalido: " + ex.getMessage(), logicalClock.value());
                 } catch (RuntimeException ex) {
                     if (!Thread.currentThread().isInterrupted()) {
-                        log("ERROR", username, "SUB_ERR", "erro no subscriber: " + ex.getMessage());
+                        log("ERROR", username, "SUB_ERR", "erro no subscriber: " + ex.getMessage(), logicalClock.value());
                     }
                 }
             }
@@ -234,13 +247,13 @@ public class ChatClientBotMain {
         return listener;
     }
 
-    private static void ensureAtLeastFiveChannels(ZMQ.Socket reqSocket, String username) {
-        List<String> channels = new ArrayList<>(listChannels(reqSocket, username));
+    private static void ensureAtLeastFiveChannels(ZMQ.Socket reqSocket, String username, LogicalClock logicalClock) {
+        List<String> channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
 
         while (channels.size() < 5) {
             String channelName = "java_ch_" + UUID.randomUUID().toString().substring(0, 6);
-            if (createChannel(reqSocket, username, channelName)) {
-                channels = new ArrayList<>(listChannels(reqSocket, username));
+            if (createChannel(reqSocket, username, channelName, logicalClock)) {
+                channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
             }
         }
     }
@@ -250,9 +263,10 @@ public class ChatClientBotMain {
             ZMQ.Socket subSocket,
             String username,
             Set<String> subscribedChannels,
-            Random random
+            Random random,
+            LogicalClock logicalClock
     ) {
-        List<String> channels = new ArrayList<>(listChannels(reqSocket, username));
+        List<String> channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
         if (channels.isEmpty()) {
             return;
         }
@@ -268,7 +282,7 @@ public class ChatClientBotMain {
             String selected = available.get(random.nextInt(available.size()));
             subSocket.subscribe(selected.getBytes(StandardCharsets.UTF_8));
             subscribedChannels.add(selected);
-            log("INFO", username, "SUB_OK", "inscrito em " + selected);
+            log("INFO", username, "SUB_OK", "inscrito em " + selected, logicalClock.value());
         }
     }
 
@@ -277,19 +291,20 @@ public class ChatClientBotMain {
             ZMQ.Socket subSocket,
             String username,
             Set<String> subscribedChannels,
-            Random random
+            Random random,
+            LogicalClock logicalClock
     ) throws InterruptedException {
         final int maxPublishes = 10;
         int messageCounter = 0;
         while (messageCounter < maxPublishes) {
-            List<String> channels = new ArrayList<>(listChannels(reqSocket, username));
+            List<String> channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
             if (channels.isEmpty()) {
                 pauseMs(1000);
                 continue;
             }
 
             if (subscribedChannels.size() < 3) {
-                ensureUpToThreeSubscriptions(reqSocket, subSocket, username, subscribedChannels, random);
+                ensureUpToThreeSubscriptions(reqSocket, subSocket, username, subscribedChannels, random, logicalClock);
             }
 
             String targetChannel = channels.get(random.nextInt(channels.size()));
@@ -297,12 +312,12 @@ public class ChatClientBotMain {
                 messageCounter++;
                 String text = "Hello pub/sub " + messageCounter + " from " + username + " ["
                         + UUID.randomUUID().toString().substring(0, 4) + "]";
-                publishMessage(reqSocket, username, targetChannel, text);
+                publishMessage(reqSocket, username, targetChannel, text, logicalClock);
                 pauseMs(1000);
             }
         }
 
-        log("INFO", username, "PUBLISH_DONE", "limite de 10 publicacoes totais atingido");
+            log("INFO", username, "PUBLISH_DONE", "limite de 10 publicacoes totais atingido", logicalClock.value());
     }
 
     private static void pauseMs(long delayMs) {
@@ -313,27 +328,29 @@ public class ChatClientBotMain {
             ZMQ.Socket socket,
             ChatProtocol.ClientRequest request,
             String username,
-            String label
+            String label,
+            LogicalClock logicalClock
     ) {
         try {
             byte[] payload = ProtocolCodec.toBytes(request);
-            log("INFO", username, "SEND", "action=" + label + " bytes=" + payload.length, request.getTimestampMs());
+            log("INFO", username, "SEND", "action=" + label + " bytes=" + payload.length, request.getTimestampMs(), logicalClock.value());
             socket.send(payload, 0);
 
             byte[] raw = socket.recv(0);
             if (raw == null) {
-                log("ERROR", username, "TIMEOUT", "timeout na acao " + label);
+                log("ERROR", username, "TIMEOUT", "timeout na acao " + label, logicalClock.value());
                 return null;
             }
 
             ChatProtocol.ServerResponse response = ProtocolCodec.parseServerResponse(raw);
-            log("INFO", username, "RECV", "action=" + response.getActionCase() + " bytes=" + raw.length, response.getTimestampMs());
+            logicalClock.update(response.getLogicalClock());
+            log("INFO", username, "RECV", "action=" + response.getActionCase() + " bytes=" + raw.length, response.getTimestampMs(), logicalClock.value());
             return response;
         } catch (InvalidProtocolBufferException ex) {
-            log("ERROR", username, "PROTO_INVALID", "resposta protobuf invalida em " + label + ": " + ex.getMessage());
+            log("ERROR", username, "PROTO_INVALID", "resposta protobuf invalida em " + label + ": " + ex.getMessage(), logicalClock.value());
             return null;
         } catch (RuntimeException ex) {
-            log("ERROR", username, "COMM_ERROR", "erro de comunicacao em " + label + ": " + ex.getMessage());
+            log("ERROR", username, "COMM_ERROR", "erro de comunicacao em " + label + ": " + ex.getMessage(), logicalClock.value());
             return null;
         }
     }
