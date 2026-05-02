@@ -89,11 +89,13 @@ message ReferenceRequest {
   int64 timestamp_ms = 1;
   string action = 2;       // "rank", "list", "heartbeat"
   string server_name = 3;
+  string election_endpoint = 4;  // Part 4: election REP endpoint (e.g. tcp://hostname:6001)
 }
 
 message ServerInfo {
   string name = 1;
   int32 rank = 2;
+  string election_endpoint = 3;  // Part 4
 }
 
 message ReferenceResponse {
@@ -102,5 +104,40 @@ message ReferenceResponse {
   int32 rank = 3;
   repeated ServerInfo servers = 4;
   string status = 5;
-  int64 reference_time_ms = 6;
+  int64 reference_time_ms = 6;   // Part 4: kept for rank response only (initial sync)
 }
+
+// ---- Part 4: Election Messages (Bully algorithm) ----
+
+message ElectionRequest {
+  int64 timestamp_ms = 1;
+  string server_name = 2;
+  int32 rank = 3;
+}
+
+message ElectionResponse {
+  int64 timestamp_ms = 1;
+  string server_name = 2;
+  bool ok = 3;
+}
+
+// ---- Part 4: Berkeley Clock Sync ----
+
+message ClockSyncRequest {
+  int64 timestamp_ms = 1;
+  string server_name = 2;
+  int64 local_time_ms = 3;
+}
+
+message ClockSyncResponse {
+  int64 timestamp_ms = 1;
+  int64 correct_time_ms = 2;
+}
+
+// ---- Part 4: Coordinator Announcement (PUB on "servers" topic) ----
+
+message CoordinatorAnnouncement {
+  int64 timestamp_ms = 1;
+  string coordinator_name = 2;
+}
+

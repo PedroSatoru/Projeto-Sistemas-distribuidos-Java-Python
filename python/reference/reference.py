@@ -1,12 +1,12 @@
 """
-Reference Service for clock synchronisation and server registry.
+Reference Service for server registry and heartbeat.
 
 Responsibilities:
   1. Assign a unique rank to each server on first contact.
   2. Maintain the list of registered servers (no duplicate names).
-  3. Return the list of available servers with ranks.
+  3. Return the list of available servers with ranks and election endpoints.
   4. Accept heartbeats from servers and remove stale ones.
-  5. Return the current reference time so servers can sync their physical clock.
+  Part 4: No longer returns reference time in heartbeat (clock sync is via coordinator).
 """
 
 import argparse
@@ -67,12 +67,14 @@ class ReferenceService:
     # Request handlers
     # ------------------------------------------------------------------
 
-    def _handle_rank(self, server_name: str) -> chat_pb2.ReferenceResponse:
+    def _handle_rank(self, server_name: str, election_endpoint: str = "") -> chat_pb2.ReferenceResponse:
         """Register server and return its rank."""
         with self._lock:
             if server_name in self._servers:
                 rank = self._servers[server_name]["rank"]
                 self._servers[server_name]["last_heartbeat"] = time.time()
+                if election_endpoint:
+                    self._servers[server_name]["election_endpoint"] = election_endpoint
                 _log("INFO", "RANK_EXISTING", f"{server_name} -> rank={rank} (ja registrado)")
             else:
                 rank = self._next_rank
@@ -80,8 +82,9 @@ class ReferenceService:
                 self._servers[server_name] = {
                     "rank": rank,
                     "last_heartbeat": time.time(),
+                    "election_endpoint": election_endpoint,
                 }
-                _log("INFO", "RANK_NEW", f"{server_name} -> rank={rank}")
+                _log("INFO", "RANK_NEW", f"{server_name} -> rank={rank}, election={election_endpoint}")
 
         return chat_pb2.ReferenceResponse(
             timestamp_ms=_now_ms(),
@@ -91,10 +94,14 @@ class ReferenceService:
         )
 
     def _handle_list(self) -> chat_pb2.ReferenceResponse:
-        """Return list of available servers."""
+        """Return list of available servers with election endpoints."""
         with self._lock:
             infos = [
-                chat_pb2.ServerInfo(name=name, rank=data["rank"])
+                chat_pb2.ServerInfo(
+                    name=name,
+                    rank=data["rank"],
+                    election_endpoint=data.get("election_endpoint", ""),
+                )
                 for name, data in self._servers.items()
             ]
         _log("INFO", "LIST", f"retornando {len(infos)} servidor(es)")
@@ -102,14 +109,15 @@ class ReferenceService:
             timestamp_ms=_now_ms(),
             action="list",
             servers=infos,
-            reference_time_ms=_now_ms(),
         )
 
-    def _handle_heartbeat(self, server_name: str) -> chat_pb2.ReferenceResponse:
-        """Update heartbeat timestamp and return reference time."""
+    def _handle_heartbeat(self, server_name: str, election_endpoint: str = "") -> chat_pb2.ReferenceResponse:
+        """Update heartbeat timestamp. Part 4: no longer returns reference time."""
         with self._lock:
             if server_name in self._servers:
                 self._servers[server_name]["last_heartbeat"] = time.time()
+                if election_endpoint:
+                    self._servers[server_name]["election_endpoint"] = election_endpoint
                 _log("INFO", "HEARTBEAT", f"{server_name} heartbeat recebido")
             else:
                 # Server not registered yet – register it on the fly
@@ -118,6 +126,7 @@ class ReferenceService:
                 self._servers[server_name] = {
                     "rank": rank,
                     "last_heartbeat": time.time(),
+                    "election_endpoint": election_endpoint,
                 }
                 _log("WARN", "HEARTBEAT_NEW", f"{server_name} registrado via heartbeat, rank={rank}")
 
@@ -125,7 +134,7 @@ class ReferenceService:
             timestamp_ms=_now_ms(),
             action="heartbeat",
             status="OK",
-            reference_time_ms=_now_ms(),
+            # Part 4: reference_time_ms removed – clock sync is now via coordinator
         )
 
     # ------------------------------------------------------------------
@@ -159,13 +168,14 @@ class ReferenceService:
 
                 action = req.action.lower().strip()
                 server_name = req.server_name.strip()
+                election_endpoint = req.election_endpoint.strip()
 
                 if action == "rank":
-                    resp = self._handle_rank(server_name)
+                    resp = self._handle_rank(server_name, election_endpoint)
                 elif action == "list":
                     resp = self._handle_list()
                 elif action == "heartbeat":
-                    resp = self._handle_heartbeat(server_name)
+                    resp = self._handle_heartbeat(server_name, election_endpoint)
                 else:
                     _log("WARN", "UNKNOWN_ACTION", f"acao desconhecida: {action}")
                     resp = chat_pb2.ReferenceResponse(

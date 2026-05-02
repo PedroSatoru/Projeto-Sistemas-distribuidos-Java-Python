@@ -20,24 +20,27 @@ public class ReferenceServiceClient {
         this.reqSocket.connect(endpoint);
     }
 
-    public ReferenceResult requestRank(String serverName, long timestampMs)
+    public ReferenceResult requestRank(String serverName, long timestampMs, String electionEndpoint)
             throws InvalidProtocolBufferException {
         ChatProtocol.ReferenceRequest request = ChatProtocol.ReferenceRequest.newBuilder()
                 .setTimestampMs(timestampMs)
                 .setAction("rank")
                 .setServerName(serverName)
+                .setElectionEndpoint(electionEndpoint)
                 .build();
 
         ChatProtocol.ReferenceResponse response = sendAndReceive(request);
         return new ReferenceResult(response.getRank(), response.getReferenceTimeMs());
     }
 
-    public ReferenceResult sendHeartbeat(String serverName, long timestampMs)
+    /** Part 4: heartbeat no longer syncs clock. */
+    public ReferenceResult sendHeartbeat(String serverName, long timestampMs, String electionEndpoint)
             throws InvalidProtocolBufferException {
         ChatProtocol.ReferenceRequest request = ChatProtocol.ReferenceRequest.newBuilder()
                 .setTimestampMs(timestampMs)
                 .setAction("heartbeat")
                 .setServerName(serverName)
+                .setElectionEndpoint(electionEndpoint)
                 .build();
 
         ChatProtocol.ReferenceResponse response = sendAndReceive(request);

@@ -294,7 +294,7 @@ public class ChatClientBotMain {
             Random random,
             LogicalClock logicalClock
     ) throws InterruptedException {
-        final int maxPublishes = 10;
+        final int maxPublishes = 30;
         int messageCounter = 0;
         while (messageCounter < maxPublishes) {
             List<String> channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
@@ -317,7 +317,7 @@ public class ChatClientBotMain {
             }
         }
 
-            log("INFO", username, "PUBLISH_DONE", "limite de 10 publicacoes totais atingido", logicalClock.value());
+            log("INFO", username, "PUBLISH_DONE", "limite de 30 publicacoes totais atingido", logicalClock.value());
     }
 
     private static void pauseMs(long delayMs) {

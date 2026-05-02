@@ -37,7 +37,7 @@ services:
     networks:
       - chat_network
 
-  # Reference Service (Part 3) – clock sync, rank, heartbeat
+  # Reference Service (Part 3/4) – rank, heartbeat (no clock sync in Part 4)
   python_reference:
     build:
       context: ./python
@@ -54,7 +54,7 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
 
-  # Java Server 1
+  # Java Server 1 (election port 6003)
   java_server_1:
     build:
       context: ./java
@@ -68,8 +68,12 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --reference-endpoint
       - tcp://python_reference:5559
+      - --election-port
+      - "6003"
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -83,7 +87,7 @@ services:
       - python_proxy
       - python_reference
 
-  # Java Server 2
+  # Java Server 2 (election port 6004)
   java_server_2:
     build:
       context: ./java
@@ -97,8 +101,12 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --reference-endpoint
       - tcp://python_reference:5559
+      - --election-port
+      - "6004"
       - --users-file
       - /app/users.txt
       - --data-dir
@@ -164,7 +172,7 @@ services:
       - python_server_1
       - python_server_2
 
-  # Python Server 1
+  # Python Server 1 (election port 6001)
   python_server_1:
     build:
       context: ./python
@@ -176,6 +184,8 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --reference-endpoint
       - tcp://python_reference:5559
       - --data-file
@@ -184,6 +194,8 @@ services:
       - users.txt
       - --server-name
       - python_server_1
+      - --election-port
+      - "6001"
     volumes:
       - ./python/data:/data
     networks:
@@ -195,7 +207,7 @@ services:
       - python_proxy
       - python_reference
 
-  # Python Server 2
+  # Python Server 2 (election port 6002)
   python_server_2:
     build:
       context: ./python
@@ -207,6 +219,8 @@ services:
       - tcp://broker:5556
       - --pub-endpoint
       - tcp://python_proxy:5557
+      - --sub-endpoint
+      - tcp://python_proxy:5558
       - --reference-endpoint
       - tcp://python_reference:5559
       - --data-file
@@ -215,6 +229,8 @@ services:
       - users.txt
       - --server-name
       - python_server_2
+      - --election-port
+      - "6002"
     volumes:
       - ./python/data:/data
     networks:
