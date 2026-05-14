@@ -127,35 +127,9 @@ class ChatServer:
         lc_val = self.lc.value
         coord = self.coordinator_name or "NONE"
 
-        # Hora local legível
-        t = time.localtime(ts_ms / 1000)
-        time_str = f"{t.tm_hour:02d}:{t.tm_min:02d}:{t.tm_sec:02d}.{ts_ms % 1000:03d}"
-
-        level_icons = {"INFO": "✅", "WARN": "⚠️ ", "ERROR": "❌"}
-        level_icon = level_icons.get(level, "❓")
-
-        event_icons = {
-            "READY": "🟢", "SHUTDOWN": "🔴", "CONNECT": "🔌",
-            "RECV": "📨", "SEND": "📤",
-            "LOGIN_OK": "🔑", "LOGIN_FAIL": "🚫",
-            "CREATE_CHANNEL_OK": "📁", "CREATE_CHANNEL_FAIL": "🚫",
-            "LIST_CHANNELS": "📋", "PUBLISH_OK": "📢", "PUBLISH_FAIL": "🚫",
-            "REPL_STORE": "🔄", "SUB_REPL": "🔗", "SUB_SERVERS": "📡",
-            "HEARTBEAT_OK": "💓", "HEARTBEAT_FAIL": "💔",
-            "ELECTION_START": "🗳️", "ELECTION_WAIT": "⏳", "ELECTION_RECV": "🗳️",
-            "ELECTION_OK_RECV": "✊", "ELECTION_NO_RESP": "🔕",
-            "COORDINATOR_SELF": "👑", "COORDINATOR_UPDATE": "👑", "COORDINATOR_PUB": "📣",
-            "RANK_OK": "🏅", "RANK_FAIL": "🏴",
-            "CLOCK_SYNC_OK": "🕐", "CLOCK_SYNC_FAIL": "⏰", "CLOCK_SYNC_RESP": "🕐",
-            "CLOCK_SYNC_SKIP": "⏩", "CLOCK_SYNC_SELF": "🕐",
-            "ELECTION_BIND": "📡",
-        }
-        event_icon = event_icons.get(event, "  ")
-        coord_mark = "👑" if coord == self.server_id else "  "
-
         print(
-            f"{time_str}  🐍  {self.server_id:<22} {coord_mark}  lc={lc_val:<5}"
-            f"{level_icon}  {event_icon} {event:<26}  {message}",
+            f"[ts={ts_ms}][lc={lc_val}][lang=PY][role=SERVER][id={self.server_id}][rank={self.rank}][coord={coord}]"
+            f"[lvl={level}][evt={event}] {message}",
             flush=True,
         )
     

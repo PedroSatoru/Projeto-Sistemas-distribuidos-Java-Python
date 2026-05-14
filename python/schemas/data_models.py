@@ -57,7 +57,7 @@ class ServerData:
                         for m in self.messages_published
                     }
             except Exception as e:
-                print(f"✗ Erro ao carregar dados: {e}")
+                print(f"Erro ao carregar dados: {e}")
         else:
             self.users = set()
             self.channels = set()
