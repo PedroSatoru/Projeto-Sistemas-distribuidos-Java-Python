@@ -143,12 +143,6 @@ docker-compose.yaml
 Detalhamento tecnico das alteracoes:
 - Docs/entrega3-java-python.md
 ```
-
-## Autores
-
-- Python: Pedro Satoru
-- Java: Pedro Correia
-
 ---
 
 ## Parte 5: Consistencia e Replicacao
@@ -206,4 +200,12 @@ Sinais esperados nos logs apos `docker compose up --build`:
 - `[evt=REPL_STORE]` aparecendo nos servidores que *nao* processaram a requisicao original ao receber copias pelo proxy.
 - Apos execucao, `python/data/server1_data.json` e `server2_data.json` devem conter as mesmas mensagens.
 - `java/data/java_server_1_messages.txt` e `java_server_2_messages.txt` devem conter as mesmas linhas.
+
+
+--- 
+
+## Autores
+
+- Python: Pedro Satoru
+- Java: Pedro Correia
 
