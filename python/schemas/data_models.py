@@ -32,6 +32,8 @@ class ServerData:
         self.channels: Set[str] = set()  # Available channels
         self.login_history: List[UserLogin] = []  # Login history with timestamps
         self.messages_published: List[dict] = []  # List of published messages
+        # Part 5: dedup set for replication (key = ts|channel|text)
+        self._seen_message_keys: Set[str] = set()
         self.load_data()
     
     def load_data(self):
@@ -49,6 +51,11 @@ class ServerData:
                         for log in data.get("login_history", [])
                     ]
                     self.messages_published = data.get("messages_published", [])
+                    # Part 5: rebuild dedup keys from loaded messages
+                    self._seen_message_keys = {
+                        f"{m.get('timestamp_ms', 0)}|{m.get('channel_name', '')}|{m.get('message_text', '')}"
+                        for m in self.messages_published
+                    }
             except Exception as e:
                 print(f"✗ Erro ao carregar dados: {e}")
         else:
@@ -56,6 +63,7 @@ class ServerData:
             self.channels = set()
             self.login_history = []
             self.messages_published = []
+            self._seen_message_keys = set()
     
     def save_data(self):
         """Save data to JSON file"""
@@ -101,11 +109,32 @@ class ServerData:
         """Check if user is logged in"""
         return username in self.users
 
-    def add_message(self, channel_name: str, message_text: str, timestamp_ms: int):
+    def add_message(self, channel_name: str, message_text: str, timestamp_ms: int, username: str = ""):
         """Add a published message and persist to disk"""
-        self.messages_published.append({
+        entry = {
             "channel_name": channel_name,
             "message_text": message_text,
-            "timestamp_ms": timestamp_ms
-        })
+            "timestamp_ms": timestamp_ms,
+            "username": username,
+        }
+        self.messages_published.append(entry)
+        # Keep dedup key in sync
+        key = f"{timestamp_ms}|{channel_name}|{message_text}"
+        self._seen_message_keys.add(key)
         self.save_data()
+
+    def add_message_if_new(self, channel_name: str, message_text: str, timestamp_ms: int, username: str = "") -> bool:
+        """Store a replicated message only if not already present. Returns True if stored."""
+        key = f"{timestamp_ms}|{channel_name}|{message_text}"
+        if key in self._seen_message_keys:
+            return False
+        self._seen_message_keys.add(key)
+        entry = {
+            "channel_name": channel_name,
+            "message_text": message_text,
+            "timestamp_ms": timestamp_ms,
+            "username": username,
+        }
+        self.messages_published.append(entry)
+        self.save_data()
+        return True

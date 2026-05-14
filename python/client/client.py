@@ -4,6 +4,7 @@ Automatically performs login, lists channels, creates new channels, and publishe
 Part 3: logical clock on all messages.
 """
 
+# pyrefly: ignore [missing-import]
 import zmq
 import sys
 import os

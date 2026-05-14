@@ -148,3 +148,62 @@ Detalhamento tecnico das alteracoes:
 
 - Python: Pedro Satoru
 - Java: Pedro Correia
+
+---
+
+## Parte 5: Consistencia e Replicacao
+
+### Problema
+
+Com o balanceamento de carga em round-robin do broker, cada servidor recebe e armazena apenas uma fração das mensagens trocadas. Se um servidor parar, parte do historico se perde. Se um cliente pedir o historico, recebe somente os dados do servidor que respondeu.
+
+### Metodo escolhido: Replicacao Passiva via PUB/SUB existente
+
+O sistema ja possui um proxy PUB/SUB (portas 5557/5558) que os servidores utilizam para publicar mensagens de chat aos clientes (SUBscribers).
+
+**Ideia:** reutilizar esse mesmo canal PUB/SUB para que cada servidor tambem ASSINE (SUB) o proxy e, ao receber uma `ChatMessage`, armazene-a localmente caso ainda nao exista.
+
+#### Fluxo de replicacao
+
+```
+Cliente → Broker (round-robin) → Servidor X
+                                   ├── armazena localmente
+                                   └── PUB → Proxy PUB/SUB
+                                              ├── SUB → Clientes (comportamento existente)
+                                              ├── SUB → Servidor Y → armazena copia [NOVO]
+                                              └── SUB → Servidor Z → armazena copia [NOVO]
+```
+
+#### Como foi implementado
+
+- Cada servidor cria um segundo socket SUB (`replication_sub_socket` em Python, `replicationSub` em Java) conectado ao proxy, inscrito em **todos os topicos** (prefixo vazio `""`).
+- Uma thread dedicada (`_replication_listener` / `replication-listener`) fica escutando mensagens nesse socket.
+- Ao receber uma `ChatMessage`, o servidor verifica se ja a possui (por chave `timestamp_ms|channel|text`) antes de armazenar — evitando duplicatas, inclusive das proprias publicacoes.
+- O evento `REPL_STORE` e registrado no log sempre que uma mensagem e armazenada por replicacao.
+
+#### Adaptacoes em relacao ao metodo teorico
+
+A replicacao passiva classica pressupoe um primario que envia copias explicitamente aos backups. Aqui adaptamos para usar o canal PUB/SUB ja existente como mecanismo de difusao, o que evita a criacao de novos sockets ou protocolo. O resultado e equivalente: todos os servidores recebem todas as mensagens enquanto estao online (consistencia eventual). Mensagens publicadas enquanto um servidor esta offline nao sao recuperadas automaticamente ao voltar.
+
+#### Deduplicacao
+
+- **Python:** metodo `add_message_if_new()` em `ServerData` com conjunto `_seen_message_keys` (reconstruido a partir do JSON ao reiniciar).
+- **Java:** metodo `appendPublishedMessageIfNew()` em `PersistenceStore` com `Set<String> seenMessageKeys` em memoria.
+
+#### Arquivos alterados
+
+| Arquivo | Alteracao |
+|---|---|
+| `python/schemas/data_models.py` | `add_message_if_new()` + `_seen_message_keys` |
+| `python/server/server.py` | socket SUB de replicacao + thread `_replication_listener` |
+| `java/src/main/java/PersistenceStore.java` | `appendPublishedMessageIfNew()` + `seenMessageKeys` |
+| `java/src/main/java/ChatServerMain.java` | socket SUB de replicacao + thread `replication-listener` |
+
+#### Validacao
+
+Sinais esperados nos logs apos `docker compose up --build`:
+- `[evt=SUB_REPL]` em todos os servidores na inicializacao.
+- `[evt=REPL_STORE]` aparecendo nos servidores que *nao* processaram a requisicao original ao receber copias pelo proxy.
+- Apos execucao, `python/data/server1_data.json` e `server2_data.json` devem conter as mesmas mensagens.
+- `java/data/java_server_1_messages.txt` e `java_server_2_messages.txt` devem conter as mesmas linhas.
+

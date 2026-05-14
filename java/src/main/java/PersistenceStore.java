@@ -14,6 +14,9 @@ public class PersistenceStore {
     private final Path loginsFile;
     private final Path messagesFile;
 
+    // Part 5: dedup key set for replication (key = ts|channel|text)
+    private final java.util.Set<String> seenMessageKeys = new java.util.HashSet<>();
+
     public PersistenceStore(Path channelsFile, Path loginsFile, Path messagesFile) {
         this.channelsFile = channelsFile;
         this.loginsFile = loginsFile;
@@ -48,6 +51,25 @@ public class PersistenceStore {
         String sanitized = messageText.replace("\n", "\\n").replace("\r", "");
         String line = timestampMs + "|" + username + "|" + channel + "|" + sanitized + System.lineSeparator();
         appendLine(messagesFile, line);
+        // Part 5: keep dedup key in sync
+        seenMessageKeys.add(timestampMs + "|" + channel + "|" + sanitized);
+    }
+
+    /**
+     * Part 5: Stores a replicated message only if not already seen.
+     * Returns true if the message was stored.
+     */
+    public synchronized boolean appendPublishedMessageIfNew(
+            long timestampMs, String username, String channel, String messageText) {
+        String sanitized = messageText.replace("\n", "\\n").replace("\r", "");
+        String key = timestampMs + "|" + channel + "|" + sanitized;
+        if (seenMessageKeys.contains(key)) {
+            return false;
+        }
+        seenMessageKeys.add(key);
+        String line = timestampMs + "|" + username + "|" + channel + "|" + sanitized + System.lineSeparator();
+        appendLine(messagesFile, line);
+        return true;
     }
 
     public synchronized void persistChannelSet(Set<String> channels) {

@@ -101,9 +101,19 @@ class ChatServer:
         self.servers_sub_socket.setsockopt_string(zmq.SUBSCRIBE, "servers")
         self._log("INFO", "SUB_SERVERS", f"inscrito no topico 'servers' via {self.sub_endpoint}")
 
+        # Part 5: SUB socket for replication — subscribes to ALL channel topics
+        self.replication_sub_socket = self.context.socket(zmq.SUB)
+        self.replication_sub_socket.connect(self.sub_endpoint)
+        self.replication_sub_socket.setsockopt_string(zmq.SUBSCRIBE, "")  # todos os topicos
+        self._log("INFO", "SUB_REPL", f"inscrito em todos os topicos para replicacao via {self.sub_endpoint}")
+
         # Start coordinator announcement listener thread
         self._coordinator_thread = threading.Thread(target=self._coordinator_listener, daemon=True)
         self._coordinator_thread.start()
+
+        # Part 5: Start replication listener thread
+        self._replication_thread = threading.Thread(target=self._replication_listener, daemon=True)
+        self._replication_thread.start()
 
         # Part 4: Initial election after short delay
         threading.Timer(5.0, self._start_election).start()
@@ -116,9 +126,36 @@ class ChatServer:
         ts_ms = ts_ms if ts_ms is not None else self._adjusted_time_ms()
         lc_val = self.lc.value
         coord = self.coordinator_name or "NONE"
+
+        # Hora local legível
+        t = time.localtime(ts_ms / 1000)
+        time_str = f"{t.tm_hour:02d}:{t.tm_min:02d}:{t.tm_sec:02d}.{ts_ms % 1000:03d}"
+
+        level_icons = {"INFO": "✅", "WARN": "⚠️ ", "ERROR": "❌"}
+        level_icon = level_icons.get(level, "❓")
+
+        event_icons = {
+            "READY": "🟢", "SHUTDOWN": "🔴", "CONNECT": "🔌",
+            "RECV": "📨", "SEND": "📤",
+            "LOGIN_OK": "🔑", "LOGIN_FAIL": "🚫",
+            "CREATE_CHANNEL_OK": "📁", "CREATE_CHANNEL_FAIL": "🚫",
+            "LIST_CHANNELS": "📋", "PUBLISH_OK": "📢", "PUBLISH_FAIL": "🚫",
+            "REPL_STORE": "🔄", "SUB_REPL": "🔗", "SUB_SERVERS": "📡",
+            "HEARTBEAT_OK": "💓", "HEARTBEAT_FAIL": "💔",
+            "ELECTION_START": "🗳️", "ELECTION_WAIT": "⏳", "ELECTION_RECV": "🗳️",
+            "ELECTION_OK_RECV": "✊", "ELECTION_NO_RESP": "🔕",
+            "COORDINATOR_SELF": "👑", "COORDINATOR_UPDATE": "👑", "COORDINATOR_PUB": "📣",
+            "RANK_OK": "🏅", "RANK_FAIL": "🏴",
+            "CLOCK_SYNC_OK": "🕐", "CLOCK_SYNC_FAIL": "⏰", "CLOCK_SYNC_RESP": "🕐",
+            "CLOCK_SYNC_SKIP": "⏩", "CLOCK_SYNC_SELF": "🕐",
+            "ELECTION_BIND": "📡",
+        }
+        event_icon = event_icons.get(event, "  ")
+        coord_mark = "👑" if coord == self.server_id else "  "
+
         print(
-            f"[ts={ts_ms}][lc={lc_val}][lang=PY][role=SERVER][id={self.server_id}]"
-            f"[rank={self.rank}][coord={coord}][lvl={level}][evt={event}] {message}",
+            f"{time_str}  🐍  {self.server_id:<22} {coord_mark}  lc={lc_val:<5}"
+            f"{level_icon}  {event_icon} {event:<26}  {message}",
             flush=True,
         )
     
@@ -267,7 +304,7 @@ class ChatServer:
             self._log("WARN", "PUBLISH_FAIL", error_msg, ts_ms=message.timestamp_ms)
             return PublishResponseMessage(success=False, error=error_msg)
             
-        self.data.add_message(channel_name, message_text, message.timestamp_ms)
+        self.data.add_message(channel_name, message_text, message.timestamp_ms, username)
         
         # Increment logical clock for the pub/sub publish
         pub_lc = self.lc.increment()
@@ -340,6 +377,44 @@ class ChatServer:
             except Exception as e:
                 if self.running:
                     self._log("ERROR", "COORD_LISTENER_ERR", str(e))
+
+    def _replication_listener(self):
+        """Part 5: Thread that receives ChatMessages from proxy and stores them locally (replication)."""
+        poller = zmq.Poller()
+        poller.register(self.replication_sub_socket, zmq.POLLIN)
+        while self.running:
+            try:
+                socks = dict(poller.poll(1000))
+                if self.replication_sub_socket in socks:
+                    parts = self.replication_sub_socket.recv_multipart()
+                    # Frame 0: topic (channel name or "servers")
+                    # Frame 1: payload
+                    if len(parts) < 2:
+                        continue
+                    topic = parts[0].decode('utf-8', errors='replace')
+                    # Ignore coordinator announcements (handled by servers_sub_socket)
+                    if topic == "servers":
+                        continue
+                    payload = parts[1]
+                    try:
+                        chat_msg = chat_pb2.ChatMessage()
+                        chat_msg.ParseFromString(payload)
+                        stored = self.data.add_message_if_new(
+                            chat_msg.channel_name,
+                            chat_msg.message_text,
+                            chat_msg.timestamp_ms,
+                            chat_msg.username,
+                        )
+                        if stored:
+                            self._log(
+                                "INFO", "REPL_STORE",
+                                f"replicado: canal={chat_msg.channel_name} user={chat_msg.username}"
+                            )
+                    except Exception as e:
+                        self._log("WARN", "REPL_PARSE_ERR", str(e))
+            except Exception as e:
+                if self.running:
+                    self._log("ERROR", "REPL_LISTENER_ERR", str(e))
 
     def _start_election(self):
         """Bully election: contact servers with higher rank."""
@@ -562,6 +637,7 @@ class ChatServer:
         self.ref_socket.close()
         self.election_socket.close()
         self.servers_sub_socket.close()
+        self.replication_sub_socket.close()  # Part 5
         self.context.term()
         self._log("INFO", "SHUTDOWN", "servidor desligado")
 
