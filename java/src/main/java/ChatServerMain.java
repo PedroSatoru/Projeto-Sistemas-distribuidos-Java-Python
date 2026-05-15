@@ -2,6 +2,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
@@ -13,10 +14,11 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import proto.ChatProtocol;
 
 public class ChatServerMain {
+    private static final AtomicLong coordinatorEpoch = new AtomicLong(0);
     private static void log(String level, String id, String event, String message, long ts, long lc, int rank, String coordinator) {
         System.out.printf(
-                "[ts=%d][lc=%d][lang=JAVA][role=SERVER][id=%s][rank=%d][coord=%s][lvl=%s][evt=%s] %s%n",
-                ts, lc, id, rank, coordinator, level, event, message);
+                "[ts=%d][lc=%d][lang=JAVA][role=SERVER][id=%s][rank=%d][coord=%s][epoch=%d][lvl=%s][evt=%s] %s%n",
+                ts, lc, id, rank, coordinator, coordinatorEpoch.get(), level, event, message);
     }
 
     private static long adjustedNowMs(long timeOffsetMs) {
@@ -81,9 +83,10 @@ public class ChatServerMain {
                         ZMsg frames = ZMsg.recvMsg(serversSub, ZMQ.DONTWAIT);
                         if (frames == null) { Thread.sleep(500); continue; }
                         if (frames.size() >= 2) {
-                            ChatProtocol.CoordinatorAnnouncement ann =
+                                ChatProtocol.CoordinatorAnnouncement ann =
                                     ChatProtocol.CoordinatorAnnouncement.parseFrom(frames.getLast().getData());
-                            coordinatorName.set(ann.getCoordinatorName());
+                                coordinatorName.set(ann.getCoordinatorName());
+                                try { coordinatorEpoch.set(ann.getCoordinatorEpoch()); } catch (Exception ignored) {}
                             log("INFO", config.serverId(), "COORDINATOR_UPDATE",
                                     "novo coordenador: " + ann.getCoordinatorName(),
                                     adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank[0], coordinatorName.get());
@@ -157,9 +160,9 @@ public class ChatServerMain {
                             pubSocket.send(payload);
                         }
 
-                        // Part 4: every 15 msgs -> heartbeat + clock sync
+                        // Part 4: every 10 msgs -> heartbeat + clock sync
                         clientMsgCount[0] += 1;
-                        if (clientMsgCount[0] >= 15) {
+                        if (clientMsgCount[0] >= 10) {
                             clientMsgCount[0] = 0;
                             try {
                                 referenceClient.sendHeartbeat(config.serverId(),
@@ -281,17 +284,21 @@ public class ChatServerMain {
                     } catch (Exception ignored) {}
                 }
             }
-            if (!gotOk) {
+                if (!gotOk) {
+                // increment epoch for a new coordinator term
+                coordinatorEpoch.incrementAndGet();
                 coordinatorName.set(serverId);
                 log("INFO", serverId, "COORDINATOR_SELF", "EU sou o coordenador",
-                        adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
+                    adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
                 ChatProtocol.CoordinatorAnnouncement ann = ChatProtocol.CoordinatorAnnouncement.newBuilder()
-                        .setTimestampMs(adjustedNowMs(timeOffsetMs[0]))
-                        .setCoordinatorName(serverId).build();
+                    .setTimestampMs(adjustedNowMs(timeOffsetMs[0]))
+                    .setCoordinatorName(serverId)
+                    .setCoordinatorEpoch(coordinatorEpoch.get())
+                    .build();
                 pubSocket.sendMore("servers");
                 pubSocket.send(ann.toByteArray(), 0);
                 log("INFO", serverId, "COORDINATOR_PUB", "anuncio publicado no topico 'servers'",
-                        adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
+                    adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
             } else {
                 log("INFO", serverId, "ELECTION_WAIT", "aguardando coordenador",
                         adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
