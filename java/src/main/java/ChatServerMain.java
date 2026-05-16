@@ -1,8 +1,8 @@
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
@@ -173,8 +173,8 @@ public class ChatServerMain {
                                 log("WARN", config.serverId(), "HEARTBEAT_FAIL", ex.getMessage(),
                                         adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank[0], coordinatorName.get());
                             }
-                            syncClockWithCoordinator(context, config.serverId(), rank[0],
-                                    coordinatorName, referenceClient, timeOffsetMs, logicalClock, electionEndpoint);
+                                syncClockWithCoordinator(context, config.serverId(), rank[0],
+                                    coordinatorName, referenceClient, pubSocket, timeOffsetMs, logicalClock, electionEndpoint);
                         }
                     } catch (InvalidProtocolBufferException ex) {
                         response = ChatProtocol.ServerResponse.newBuilder()
@@ -309,9 +309,9 @@ public class ChatServerMain {
         }
     }
 
-    private static void syncClockWithCoordinator(ZContext context, String serverId, int rank,
+        private static void syncClockWithCoordinator(ZContext context, String serverId, int rank,
             AtomicReference<String> coordinatorName, ReferenceServiceClient referenceClient,
-            long[] timeOffsetMs, LogicalClock logicalClock, String electionEndpoint) {
+            ZMQ.Socket pubSocket, long[] timeOffsetMs, LogicalClock logicalClock, String electionEndpoint) {
         String coord = coordinatorName.get();
         if ("NONE".equals(coord) || coord == null) return;
         if (coord.equals(serverId)) return;
@@ -347,7 +347,7 @@ public class ChatServerMain {
             log("WARN", serverId, "CLOCK_SYNC_FAIL", coord + " nao respondeu",
                     adjustedNowMs(timeOffsetMs[0]), logicalClock.value(), rank, coordinatorName.get());
             startElection(context, serverId, rank, coordinatorName, referenceClient,
-                    null, timeOffsetMs, logicalClock, electionEndpoint);
+                pubSocket, timeOffsetMs, logicalClock, electionEndpoint);
         }
     }
 

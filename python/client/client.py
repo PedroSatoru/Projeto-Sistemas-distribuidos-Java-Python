@@ -232,10 +232,10 @@ class ChatClient:
                     self.subscribed_channels.append(channel_to_sub)
                     self._log("INFO", "SUB_OK", f"inscrito ao canal {channel_to_sub}")
                     
-            # Publicar no maximo 30 mensagens totais
-            self._log("INFO", "BOT_LOOP", "iniciando publicacao com limite total de 30 mensagens")
+            # Publicar no maximo 100 mensagens totais
+            self._log("INFO", "BOT_LOOP", "iniciando publicacao com limite total de 100 mensagens")
             msg_counter = 0
-            max_publishes = 30
+            max_publishes = 100
             while msg_counter < max_publishes:
                 if not channels:
                     time.sleep(1)
@@ -250,7 +250,7 @@ class ChatClient:
                 self.send_request(publish_req)
                 time.sleep(1)
 
-            self._log("INFO", "BOT_DONE", "limite de 30 publicacoes totais atingido")
+            self._log("INFO", "BOT_DONE", "limite de 100 publicacoes totais atingido")
             
             return True
         

@@ -129,7 +129,10 @@ public class ChatService {
         String publicationUser = username.isEmpty() ? "unknown" : username;
         synchronized (channels) {
             if (!channels.contains(channelName)) {
-                return publishResponse(false, "Canal nao existe.");
+                // In a multi-server setup, channel metadata may arrive late on this node.
+                // Create the channel lazily to avoid cross-node publish failures.
+                channels.add(channelName);
+                store.persistChannelSet(channels);
             }
         }
 

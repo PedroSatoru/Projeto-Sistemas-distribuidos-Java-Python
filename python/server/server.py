@@ -276,9 +276,10 @@ class ChatServer:
         username = message.payload.get("username", "").strip() or "server"
         
         if not self.data.channel_exists(channel_name):
-            error_msg = f"Canal não existe: {channel_name}"
-            self._log("WARN", "PUBLISH_FAIL", error_msg, ts_ms=message.timestamp_ms)
-            return PublishResponseMessage(success=False, error=error_msg)
+            # Em ambiente com varios servidores, a metadata de canal pode chegar depois.
+            # Criamos o canal localmente para evitar falha intermitente de publish.
+            self.data.add_channel(channel_name)
+            self._log("INFO", "PUBLISH_CHANNEL_AUTO_CREATE", f"canal {channel_name} criado sob demanda", ts_ms=message.timestamp_ms)
             
         self.data.add_message(channel_name, message_text, message.timestamp_ms, username)
         
