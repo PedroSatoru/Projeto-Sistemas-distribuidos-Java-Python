@@ -51,6 +51,9 @@ public class ChatClientBotMain {
         try (ZContext context = new ZContext()) {
             ZMQ.Socket reqSocket = context.createSocket(SocketType.REQ);
             ZMQ.Socket subSocket = context.createSocket(SocketType.SUB);
+            // Allow new requests even if the previous reply was lost during failover.
+            reqSocket.setReqRelaxed(true);
+            reqSocket.setReqCorrelate(true);
             reqSocket.connect(config.frontendEndpoint());
             reqSocket.setReceiveTimeOut(config.timeoutMs());
             subSocket.connect(config.subEndpoint());
@@ -68,7 +71,7 @@ public class ChatClientBotMain {
 
             ensureAtLeastFiveChannels(reqSocket, config.username(), logicalClock);
             ensureUpToThreeSubscriptions(reqSocket, subSocket, config.username(), subscribedChannels, config.random(), logicalClock);
-            runPublishLoop(reqSocket, subSocket, config.username(), subscribedChannels, config.random(), logicalClock);
+            runPublishLoop(reqSocket, subSocket, config.username(), subscribedChannels, config.random(), logicalClock, config.maxPublishes());
 
             listener.join();
         }
@@ -286,15 +289,15 @@ public class ChatClientBotMain {
         }
     }
 
-    private static void runPublishLoop(
+        private static void runPublishLoop(
             ZMQ.Socket reqSocket,
             ZMQ.Socket subSocket,
             String username,
             Set<String> subscribedChannels,
             Random random,
-            LogicalClock logicalClock
+            LogicalClock logicalClock,
+            int maxPublishes
     ) throws InterruptedException {
-        final int maxPublishes = 30;
         int messageCounter = 0;
         while (messageCounter < maxPublishes) {
             List<String> channels = new ArrayList<>(listChannels(reqSocket, username, logicalClock));
@@ -317,7 +320,7 @@ public class ChatClientBotMain {
             }
         }
 
-            log("INFO", username, "PUBLISH_DONE", "limite de 30 publicacoes totais atingido", logicalClock.value());
+                log("INFO", username, "PUBLISH_DONE", "limite de " + maxPublishes + " publicacoes totais atingido", logicalClock.value());
     }
 
     private static void pauseMs(long delayMs) {
@@ -362,7 +365,8 @@ public class ChatClientBotMain {
             int timeoutMs,
             int loginAttempts,
             long retryDelayMs,
-            Random random
+            Random random,
+            int maxPublishes
     ) {
         static Config from(String[] args) {
             String username = getArg(args, "--username", System.getenv().getOrDefault("BOT_USERNAME", "java_bot_1"));
@@ -371,11 +375,12 @@ public class ChatClientBotMain {
             int timeoutMs = Integer.parseInt(getArg(args, "--timeout-ms", System.getenv().getOrDefault("BOT_TIMEOUT_MS", "5000")));
             int loginAttempts = Integer.parseInt(getArg(args, "--login-attempts", System.getenv().getOrDefault("BOT_LOGIN_ATTEMPTS", "3")));
             long retryDelayMs = Long.parseLong(getArg(args, "--retry-delay-ms", System.getenv().getOrDefault("BOT_RETRY_DELAY_MS", "700")));
+            int maxPublishes = Integer.parseInt(getArg(args, "--max-publishes", System.getenv().getOrDefault("BOT_MAX_PUBLISHES", "100")));
 
             String seedArg = getArg(args, "--seed", "");
             Random random = seedArg.isBlank() ? new Random() : new Random(Long.parseLong(seedArg));
 
-            return new Config(username, frontend, subEndpoint, timeoutMs, loginAttempts, retryDelayMs, random);
+            return new Config(username, frontend, subEndpoint, timeoutMs, loginAttempts, retryDelayMs, random, maxPublishes);
         }
 
         private static String getArg(String[] args, String key, String fallback) {

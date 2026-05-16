@@ -10369,6 +10369,26 @@ public final class ChatProtocol {
      */
     com.google.protobuf.ByteString
         getServerNameBytes();
+
+    /**
+     * <pre>
+     * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+     * </pre>
+     *
+     * <code>string election_endpoint = 4;</code>
+     * @return The electionEndpoint.
+     */
+    java.lang.String getElectionEndpoint();
+    /**
+     * <pre>
+     * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+     * </pre>
+     *
+     * <code>string election_endpoint = 4;</code>
+     * @return The bytes for electionEndpoint.
+     */
+    com.google.protobuf.ByteString
+        getElectionEndpointBytes();
   }
   /**
    * Protobuf type {@code ReferenceRequest}
@@ -10385,6 +10405,7 @@ public final class ChatProtocol {
     private ReferenceRequest() {
       action_ = "";
       serverName_ = "";
+      electionEndpoint_ = "";
     }
 
     @java.lang.Override
@@ -10504,6 +10525,53 @@ public final class ChatProtocol {
       }
     }
 
+    public static final int ELECTION_ENDPOINT_FIELD_NUMBER = 4;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object electionEndpoint_ = "";
+    /**
+     * <pre>
+     * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+     * </pre>
+     *
+     * <code>string election_endpoint = 4;</code>
+     * @return The electionEndpoint.
+     */
+    @java.lang.Override
+    public java.lang.String getElectionEndpoint() {
+      java.lang.Object ref = electionEndpoint_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        electionEndpoint_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+     * </pre>
+     *
+     * <code>string election_endpoint = 4;</code>
+     * @return The bytes for electionEndpoint.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getElectionEndpointBytes() {
+      java.lang.Object ref = electionEndpoint_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        electionEndpoint_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -10527,6 +10595,9 @@ public final class ChatProtocol {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, serverName_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(electionEndpoint_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, electionEndpoint_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -10545,6 +10616,9 @@ public final class ChatProtocol {
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, serverName_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(electionEndpoint_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, electionEndpoint_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -10567,6 +10641,8 @@ public final class ChatProtocol {
           .equals(other.getAction())) return false;
       if (!getServerName()
           .equals(other.getServerName())) return false;
+      if (!getElectionEndpoint()
+          .equals(other.getElectionEndpoint())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -10585,6 +10661,8 @@ public final class ChatProtocol {
       hash = (53 * hash) + getAction().hashCode();
       hash = (37 * hash) + SERVER_NAME_FIELD_NUMBER;
       hash = (53 * hash) + getServerName().hashCode();
+      hash = (37 * hash) + ELECTION_ENDPOINT_FIELD_NUMBER;
+      hash = (53 * hash) + getElectionEndpoint().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -10719,6 +10797,7 @@ public final class ChatProtocol {
         timestampMs_ = 0L;
         action_ = "";
         serverName_ = "";
+        electionEndpoint_ = "";
         return this;
       }
 
@@ -10760,6 +10839,9 @@ public final class ChatProtocol {
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.serverName_ = serverName_;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.electionEndpoint_ = electionEndpoint_;
         }
       }
 
@@ -10820,6 +10902,11 @@ public final class ChatProtocol {
           bitField0_ |= 0x00000004;
           onChanged();
         }
+        if (!other.getElectionEndpoint().isEmpty()) {
+          electionEndpoint_ = other.electionEndpoint_;
+          bitField0_ |= 0x00000008;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -10861,6 +10948,11 @@ public final class ChatProtocol {
                 bitField0_ |= 0x00000004;
                 break;
               } // case 26
+              case 34: {
+                electionEndpoint_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000008;
+                break;
+              } // case 34
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -11073,6 +11165,98 @@ public final class ChatProtocol {
         onChanged();
         return this;
       }
+
+      private java.lang.Object electionEndpoint_ = "";
+      /**
+       * <pre>
+       * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+       * </pre>
+       *
+       * <code>string election_endpoint = 4;</code>
+       * @return The electionEndpoint.
+       */
+      public java.lang.String getElectionEndpoint() {
+        java.lang.Object ref = electionEndpoint_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          electionEndpoint_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+       * </pre>
+       *
+       * <code>string election_endpoint = 4;</code>
+       * @return The bytes for electionEndpoint.
+       */
+      public com.google.protobuf.ByteString
+          getElectionEndpointBytes() {
+        java.lang.Object ref = electionEndpoint_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          electionEndpoint_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+       * </pre>
+       *
+       * <code>string election_endpoint = 4;</code>
+       * @param value The electionEndpoint to set.
+       * @return This builder for chaining.
+       */
+      public Builder setElectionEndpoint(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        electionEndpoint_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+       * </pre>
+       *
+       * <code>string election_endpoint = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearElectionEndpoint() {
+        electionEndpoint_ = getDefaultInstance().getElectionEndpoint();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Part 4: election REP endpoint (e.g. tcp://hostname:6001)
+       * </pre>
+       *
+       * <code>string election_endpoint = 4;</code>
+       * @param value The bytes for electionEndpoint to set.
+       * @return This builder for chaining.
+       */
+      public Builder setElectionEndpointBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        electionEndpoint_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -11158,6 +11342,26 @@ public final class ChatProtocol {
      * @return The rank.
      */
     int getRank();
+
+    /**
+     * <pre>
+     * Part 4
+     * </pre>
+     *
+     * <code>string election_endpoint = 3;</code>
+     * @return The electionEndpoint.
+     */
+    java.lang.String getElectionEndpoint();
+    /**
+     * <pre>
+     * Part 4
+     * </pre>
+     *
+     * <code>string election_endpoint = 3;</code>
+     * @return The bytes for electionEndpoint.
+     */
+    com.google.protobuf.ByteString
+        getElectionEndpointBytes();
   }
   /**
    * Protobuf type {@code ServerInfo}
@@ -11173,6 +11377,7 @@ public final class ChatProtocol {
     }
     private ServerInfo() {
       name_ = "";
+      electionEndpoint_ = "";
     }
 
     @java.lang.Override
@@ -11245,6 +11450,53 @@ public final class ChatProtocol {
       return rank_;
     }
 
+    public static final int ELECTION_ENDPOINT_FIELD_NUMBER = 3;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object electionEndpoint_ = "";
+    /**
+     * <pre>
+     * Part 4
+     * </pre>
+     *
+     * <code>string election_endpoint = 3;</code>
+     * @return The electionEndpoint.
+     */
+    @java.lang.Override
+    public java.lang.String getElectionEndpoint() {
+      java.lang.Object ref = electionEndpoint_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        electionEndpoint_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     * Part 4
+     * </pre>
+     *
+     * <code>string election_endpoint = 3;</code>
+     * @return The bytes for electionEndpoint.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getElectionEndpointBytes() {
+      java.lang.Object ref = electionEndpoint_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        electionEndpoint_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -11265,6 +11517,9 @@ public final class ChatProtocol {
       if (rank_ != 0) {
         output.writeInt32(2, rank_);
       }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(electionEndpoint_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, electionEndpoint_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -11280,6 +11535,9 @@ public final class ChatProtocol {
       if (rank_ != 0) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, rank_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(electionEndpoint_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, electionEndpoint_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -11300,6 +11558,8 @@ public final class ChatProtocol {
           .equals(other.getName())) return false;
       if (getRank()
           != other.getRank()) return false;
+      if (!getElectionEndpoint()
+          .equals(other.getElectionEndpoint())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -11315,6 +11575,8 @@ public final class ChatProtocol {
       hash = (53 * hash) + getName().hashCode();
       hash = (37 * hash) + RANK_FIELD_NUMBER;
       hash = (53 * hash) + getRank();
+      hash = (37 * hash) + ELECTION_ENDPOINT_FIELD_NUMBER;
+      hash = (53 * hash) + getElectionEndpoint().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -11448,6 +11710,7 @@ public final class ChatProtocol {
         bitField0_ = 0;
         name_ = "";
         rank_ = 0;
+        electionEndpoint_ = "";
         return this;
       }
 
@@ -11486,6 +11749,9 @@ public final class ChatProtocol {
         }
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.rank_ = rank_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.electionEndpoint_ = electionEndpoint_;
         }
       }
 
@@ -11541,6 +11807,11 @@ public final class ChatProtocol {
         if (other.getRank() != 0) {
           setRank(other.getRank());
         }
+        if (!other.getElectionEndpoint().isEmpty()) {
+          electionEndpoint_ = other.electionEndpoint_;
+          bitField0_ |= 0x00000004;
+          onChanged();
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -11577,6 +11848,11 @@ public final class ChatProtocol {
                 bitField0_ |= 0x00000002;
                 break;
               } // case 16
+              case 26: {
+                electionEndpoint_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 26
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -11694,6 +11970,98 @@ public final class ChatProtocol {
       public Builder clearRank() {
         bitField0_ = (bitField0_ & ~0x00000002);
         rank_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object electionEndpoint_ = "";
+      /**
+       * <pre>
+       * Part 4
+       * </pre>
+       *
+       * <code>string election_endpoint = 3;</code>
+       * @return The electionEndpoint.
+       */
+      public java.lang.String getElectionEndpoint() {
+        java.lang.Object ref = electionEndpoint_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          electionEndpoint_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Part 4
+       * </pre>
+       *
+       * <code>string election_endpoint = 3;</code>
+       * @return The bytes for electionEndpoint.
+       */
+      public com.google.protobuf.ByteString
+          getElectionEndpointBytes() {
+        java.lang.Object ref = electionEndpoint_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          electionEndpoint_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <pre>
+       * Part 4
+       * </pre>
+       *
+       * <code>string election_endpoint = 3;</code>
+       * @param value The electionEndpoint to set.
+       * @return This builder for chaining.
+       */
+      public Builder setElectionEndpoint(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        electionEndpoint_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Part 4
+       * </pre>
+       *
+       * <code>string election_endpoint = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearElectionEndpoint() {
+        electionEndpoint_ = getDefaultInstance().getElectionEndpoint();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Part 4
+       * </pre>
+       *
+       * <code>string election_endpoint = 3;</code>
+       * @param value The bytes for electionEndpoint to set.
+       * @return This builder for chaining.
+       */
+      public Builder setElectionEndpointBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        electionEndpoint_ = value;
+        bitField0_ |= 0x00000004;
         onChanged();
         return this;
       }
@@ -11826,6 +12194,10 @@ public final class ChatProtocol {
         getStatusBytes();
 
     /**
+     * <pre>
+     * Part 4: kept for rank response only (initial sync)
+     * </pre>
+     *
      * <code>int64 reference_time_ms = 6;</code>
      * @return The referenceTimeMs.
      */
@@ -12013,6 +12385,10 @@ public final class ChatProtocol {
     public static final int REFERENCE_TIME_MS_FIELD_NUMBER = 6;
     private long referenceTimeMs_ = 0L;
     /**
+     * <pre>
+     * Part 4: kept for rank response only (initial sync)
+     * </pre>
+     *
      * <code>int64 reference_time_ms = 6;</code>
      * @return The referenceTimeMs.
      */
@@ -12964,6 +13340,10 @@ public final class ChatProtocol {
 
       private long referenceTimeMs_ ;
       /**
+       * <pre>
+       * Part 4: kept for rank response only (initial sync)
+       * </pre>
+       *
        * <code>int64 reference_time_ms = 6;</code>
        * @return The referenceTimeMs.
        */
@@ -12972,6 +13352,10 @@ public final class ChatProtocol {
         return referenceTimeMs_;
       }
       /**
+       * <pre>
+       * Part 4: kept for rank response only (initial sync)
+       * </pre>
+       *
        * <code>int64 reference_time_ms = 6;</code>
        * @param value The referenceTimeMs to set.
        * @return This builder for chaining.
@@ -12984,6 +13368,10 @@ public final class ChatProtocol {
         return this;
       }
       /**
+       * <pre>
+       * Part 4: kept for rank response only (initial sync)
+       * </pre>
+       *
        * <code>int64 reference_time_ms = 6;</code>
        * @return This builder for chaining.
        */
@@ -13052,6 +13440,3347 @@ public final class ChatProtocol {
 
     @java.lang.Override
     public proto.ChatProtocol.ReferenceResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ElectionRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ElectionRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    long getTimestampMs();
+
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    java.lang.String getServerName();
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    com.google.protobuf.ByteString
+        getServerNameBytes();
+
+    /**
+     * <code>int32 rank = 3;</code>
+     * @return The rank.
+     */
+    int getRank();
+  }
+  /**
+   * Protobuf type {@code ElectionRequest}
+   */
+  public static final class ElectionRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ElectionRequest)
+      ElectionRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ElectionRequest.newBuilder() to construct.
+    private ElectionRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ElectionRequest() {
+      serverName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ElectionRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ChatProtocol.internal_static_ElectionRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ChatProtocol.internal_static_ElectionRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ChatProtocol.ElectionRequest.class, proto.ChatProtocol.ElectionRequest.Builder.class);
+    }
+
+    public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+    private long timestampMs_ = 0L;
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    @java.lang.Override
+    public long getTimestampMs() {
+      return timestampMs_;
+    }
+
+    public static final int SERVER_NAME_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object serverName_ = "";
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    @java.lang.Override
+    public java.lang.String getServerName() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serverName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getServerNameBytes() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serverName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RANK_FIELD_NUMBER = 3;
+    private int rank_ = 0;
+    /**
+     * <code>int32 rank = 3;</code>
+     * @return The rank.
+     */
+    @java.lang.Override
+    public int getRank() {
+      return rank_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestampMs_ != 0L) {
+        output.writeInt64(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, serverName_);
+      }
+      if (rank_ != 0) {
+        output.writeInt32(3, rank_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestampMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, serverName_);
+      }
+      if (rank_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, rank_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ChatProtocol.ElectionRequest)) {
+        return super.equals(obj);
+      }
+      proto.ChatProtocol.ElectionRequest other = (proto.ChatProtocol.ElectionRequest) obj;
+
+      if (getTimestampMs()
+          != other.getTimestampMs()) return false;
+      if (!getServerName()
+          .equals(other.getServerName())) return false;
+      if (getRank()
+          != other.getRank()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMESTAMP_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimestampMs());
+      hash = (37 * hash) + SERVER_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getServerName().hashCode();
+      hash = (37 * hash) + RANK_FIELD_NUMBER;
+      hash = (53 * hash) + getRank();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static proto.ChatProtocol.ElectionRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static proto.ChatProtocol.ElectionRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ElectionRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ChatProtocol.ElectionRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ElectionRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ElectionRequest)
+        proto.ChatProtocol.ElectionRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ChatProtocol.internal_static_ElectionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ChatProtocol.internal_static_ElectionRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ChatProtocol.ElectionRequest.class, proto.ChatProtocol.ElectionRequest.Builder.class);
+      }
+
+      // Construct using proto.ChatProtocol.ElectionRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        timestampMs_ = 0L;
+        serverName_ = "";
+        rank_ = 0;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ChatProtocol.internal_static_ElectionRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.ElectionRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionRequest build() {
+        proto.ChatProtocol.ElectionRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionRequest buildPartial() {
+        proto.ChatProtocol.ElectionRequest result = new proto.ChatProtocol.ElectionRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(proto.ChatProtocol.ElectionRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.timestampMs_ = timestampMs_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.serverName_ = serverName_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.rank_ = rank_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ChatProtocol.ElectionRequest) {
+          return mergeFrom((proto.ChatProtocol.ElectionRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ChatProtocol.ElectionRequest other) {
+        if (other == proto.ChatProtocol.ElectionRequest.getDefaultInstance()) return this;
+        if (other.getTimestampMs() != 0L) {
+          setTimestampMs(other.getTimestampMs());
+        }
+        if (!other.getServerName().isEmpty()) {
+          serverName_ = other.serverName_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getRank() != 0) {
+          setRank(other.getRank());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                timestampMs_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 18: {
+                serverName_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                rank_ = input.readInt32();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long timestampMs_ ;
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return The timestampMs.
+       */
+      @java.lang.Override
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @param value The timestampMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTimestampMs(long value) {
+
+        timestampMs_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTimestampMs() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestampMs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object serverName_ = "";
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The serverName.
+       */
+      public java.lang.String getServerName() {
+        java.lang.Object ref = serverName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          serverName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The bytes for serverName.
+       */
+      public com.google.protobuf.ByteString
+          getServerNameBytes() {
+        java.lang.Object ref = serverName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          serverName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerName(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearServerName() {
+        serverName_ = getDefaultInstance().getServerName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The bytes for serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private int rank_ ;
+      /**
+       * <code>int32 rank = 3;</code>
+       * @return The rank.
+       */
+      @java.lang.Override
+      public int getRank() {
+        return rank_;
+      }
+      /**
+       * <code>int32 rank = 3;</code>
+       * @param value The rank to set.
+       * @return This builder for chaining.
+       */
+      public Builder setRank(int value) {
+
+        rank_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 rank = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearRank() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        rank_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ElectionRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:ElectionRequest)
+    private static final proto.ChatProtocol.ElectionRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ElectionRequest();
+    }
+
+    public static proto.ChatProtocol.ElectionRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ElectionRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ElectionRequest>() {
+      @java.lang.Override
+      public ElectionRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ElectionRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ElectionRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.ChatProtocol.ElectionRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ElectionResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ElectionResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    long getTimestampMs();
+
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    java.lang.String getServerName();
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    com.google.protobuf.ByteString
+        getServerNameBytes();
+
+    /**
+     * <code>bool ok = 3;</code>
+     * @return The ok.
+     */
+    boolean getOk();
+  }
+  /**
+   * Protobuf type {@code ElectionResponse}
+   */
+  public static final class ElectionResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ElectionResponse)
+      ElectionResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ElectionResponse.newBuilder() to construct.
+    private ElectionResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ElectionResponse() {
+      serverName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ElectionResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ChatProtocol.internal_static_ElectionResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ChatProtocol.internal_static_ElectionResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ChatProtocol.ElectionResponse.class, proto.ChatProtocol.ElectionResponse.Builder.class);
+    }
+
+    public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+    private long timestampMs_ = 0L;
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    @java.lang.Override
+    public long getTimestampMs() {
+      return timestampMs_;
+    }
+
+    public static final int SERVER_NAME_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object serverName_ = "";
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    @java.lang.Override
+    public java.lang.String getServerName() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serverName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getServerNameBytes() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serverName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int OK_FIELD_NUMBER = 3;
+    private boolean ok_ = false;
+    /**
+     * <code>bool ok = 3;</code>
+     * @return The ok.
+     */
+    @java.lang.Override
+    public boolean getOk() {
+      return ok_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestampMs_ != 0L) {
+        output.writeInt64(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, serverName_);
+      }
+      if (ok_ != false) {
+        output.writeBool(3, ok_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestampMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, serverName_);
+      }
+      if (ok_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, ok_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ChatProtocol.ElectionResponse)) {
+        return super.equals(obj);
+      }
+      proto.ChatProtocol.ElectionResponse other = (proto.ChatProtocol.ElectionResponse) obj;
+
+      if (getTimestampMs()
+          != other.getTimestampMs()) return false;
+      if (!getServerName()
+          .equals(other.getServerName())) return false;
+      if (getOk()
+          != other.getOk()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMESTAMP_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimestampMs());
+      hash = (37 * hash) + SERVER_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getServerName().hashCode();
+      hash = (37 * hash) + OK_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getOk());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static proto.ChatProtocol.ElectionResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static proto.ChatProtocol.ElectionResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ElectionResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ChatProtocol.ElectionResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ElectionResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ElectionResponse)
+        proto.ChatProtocol.ElectionResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ChatProtocol.internal_static_ElectionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ChatProtocol.internal_static_ElectionResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ChatProtocol.ElectionResponse.class, proto.ChatProtocol.ElectionResponse.Builder.class);
+      }
+
+      // Construct using proto.ChatProtocol.ElectionResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        timestampMs_ = 0L;
+        serverName_ = "";
+        ok_ = false;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ChatProtocol.internal_static_ElectionResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.ElectionResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionResponse build() {
+        proto.ChatProtocol.ElectionResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ElectionResponse buildPartial() {
+        proto.ChatProtocol.ElectionResponse result = new proto.ChatProtocol.ElectionResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(proto.ChatProtocol.ElectionResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.timestampMs_ = timestampMs_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.serverName_ = serverName_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.ok_ = ok_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ChatProtocol.ElectionResponse) {
+          return mergeFrom((proto.ChatProtocol.ElectionResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ChatProtocol.ElectionResponse other) {
+        if (other == proto.ChatProtocol.ElectionResponse.getDefaultInstance()) return this;
+        if (other.getTimestampMs() != 0L) {
+          setTimestampMs(other.getTimestampMs());
+        }
+        if (!other.getServerName().isEmpty()) {
+          serverName_ = other.serverName_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getOk() != false) {
+          setOk(other.getOk());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                timestampMs_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 18: {
+                serverName_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                ok_ = input.readBool();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long timestampMs_ ;
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return The timestampMs.
+       */
+      @java.lang.Override
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @param value The timestampMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTimestampMs(long value) {
+
+        timestampMs_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTimestampMs() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestampMs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object serverName_ = "";
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The serverName.
+       */
+      public java.lang.String getServerName() {
+        java.lang.Object ref = serverName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          serverName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The bytes for serverName.
+       */
+      public com.google.protobuf.ByteString
+          getServerNameBytes() {
+        java.lang.Object ref = serverName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          serverName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerName(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearServerName() {
+        serverName_ = getDefaultInstance().getServerName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The bytes for serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private boolean ok_ ;
+      /**
+       * <code>bool ok = 3;</code>
+       * @return The ok.
+       */
+      @java.lang.Override
+      public boolean getOk() {
+        return ok_;
+      }
+      /**
+       * <code>bool ok = 3;</code>
+       * @param value The ok to set.
+       * @return This builder for chaining.
+       */
+      public Builder setOk(boolean value) {
+
+        ok_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>bool ok = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearOk() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        ok_ = false;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ElectionResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:ElectionResponse)
+    private static final proto.ChatProtocol.ElectionResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ElectionResponse();
+    }
+
+    public static proto.ChatProtocol.ElectionResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ElectionResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ElectionResponse>() {
+      @java.lang.Override
+      public ElectionResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ElectionResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ElectionResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.ChatProtocol.ElectionResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClockSyncRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ClockSyncRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    long getTimestampMs();
+
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    java.lang.String getServerName();
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    com.google.protobuf.ByteString
+        getServerNameBytes();
+
+    /**
+     * <code>int64 local_time_ms = 3;</code>
+     * @return The localTimeMs.
+     */
+    long getLocalTimeMs();
+  }
+  /**
+   * Protobuf type {@code ClockSyncRequest}
+   */
+  public static final class ClockSyncRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ClockSyncRequest)
+      ClockSyncRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClockSyncRequest.newBuilder() to construct.
+    private ClockSyncRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClockSyncRequest() {
+      serverName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ClockSyncRequest();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ChatProtocol.internal_static_ClockSyncRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ChatProtocol.internal_static_ClockSyncRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ChatProtocol.ClockSyncRequest.class, proto.ChatProtocol.ClockSyncRequest.Builder.class);
+    }
+
+    public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+    private long timestampMs_ = 0L;
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    @java.lang.Override
+    public long getTimestampMs() {
+      return timestampMs_;
+    }
+
+    public static final int SERVER_NAME_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object serverName_ = "";
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The serverName.
+     */
+    @java.lang.Override
+    public java.lang.String getServerName() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serverName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string server_name = 2;</code>
+     * @return The bytes for serverName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getServerNameBytes() {
+      java.lang.Object ref = serverName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        serverName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LOCAL_TIME_MS_FIELD_NUMBER = 3;
+    private long localTimeMs_ = 0L;
+    /**
+     * <code>int64 local_time_ms = 3;</code>
+     * @return The localTimeMs.
+     */
+    @java.lang.Override
+    public long getLocalTimeMs() {
+      return localTimeMs_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestampMs_ != 0L) {
+        output.writeInt64(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, serverName_);
+      }
+      if (localTimeMs_ != 0L) {
+        output.writeInt64(3, localTimeMs_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestampMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(serverName_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, serverName_);
+      }
+      if (localTimeMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, localTimeMs_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ChatProtocol.ClockSyncRequest)) {
+        return super.equals(obj);
+      }
+      proto.ChatProtocol.ClockSyncRequest other = (proto.ChatProtocol.ClockSyncRequest) obj;
+
+      if (getTimestampMs()
+          != other.getTimestampMs()) return false;
+      if (!getServerName()
+          .equals(other.getServerName())) return false;
+      if (getLocalTimeMs()
+          != other.getLocalTimeMs()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMESTAMP_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimestampMs());
+      hash = (37 * hash) + SERVER_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getServerName().hashCode();
+      hash = (37 * hash) + LOCAL_TIME_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getLocalTimeMs());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static proto.ChatProtocol.ClockSyncRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static proto.ChatProtocol.ClockSyncRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ClockSyncRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ChatProtocol.ClockSyncRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ClockSyncRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ClockSyncRequest)
+        proto.ChatProtocol.ClockSyncRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ChatProtocol.internal_static_ClockSyncRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ChatProtocol.internal_static_ClockSyncRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ChatProtocol.ClockSyncRequest.class, proto.ChatProtocol.ClockSyncRequest.Builder.class);
+      }
+
+      // Construct using proto.ChatProtocol.ClockSyncRequest.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        timestampMs_ = 0L;
+        serverName_ = "";
+        localTimeMs_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ChatProtocol.internal_static_ClockSyncRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncRequest getDefaultInstanceForType() {
+        return proto.ChatProtocol.ClockSyncRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncRequest build() {
+        proto.ChatProtocol.ClockSyncRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncRequest buildPartial() {
+        proto.ChatProtocol.ClockSyncRequest result = new proto.ChatProtocol.ClockSyncRequest(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(proto.ChatProtocol.ClockSyncRequest result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.timestampMs_ = timestampMs_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.serverName_ = serverName_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.localTimeMs_ = localTimeMs_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ChatProtocol.ClockSyncRequest) {
+          return mergeFrom((proto.ChatProtocol.ClockSyncRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ChatProtocol.ClockSyncRequest other) {
+        if (other == proto.ChatProtocol.ClockSyncRequest.getDefaultInstance()) return this;
+        if (other.getTimestampMs() != 0L) {
+          setTimestampMs(other.getTimestampMs());
+        }
+        if (!other.getServerName().isEmpty()) {
+          serverName_ = other.serverName_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getLocalTimeMs() != 0L) {
+          setLocalTimeMs(other.getLocalTimeMs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                timestampMs_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 18: {
+                serverName_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                localTimeMs_ = input.readInt64();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long timestampMs_ ;
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return The timestampMs.
+       */
+      @java.lang.Override
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @param value The timestampMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTimestampMs(long value) {
+
+        timestampMs_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTimestampMs() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestampMs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object serverName_ = "";
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The serverName.
+       */
+      public java.lang.String getServerName() {
+        java.lang.Object ref = serverName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          serverName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return The bytes for serverName.
+       */
+      public com.google.protobuf.ByteString
+          getServerNameBytes() {
+        java.lang.Object ref = serverName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          serverName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerName(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearServerName() {
+        serverName_ = getDefaultInstance().getServerName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string server_name = 2;</code>
+       * @param value The bytes for serverName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setServerNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        serverName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private long localTimeMs_ ;
+      /**
+       * <code>int64 local_time_ms = 3;</code>
+       * @return The localTimeMs.
+       */
+      @java.lang.Override
+      public long getLocalTimeMs() {
+        return localTimeMs_;
+      }
+      /**
+       * <code>int64 local_time_ms = 3;</code>
+       * @param value The localTimeMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setLocalTimeMs(long value) {
+
+        localTimeMs_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 local_time_ms = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearLocalTimeMs() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        localTimeMs_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ClockSyncRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:ClockSyncRequest)
+    private static final proto.ChatProtocol.ClockSyncRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ClockSyncRequest();
+    }
+
+    public static proto.ChatProtocol.ClockSyncRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClockSyncRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ClockSyncRequest>() {
+      @java.lang.Override
+      public ClockSyncRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClockSyncRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClockSyncRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.ChatProtocol.ClockSyncRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClockSyncResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ClockSyncResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    long getTimestampMs();
+
+    /**
+     * <code>int64 correct_time_ms = 2;</code>
+     * @return The correctTimeMs.
+     */
+    long getCorrectTimeMs();
+  }
+  /**
+   * Protobuf type {@code ClockSyncResponse}
+   */
+  public static final class ClockSyncResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ClockSyncResponse)
+      ClockSyncResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClockSyncResponse.newBuilder() to construct.
+    private ClockSyncResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClockSyncResponse() {
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new ClockSyncResponse();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ChatProtocol.internal_static_ClockSyncResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ChatProtocol.internal_static_ClockSyncResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ChatProtocol.ClockSyncResponse.class, proto.ChatProtocol.ClockSyncResponse.Builder.class);
+    }
+
+    public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+    private long timestampMs_ = 0L;
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    @java.lang.Override
+    public long getTimestampMs() {
+      return timestampMs_;
+    }
+
+    public static final int CORRECT_TIME_MS_FIELD_NUMBER = 2;
+    private long correctTimeMs_ = 0L;
+    /**
+     * <code>int64 correct_time_ms = 2;</code>
+     * @return The correctTimeMs.
+     */
+    @java.lang.Override
+    public long getCorrectTimeMs() {
+      return correctTimeMs_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestampMs_ != 0L) {
+        output.writeInt64(1, timestampMs_);
+      }
+      if (correctTimeMs_ != 0L) {
+        output.writeInt64(2, correctTimeMs_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestampMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timestampMs_);
+      }
+      if (correctTimeMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, correctTimeMs_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ChatProtocol.ClockSyncResponse)) {
+        return super.equals(obj);
+      }
+      proto.ChatProtocol.ClockSyncResponse other = (proto.ChatProtocol.ClockSyncResponse) obj;
+
+      if (getTimestampMs()
+          != other.getTimestampMs()) return false;
+      if (getCorrectTimeMs()
+          != other.getCorrectTimeMs()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMESTAMP_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimestampMs());
+      hash = (37 * hash) + CORRECT_TIME_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCorrectTimeMs());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static proto.ChatProtocol.ClockSyncResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static proto.ChatProtocol.ClockSyncResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.ClockSyncResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ChatProtocol.ClockSyncResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ClockSyncResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ClockSyncResponse)
+        proto.ChatProtocol.ClockSyncResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ChatProtocol.internal_static_ClockSyncResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ChatProtocol.internal_static_ClockSyncResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ChatProtocol.ClockSyncResponse.class, proto.ChatProtocol.ClockSyncResponse.Builder.class);
+      }
+
+      // Construct using proto.ChatProtocol.ClockSyncResponse.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        timestampMs_ = 0L;
+        correctTimeMs_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ChatProtocol.internal_static_ClockSyncResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncResponse getDefaultInstanceForType() {
+        return proto.ChatProtocol.ClockSyncResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncResponse build() {
+        proto.ChatProtocol.ClockSyncResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.ClockSyncResponse buildPartial() {
+        proto.ChatProtocol.ClockSyncResponse result = new proto.ChatProtocol.ClockSyncResponse(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(proto.ChatProtocol.ClockSyncResponse result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.timestampMs_ = timestampMs_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.correctTimeMs_ = correctTimeMs_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ChatProtocol.ClockSyncResponse) {
+          return mergeFrom((proto.ChatProtocol.ClockSyncResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ChatProtocol.ClockSyncResponse other) {
+        if (other == proto.ChatProtocol.ClockSyncResponse.getDefaultInstance()) return this;
+        if (other.getTimestampMs() != 0L) {
+          setTimestampMs(other.getTimestampMs());
+        }
+        if (other.getCorrectTimeMs() != 0L) {
+          setCorrectTimeMs(other.getCorrectTimeMs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                timestampMs_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 16: {
+                correctTimeMs_ = input.readInt64();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 16
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long timestampMs_ ;
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return The timestampMs.
+       */
+      @java.lang.Override
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @param value The timestampMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTimestampMs(long value) {
+
+        timestampMs_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTimestampMs() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestampMs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private long correctTimeMs_ ;
+      /**
+       * <code>int64 correct_time_ms = 2;</code>
+       * @return The correctTimeMs.
+       */
+      @java.lang.Override
+      public long getCorrectTimeMs() {
+        return correctTimeMs_;
+      }
+      /**
+       * <code>int64 correct_time_ms = 2;</code>
+       * @param value The correctTimeMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCorrectTimeMs(long value) {
+
+        correctTimeMs_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 correct_time_ms = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCorrectTimeMs() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        correctTimeMs_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ClockSyncResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:ClockSyncResponse)
+    private static final proto.ChatProtocol.ClockSyncResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ChatProtocol.ClockSyncResponse();
+    }
+
+    public static proto.ChatProtocol.ClockSyncResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClockSyncResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ClockSyncResponse>() {
+      @java.lang.Override
+      public ClockSyncResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClockSyncResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClockSyncResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.ChatProtocol.ClockSyncResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface CoordinatorAnnouncementOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:CoordinatorAnnouncement)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    long getTimestampMs();
+
+    /**
+     * <code>string coordinator_name = 2;</code>
+     * @return The coordinatorName.
+     */
+    java.lang.String getCoordinatorName();
+    /**
+     * <code>string coordinator_name = 2;</code>
+     * @return The bytes for coordinatorName.
+     */
+    com.google.protobuf.ByteString
+        getCoordinatorNameBytes();
+
+    /**
+     * <code>int64 coordinator_epoch = 3;</code>
+     * @return The coordinatorEpoch.
+     */
+    long getCoordinatorEpoch();
+  }
+  /**
+   * Protobuf type {@code CoordinatorAnnouncement}
+   */
+  public static final class CoordinatorAnnouncement extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:CoordinatorAnnouncement)
+      CoordinatorAnnouncementOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use CoordinatorAnnouncement.newBuilder() to construct.
+    private CoordinatorAnnouncement(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private CoordinatorAnnouncement() {
+      coordinatorName_ = "";
+    }
+
+    @java.lang.Override
+    @SuppressWarnings({"unused"})
+    protected java.lang.Object newInstance(
+        UnusedPrivateParameter unused) {
+      return new CoordinatorAnnouncement();
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return proto.ChatProtocol.internal_static_CoordinatorAnnouncement_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return proto.ChatProtocol.internal_static_CoordinatorAnnouncement_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              proto.ChatProtocol.CoordinatorAnnouncement.class, proto.ChatProtocol.CoordinatorAnnouncement.Builder.class);
+    }
+
+    public static final int TIMESTAMP_MS_FIELD_NUMBER = 1;
+    private long timestampMs_ = 0L;
+    /**
+     * <code>int64 timestamp_ms = 1;</code>
+     * @return The timestampMs.
+     */
+    @java.lang.Override
+    public long getTimestampMs() {
+      return timestampMs_;
+    }
+
+    public static final int COORDINATOR_NAME_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object coordinatorName_ = "";
+    /**
+     * <code>string coordinator_name = 2;</code>
+     * @return The coordinatorName.
+     */
+    @java.lang.Override
+    public java.lang.String getCoordinatorName() {
+      java.lang.Object ref = coordinatorName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        coordinatorName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string coordinator_name = 2;</code>
+     * @return The bytes for coordinatorName.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getCoordinatorNameBytes() {
+      java.lang.Object ref = coordinatorName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        coordinatorName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int COORDINATOR_EPOCH_FIELD_NUMBER = 3;
+    private long coordinatorEpoch_ = 0L;
+    /**
+     * <code>int64 coordinator_epoch = 3;</code>
+     * @return The coordinatorEpoch.
+     */
+    @java.lang.Override
+    public long getCoordinatorEpoch() {
+      return coordinatorEpoch_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (timestampMs_ != 0L) {
+        output.writeInt64(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(coordinatorName_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, coordinatorName_);
+      }
+      if (coordinatorEpoch_ != 0L) {
+        output.writeInt64(3, coordinatorEpoch_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (timestampMs_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(1, timestampMs_);
+      }
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(coordinatorName_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, coordinatorName_);
+      }
+      if (coordinatorEpoch_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, coordinatorEpoch_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof proto.ChatProtocol.CoordinatorAnnouncement)) {
+        return super.equals(obj);
+      }
+      proto.ChatProtocol.CoordinatorAnnouncement other = (proto.ChatProtocol.CoordinatorAnnouncement) obj;
+
+      if (getTimestampMs()
+          != other.getTimestampMs()) return false;
+      if (!getCoordinatorName()
+          .equals(other.getCoordinatorName())) return false;
+      if (getCoordinatorEpoch()
+          != other.getCoordinatorEpoch()) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + TIMESTAMP_MS_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getTimestampMs());
+      hash = (37 * hash) + COORDINATOR_NAME_FIELD_NUMBER;
+      hash = (53 * hash) + getCoordinatorName().hashCode();
+      hash = (37 * hash) + COORDINATOR_EPOCH_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getCoordinatorEpoch());
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static proto.ChatProtocol.CoordinatorAnnouncement parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(proto.ChatProtocol.CoordinatorAnnouncement prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code CoordinatorAnnouncement}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:CoordinatorAnnouncement)
+        proto.ChatProtocol.CoordinatorAnnouncementOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return proto.ChatProtocol.internal_static_CoordinatorAnnouncement_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return proto.ChatProtocol.internal_static_CoordinatorAnnouncement_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                proto.ChatProtocol.CoordinatorAnnouncement.class, proto.ChatProtocol.CoordinatorAnnouncement.Builder.class);
+      }
+
+      // Construct using proto.ChatProtocol.CoordinatorAnnouncement.newBuilder()
+      private Builder() {
+
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        timestampMs_ = 0L;
+        coordinatorName_ = "";
+        coordinatorEpoch_ = 0L;
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return proto.ChatProtocol.internal_static_CoordinatorAnnouncement_descriptor;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.CoordinatorAnnouncement getDefaultInstanceForType() {
+        return proto.ChatProtocol.CoordinatorAnnouncement.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.CoordinatorAnnouncement build() {
+        proto.ChatProtocol.CoordinatorAnnouncement result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public proto.ChatProtocol.CoordinatorAnnouncement buildPartial() {
+        proto.ChatProtocol.CoordinatorAnnouncement result = new proto.ChatProtocol.CoordinatorAnnouncement(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(proto.ChatProtocol.CoordinatorAnnouncement result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.timestampMs_ = timestampMs_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.coordinatorName_ = coordinatorName_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.coordinatorEpoch_ = coordinatorEpoch_;
+        }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof proto.ChatProtocol.CoordinatorAnnouncement) {
+          return mergeFrom((proto.ChatProtocol.CoordinatorAnnouncement)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(proto.ChatProtocol.CoordinatorAnnouncement other) {
+        if (other == proto.ChatProtocol.CoordinatorAnnouncement.getDefaultInstance()) return this;
+        if (other.getTimestampMs() != 0L) {
+          setTimestampMs(other.getTimestampMs());
+        }
+        if (!other.getCoordinatorName().isEmpty()) {
+          coordinatorName_ = other.coordinatorName_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        if (other.getCoordinatorEpoch() != 0L) {
+          setCoordinatorEpoch(other.getCoordinatorEpoch());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 8: {
+                timestampMs_ = input.readInt64();
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 8
+              case 18: {
+                coordinatorName_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              case 24: {
+                coordinatorEpoch_ = input.readInt64();
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 24
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private long timestampMs_ ;
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return The timestampMs.
+       */
+      @java.lang.Override
+      public long getTimestampMs() {
+        return timestampMs_;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @param value The timestampMs to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTimestampMs(long value) {
+
+        timestampMs_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 timestamp_ms = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearTimestampMs() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        timestampMs_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object coordinatorName_ = "";
+      /**
+       * <code>string coordinator_name = 2;</code>
+       * @return The coordinatorName.
+       */
+      public java.lang.String getCoordinatorName() {
+        java.lang.Object ref = coordinatorName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          coordinatorName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string coordinator_name = 2;</code>
+       * @return The bytes for coordinatorName.
+       */
+      public com.google.protobuf.ByteString
+          getCoordinatorNameBytes() {
+        java.lang.Object ref = coordinatorName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          coordinatorName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string coordinator_name = 2;</code>
+       * @param value The coordinatorName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCoordinatorName(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        coordinatorName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string coordinator_name = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCoordinatorName() {
+        coordinatorName_ = getDefaultInstance().getCoordinatorName();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string coordinator_name = 2;</code>
+       * @param value The bytes for coordinatorName to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCoordinatorNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        coordinatorName_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      private long coordinatorEpoch_ ;
+      /**
+       * <code>int64 coordinator_epoch = 3;</code>
+       * @return The coordinatorEpoch.
+       */
+      @java.lang.Override
+      public long getCoordinatorEpoch() {
+        return coordinatorEpoch_;
+      }
+      /**
+       * <code>int64 coordinator_epoch = 3;</code>
+       * @param value The coordinatorEpoch to set.
+       * @return This builder for chaining.
+       */
+      public Builder setCoordinatorEpoch(long value) {
+
+        coordinatorEpoch_ = value;
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 coordinator_epoch = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearCoordinatorEpoch() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        coordinatorEpoch_ = 0L;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFields(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:CoordinatorAnnouncement)
+    }
+
+    // @@protoc_insertion_point(class_scope:CoordinatorAnnouncement)
+    private static final proto.ChatProtocol.CoordinatorAnnouncement DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new proto.ChatProtocol.CoordinatorAnnouncement();
+    }
+
+    public static proto.ChatProtocol.CoordinatorAnnouncement getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<CoordinatorAnnouncement>
+        PARSER = new com.google.protobuf.AbstractParser<CoordinatorAnnouncement>() {
+      @java.lang.Override
+      public CoordinatorAnnouncement parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<CoordinatorAnnouncement> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CoordinatorAnnouncement> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public proto.ChatProtocol.CoordinatorAnnouncement getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -13132,6 +16861,31 @@ public final class ChatProtocol {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_ReferenceResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ElectionRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ElectionRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ElectionResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ElectionResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ClockSyncRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ClockSyncRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ClockSyncResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ClockSyncResponse_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_CoordinatorAnnouncement_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_CoordinatorAnnouncement_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -13174,14 +16928,26 @@ public final class ChatProtocol {
       "nnelResponseH\000\022(\n\016error_response\030\005 \001(\0132\016" +
       ".ErrorResponseH\000\022,\n\020publish_response\030\006 \001" +
       "(\0132\020.PublishResponseH\000\022\025\n\rlogical_clock\030" +
-      "\007 \001(\003B\010\n\006action\"M\n\020ReferenceRequest\022\024\n\014t" +
+      "\007 \001(\003B\010\n\006action\"h\n\020ReferenceRequest\022\024\n\014t" +
       "imestamp_ms\030\001 \001(\003\022\016\n\006action\030\002 \001(\t\022\023\n\013ser" +
-      "ver_name\030\003 \001(\t\"(\n\nServerInfo\022\014\n\004name\030\001 \001" +
-      "(\t\022\014\n\004rank\030\002 \001(\005\"\220\001\n\021ReferenceResponse\022\024" +
-      "\n\014timestamp_ms\030\001 \001(\003\022\016\n\006action\030\002 \001(\t\022\014\n\004" +
-      "rank\030\003 \001(\005\022\034\n\007servers\030\004 \003(\0132\013.ServerInfo" +
-      "\022\016\n\006status\030\005 \001(\t\022\031\n\021reference_time_ms\030\006 " +
-      "\001(\003B\025\n\005protoB\014ChatProtocolb\006proto3"
+      "ver_name\030\003 \001(\t\022\031\n\021election_endpoint\030\004 \001(" +
+      "\t\"C\n\nServerInfo\022\014\n\004name\030\001 \001(\t\022\014\n\004rank\030\002 " +
+      "\001(\005\022\031\n\021election_endpoint\030\003 \001(\t\"\220\001\n\021Refer" +
+      "enceResponse\022\024\n\014timestamp_ms\030\001 \001(\003\022\016\n\006ac" +
+      "tion\030\002 \001(\t\022\014\n\004rank\030\003 \001(\005\022\034\n\007servers\030\004 \003(" +
+      "\0132\013.ServerInfo\022\016\n\006status\030\005 \001(\t\022\031\n\021refere" +
+      "nce_time_ms\030\006 \001(\003\"J\n\017ElectionRequest\022\024\n\014" +
+      "timestamp_ms\030\001 \001(\003\022\023\n\013server_name\030\002 \001(\t\022" +
+      "\014\n\004rank\030\003 \001(\005\"I\n\020ElectionResponse\022\024\n\014tim" +
+      "estamp_ms\030\001 \001(\003\022\023\n\013server_name\030\002 \001(\t\022\n\n\002" +
+      "ok\030\003 \001(\010\"T\n\020ClockSyncRequest\022\024\n\014timestam" +
+      "p_ms\030\001 \001(\003\022\023\n\013server_name\030\002 \001(\t\022\025\n\rlocal" +
+      "_time_ms\030\003 \001(\003\"B\n\021ClockSyncResponse\022\024\n\014t" +
+      "imestamp_ms\030\001 \001(\003\022\027\n\017correct_time_ms\030\002 \001" +
+      "(\003\"d\n\027CoordinatorAnnouncement\022\024\n\014timesta" +
+      "mp_ms\030\001 \001(\003\022\030\n\020coordinator_name\030\002 \001(\t\022\031\n" +
+      "\021coordinator_epoch\030\003 \001(\003B\025\n\005protoB\014ChatP" +
+      "rotocolb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -13264,19 +17030,49 @@ public final class ChatProtocol {
     internal_static_ReferenceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ReferenceRequest_descriptor,
-        new java.lang.String[] { "TimestampMs", "Action", "ServerName", });
+        new java.lang.String[] { "TimestampMs", "Action", "ServerName", "ElectionEndpoint", });
     internal_static_ServerInfo_descriptor =
       getDescriptor().getMessageTypes().get(13);
     internal_static_ServerInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ServerInfo_descriptor,
-        new java.lang.String[] { "Name", "Rank", });
+        new java.lang.String[] { "Name", "Rank", "ElectionEndpoint", });
     internal_static_ReferenceResponse_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_ReferenceResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ReferenceResponse_descriptor,
         new java.lang.String[] { "TimestampMs", "Action", "Rank", "Servers", "Status", "ReferenceTimeMs", });
+    internal_static_ElectionRequest_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_ElectionRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ElectionRequest_descriptor,
+        new java.lang.String[] { "TimestampMs", "ServerName", "Rank", });
+    internal_static_ElectionResponse_descriptor =
+      getDescriptor().getMessageTypes().get(16);
+    internal_static_ElectionResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ElectionResponse_descriptor,
+        new java.lang.String[] { "TimestampMs", "ServerName", "Ok", });
+    internal_static_ClockSyncRequest_descriptor =
+      getDescriptor().getMessageTypes().get(17);
+    internal_static_ClockSyncRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ClockSyncRequest_descriptor,
+        new java.lang.String[] { "TimestampMs", "ServerName", "LocalTimeMs", });
+    internal_static_ClockSyncResponse_descriptor =
+      getDescriptor().getMessageTypes().get(18);
+    internal_static_ClockSyncResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ClockSyncResponse_descriptor,
+        new java.lang.String[] { "TimestampMs", "CorrectTimeMs", });
+    internal_static_CoordinatorAnnouncement_descriptor =
+      getDescriptor().getMessageTypes().get(19);
+    internal_static_CoordinatorAnnouncement_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_CoordinatorAnnouncement_descriptor,
+        new java.lang.String[] { "TimestampMs", "CoordinatorName", "CoordinatorEpoch", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

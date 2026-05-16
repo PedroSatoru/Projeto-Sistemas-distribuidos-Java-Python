@@ -77,6 +77,7 @@ class ChatServer:
 
         # Part 4: Coordinator tracking
         self.coordinator_name: str | None = None
+        self.coordinator_epoch: int = 0
         self._coordinator_lock = threading.Lock()
         
         # Connect with retry
@@ -126,9 +127,10 @@ class ChatServer:
         ts_ms = ts_ms if ts_ms is not None else self._adjusted_time_ms()
         lc_val = self.lc.value
         coord = self.coordinator_name or "NONE"
+        epoch_val = getattr(self, "coordinator_epoch", 0)
 
         print(
-            f"[ts={ts_ms}][lc={lc_val}][lang=PY][role=SERVER][id={self.server_id}][rank={self.rank}][coord={coord}]"
+            f"[ts={ts_ms}][lc={lc_val}][lang=PY][role=SERVER][id={self.server_id}][rank={self.rank}][coord={coord}][epoch={epoch_val}]"
             f"[lvl={level}][evt={event}] {message}",
             flush=True,
         )
@@ -274,9 +276,10 @@ class ChatServer:
         username = message.payload.get("username", "").strip() or "server"
         
         if not self.data.channel_exists(channel_name):
-            error_msg = f"Canal não existe: {channel_name}"
-            self._log("WARN", "PUBLISH_FAIL", error_msg, ts_ms=message.timestamp_ms)
-            return PublishResponseMessage(success=False, error=error_msg)
+            # Em ambiente com varios servidores, a metadata de canal pode chegar depois.
+            # Criamos o canal localmente para evitar falha intermitente de publish.
+            self.data.add_channel(channel_name)
+            self._log("INFO", "PUBLISH_CHANNEL_AUTO_CREATE", f"canal {channel_name} criado sob demanda", ts_ms=message.timestamp_ms)
             
         self.data.add_message(channel_name, message_text, message.timestamp_ms, username)
         
@@ -345,9 +348,18 @@ class ChatServer:
                         payload = parts[1]
                         ann = chat_pb2.CoordinatorAnnouncement()
                         ann.ParseFromString(payload)
+                        # Accept only announcements with a newer epoch
+                        try:
+                            ann_epoch = ann.coordinator_epoch
+                        except Exception:
+                            ann_epoch = 0
                         with self._coordinator_lock:
-                            self.coordinator_name = ann.coordinator_name
-                        self._log("INFO", "COORDINATOR_UPDATE", f"novo coordenador: {ann.coordinator_name}")
+                            if ann_epoch > self.coordinator_epoch:
+                                self.coordinator_name = ann.coordinator_name
+                                self.coordinator_epoch = ann_epoch
+                                self._log("INFO", "COORDINATOR_UPDATE", f"novo coordenador: {ann.coordinator_name}")
+                            else:
+                                self._log("DEBUG", "COORD_IGNORED", f"anuncio antigo ignorado de {ann.coordinator_name} epoch={ann_epoch}")
             except Exception as e:
                 if self.running:
                     self._log("ERROR", "COORD_LISTENER_ERR", str(e))
@@ -439,10 +451,13 @@ class ChatServer:
         """Announce self as coordinator via PUB on 'servers' topic."""
         with self._coordinator_lock:
             self.coordinator_name = self.server_name
+            # bump epoch to mark a new coordinator term
+            self.coordinator_epoch = int(self.coordinator_epoch) + 1
         self._log("INFO", "COORDINATOR_SELF", f"EU sou o coordenador (rank={self.rank})")
         ann = chat_pb2.CoordinatorAnnouncement(
             timestamp_ms=self._adjusted_time_ms(),
             coordinator_name=self.server_name,
+            coordinator_epoch=self.coordinator_epoch,
         )
         self.pub_socket.send_multipart([b"servers", ann.SerializeToString()])
         self._log("INFO", "COORDINATOR_PUB", "anuncio publicado no topico 'servers'")
